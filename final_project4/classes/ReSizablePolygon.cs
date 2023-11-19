@@ -91,8 +91,8 @@ namespace final_project4.classes
             return polygonPoints;
         }
 
-        public Windows.Foundation.Point ConvertToPoint(double x, double y)=> new Windows.Foundation.Point((int)x, (int)y);
-        public Windows.Foundation.Point Convert_To_Real_Point(double x, double y) => new Windows.Foundation.Point((int)(SettingsClass.Convert_To_Real(x)),(int)SettingsClass.Convert_To_Real(y));
+        public Windows.Foundation.Point ConvertToPoint(double x, double y)=> new Windows.Foundation.Point(x, y);
+        public Windows.Foundation.Point Convert_To_Real_Point(double x, double y) => new Windows.Foundation.Point((SettingsClass.Convert_To_Real(x)),SettingsClass.Convert_To_Real(y));
 
 
     }

@@ -33,7 +33,7 @@ namespace final_project4
             myPolygon.Fill = new SolidColorBrush(Windows.UI.Colors.Blue);
             myPolygon.Points = new PointCollection()
             {
-            new Point(100.5, 50.5),
+            new Point(500.5, 440.5),
             new Point(20.5, 15.5),
             new Point(300.5, 25.5)
             };
