@@ -22,7 +22,7 @@ namespace final_project4.classes
 
         //const
 
-        public const double gravity = 0.00098;
+        public const double gravity = 9.8;
         public PhysicBody(double x ,double y, double vx=0,double vy=0,double ax=0,double ay = 0)
         {
             this.x = x;
@@ -41,7 +41,7 @@ namespace final_project4.classes
 
             //add a/fps so you move the same if you diffrent fps 
             vx += ax * dt;
-            vy += ay * dt;
+            vy += gravity * dt;
 
             //you move the same in every frame 
             x+= vx * dt;

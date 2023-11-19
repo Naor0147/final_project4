@@ -26,12 +26,17 @@ namespace final_project4.pages
         ReSizablePolygon reSizablePolygon;
         public int frameCount = 0;
         public DispatcherTimer fpsTimer;
+        public GameCanvas gameCanvas;
+
+
+        private double angle = 0;
 
         public GamePage2()
         {
             this.InitializeComponent();
-            reSizablePolygon = new ReSizablePolygon(new PhysicBody(100, 100,15,15,3,3), 50, 50,250);
-            reSizablePolygon.AddToCanvas(GameCanvas);
+            gameCanvas = new GameCanvas(GameCanvas);
+            reSizablePolygon = new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 3, vy: -10, ax: 0, ay: 3), 50, 50,angle);
+            gameCanvas.AddToCanvas(reSizablePolygon);
             Functions_add();
         }
 
@@ -59,12 +64,15 @@ namespace final_project4.pages
             frameCount = 0;
         }
 
+        
         private void CompositionTarget_Rendering(object sender, object e)
         {
             frameCount++;
-            reSizablePolygon.body.Move(SettingsClass.current_FPS);
-            reSizablePolygon.UpdateImgSize();
+            angle++;
+            reSizablePolygon = new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 3, vy: -10, ax: 0, ay: 3), 50, 50, angle);
+            gameCanvas.AddToCanvas(reSizablePolygon);
 
+            gameCanvas.moveAll(1, 1);
 
         }
     }

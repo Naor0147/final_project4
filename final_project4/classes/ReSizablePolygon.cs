@@ -5,11 +5,12 @@ using Windows.UI.Xaml.Shapes;
 
 namespace final_project4.classes
 {
-    class ReSizablePolygon
+    public class ReSizablePolygon
     {
         public Polygon imgPolygon { get; set; }
 
         public Polygon realPolygon{ get; set; }
+
         public double height, width, angle;
         public PhysicBody body;
 

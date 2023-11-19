@@ -15,76 +15,32 @@ namespace final_project4.classes
     {
         public Canvas MainCanvas { get; set; }
 
-        private List<Polygon> polygonsImg = new List<Polygon>();
-        //need to create  a clone not 
-        private List<Polygon> polygonsReal = new List<Polygon>();
-
+       public List<ReSizablePolygon> reSizablePolygonList { get; set; }
+        int count = 0;
 
 
 
         public GameCanvas(Canvas canvas)
         {
             MainCanvas = canvas;
+            reSizablePolygonList = new List<ReSizablePolygon>();
         }
 
-        public void AddToCanvas(Polygon polygon)
+        public void AddToCanvas(ReSizablePolygon polygon)
         {
-
-            
-            polygonsImg.Add(polygon);
-            polygonsReal.Add(ClonePolygon(polygon));
-            MainCanvas.Children.Add(polygon);
+            reSizablePolygonList.Add(polygon);
+            polygon.AddToCanvas(MainCanvas);
+            count++;
         }
 
-        private Polygon ClonePolygon(Polygon originalPolygon)
+        public void moveAll(double dx, double dy)
         {
-            var clonedPolygon = new Polygon
+            foreach (ReSizablePolygon polygon in reSizablePolygonList)
             {
-                Fill = originalPolygon.Fill,
-                Stroke = originalPolygon.Stroke,
-                StrokeThickness = originalPolygon.StrokeThickness,
-                FillRule = originalPolygon.FillRule,
-
-            };
-
-            foreach (var point in originalPolygon.Points)
-            {
-                clonedPolygon.Points.Add(point);
-            }
-
-            return clonedPolygon;
-        }
-
-
-        public void MoveAll(int dx, int dy) { 
-            
-            foreach (var polygon in polygonsImg)
-            {
-                for (int i = 0; i < polygon.Points.Count; i++)
-                {
-                    polygon.Points[i] = new Windows.Foundation.Point(polygon.Points[i].X+dx, polygon.Points[i].Y + dy);
-                }
-                
+                polygon.body.Move(SettingsClass.current_FPS);
+                polygon.UpdateImgSize();
             }
         }
-        public void UpdateSize(int dx, int dy)
-        {
-            foreach (var polygon in polygonsReal)
-            {
-                for (int i = 0; i < polygon.Points.Count; i++)
-                {
-                    polygon.Points[i] = new Windows.Foundation.Point(polygon.Points[i].X + dx, polygon.Points[i].Y + dy);
-                }
-
-            }
-        }
-         
-
-        public void RemoveFromCanvas(Polygon polygon)
-        {
-            polygonsImg.Remove(polygon);
-            polygonsReal.Remove(polygon);
-            MainCanvas.Children.Remove(polygon);
-        }
+        
     }
 }
