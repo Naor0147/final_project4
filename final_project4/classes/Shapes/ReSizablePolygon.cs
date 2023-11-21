@@ -105,7 +105,7 @@ namespace final_project4.classes
             return new Polygon()
             {
                 Stroke = new SolidColorBrush(Windows.UI.Colors.Purple),
-                StrokeThickness = 6,
+                StrokeThickness = 2,
                 Fill = new SolidColorBrush(Windows.UI.Colors.Blue) ,
                 Opacity =0.4,
             };
@@ -114,8 +114,9 @@ namespace final_project4.classes
 
         private PointCollection RectPoints(double x, double y, double height, double width,double angle)
         {
-            double sin = Math.Sin(angle);
-            double cos = Math.Cos(angle);
+            double radian = angle * 0.0174532925;//convert the angle to radian 
+            double sin = Math.Sin(radian);//the sin , cos works in radian so i convert the angle to radian
+            double cos = Math.Cos(radian);
 
             PointCollection polygonPoints = new PointCollection();
             polygonPoints.Add(ConvertToPoint(x, y));

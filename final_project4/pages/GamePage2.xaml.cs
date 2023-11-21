@@ -28,7 +28,7 @@ namespace final_project4.pages
         public int frameCount = 0;
         public DispatcherTimer fpsTimer;
         public GameCanvas gameCanvas;
-
+        ReSizablePolygon pol1;
 
         private double angle = 0;
 
@@ -37,7 +37,7 @@ namespace final_project4.pages
             this.InitializeComponent();
             gameCanvas = new GameCanvas(GameCanvas);
             
-            ReSizablePolygon pol1 =new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 100, vy: 0, ax: 0, ay: 0), 120, 100, 1);
+            pol1 =new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 100, vy: 0, ax: 0, ay: 0), 120, 100, 0);
             ReSizablePolygon pol2 = new ReSizablePolygon(new PhysicBody(x: 900, y: 100, vx: -100, vy: 0, ax: 0, ay: 0), 120, 100, 0);
             gameCanvas.AddToCanvas(pol1);
             gameCanvas.AddToCanvas(pol2);
@@ -79,11 +79,14 @@ namespace final_project4.pages
                 Debug.Print("true");
 
             }
-            
-           // reSizablePolygon = new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 3, vy: -10, ax: 0, ay: 3), 50, 50, angle);
+            angle+=0.5;
+            //pol1.angle = angle;
+            //pol1.UpdateImgSize();
+            fpstextblock.Text = $"angle: {angle:F2}";
+            // reSizablePolygon = new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 3, vy: -10, ax: 0, ay: 3), 50, 50, angle);
             //gameCanvas.AddToCanvas(reSizablePolygon);
 
-//            gameCanvas.MoveAll(1, 2);
+            //            gameCanvas.MoveAll(1, 2);
 
         }
     }

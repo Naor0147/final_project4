@@ -11,8 +11,8 @@ namespace final_project4.classes.Shapes
 {
     enum LineType
     {
-        XType,// x=value
-        YType,//y= mx+b 
+        VerticalLine,// x=value
+        RegularLine,//y= mx+b 
 
     }
     public struct LineCol
@@ -34,8 +34,14 @@ namespace final_project4.classes.Shapes
             y1 = p1.Y;
             x2 = p2.X;
             y2 = p2.Y;
+
+
+            //default values in struct
             function = "";
-            _LineType = LineType.YType;
+            _LineType = LineType.RegularLine;
+            m = 0;
+            b = 0;
+
             ConvertData();
         }
       
@@ -45,6 +51,15 @@ namespace final_project4.classes.Shapes
             this.y1 = y1;
             this.x2 = x2;
             this.y2 = y2;
+
+
+            //default values in struct
+            function = "";
+            _LineType = LineType.RegularLine;
+            m = 0;
+            b = 0;
+
+
             ConvertData();
 
 
@@ -53,12 +68,12 @@ namespace final_project4.classes.Shapes
         {
             if (x1==x2)
             {
-                _LineType = LineType.XType;
+                _LineType = LineType.VerticalLine;
 
                 function = $"x={x1}";
                 return;
             }
-            _LineType = LineType.YType;
+            _LineType = LineType.RegularLine;
             m =(y1-y2)/(x1-x2);
             
             //the y value when x=0 
@@ -78,18 +93,17 @@ namespace final_project4.classes.Shapes
 
         public bool Collision(LineCol line)
         {
+            
+            bool line1Vertical = this._LineType == LineType.VerticalLine;
+            bool line2Vertical = line._LineType == LineType.VerticalLine;
+
+
+            if (line1Vertical || line2Vertical)
             {
-                bool line1Vertical = this._LineType == LineType.XType;
-                bool line2Vertical = line._LineType == LineType.XType;
-
-
-                if (line1Vertical || line2Vertical)
-                {
-                    return CollisionForVerticalLines(line, line1Vertical, line2Vertical);
-                }
+                return CollisionForVerticalLines(line, line1Vertical, line2Vertical);
             }
-
-
+            
+            
             if (this.m == line.m)
             {
                 if (x1==x2)// if the line are x=value and not y=mx+b 
@@ -115,13 +129,40 @@ namespace final_project4.classes.Shapes
             /*pretty sure i dont need this check 
              * cause i allready cheked the x of the line so i dont need to check the y 
              * 
-             bool condtion3 = Settings_class.isBetween(y1, y, y2);
+            bool condtion3 = Settings_class.isBetween(y1, y, y2);
             bool condtion4 = Settings_class.isBetween(line.y1, y, line.y2);
             return (condtion1 && condtion2 && condtion3 && condtion4);*/
 
             return (condition1 && condition2);
 
         }
+
+        private bool CollisionForVerticalLines(LineCol line, bool line1Vertical, bool line2Vertical)
+        {
+            /* if two lines are vertical , you need to check if two lines have the same x=value
+             and if they are they you need to check if the one of the two lines point are found between those two lines */
+            if (line1Vertical && line2Vertical)
+            {
+                return (x1 == line.x1) && (SettingsClass.isBetween(y1, line.y1, y2) || SettingsClass.isBetween(y1, line.y2, y2));
+            }
+            //reaccuse it a continuous line line there got a be Collision in the x of the straight line 
+            return CollisionVerticalWithNormalLine(this, line);
+        }
+
+        private bool CollisionVerticalWithNormalLine(LineCol line1, LineCol line2)
+        {
+            LineCol line;
+            if (line2._LineType== LineType.VerticalLine)
+            {
+                line = line1;
+                line1 = line2;
+                line2 = line;
+            }
+            double _x = line1.x1;
+            double _y = line2.Get_Y_Value_On_X(x1);// one is vertical one line is normal , so there  meeting point on x must be the same , dosent work properly 
+            return SettingsClass.isBetween(line2.x1,_x,x2)&&(SettingsClass.isBetween(line2.y1, _y, line2.y2));
+        }
+
         public double Get_Y_Value_On_X(double x_temp)
         {
             return m * x_temp + b;
