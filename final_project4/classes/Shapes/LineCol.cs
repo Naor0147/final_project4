@@ -85,16 +85,7 @@ namespace final_project4.classes.Shapes
 
                 if (line1Vertical || line2Vertical)
                 {
-                    if (line1Vertical && line2Vertical)
-                    {
-                        return (x1 == line.x1) && (SettingsClass.isBetween(y1, line.y1, y2) || SettingsClass.isBetween(y1, line.y2, y2));
-                    }
-                    else if (line1Vertical)
-                    {
-                        double _y = line.Get_Y_Value_On_X(x1);// one is vertical one line is normal , so there  meeting point on x must be the same 
-                        double _x = x1;
-
-                    }
+                    return CollisionForVerticalLines(line, line1Vertical, line2Vertical);
                 }
             }
 
