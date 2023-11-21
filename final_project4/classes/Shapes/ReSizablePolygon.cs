@@ -1,7 +1,13 @@
-﻿using System;
+﻿using final_project4.classes.Shapes;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using Windows.Foundation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
+using Point = Windows.Foundation.Point;
 
 namespace final_project4.classes
 {
@@ -14,8 +20,30 @@ namespace final_project4.classes
         public double height, width, angle;
         public PhysicBody body;
 
+        public string Id;
 
-        public ReSizablePolygon(PhysicBody physicBody,double height ,double width,double angle)
+        private PointCollection __imgPoints;
+
+        private PointCollection _pointsImg
+        {
+            get
+            {
+                return __imgPoints;
+            }
+
+            set
+            {
+                __imgPoints = value;
+                imgPolygon.Points= value;
+                CreateLineList();
+            }
+        }
+
+        List<LineCol> lines;
+
+
+
+        public ReSizablePolygon(PhysicBody physicBody,double height ,double width,double angle,string Id="")
         {
             //physics
             this.body = physicBody;
@@ -28,7 +56,11 @@ namespace final_project4.classes
             double x = physicBody.x;
             double y = physicBody.y;
 
+            this.Id = Id;
+
             imgPolygon = CreateRect(x,y,width,height,angle);
+            //_pointsImg = new PointCollection();
+            _pointsImg = imgPolygon.Points;
             realPolygon= CreateRect(SettingsClass.Convert_To_Real(x),SettingsClass.Convert_To_Real(y), SettingsClass.Convert_To_Real(width), SettingsClass.Convert_To_Real(height), angle);
         }
         public void UpdateRealSize()
@@ -38,7 +70,6 @@ namespace final_project4.classes
             {
                 realPolygon.Points[i] = Convert_To_Real_Point(imgPolygon.Points[i].X, imgPolygon.Points[i].Y);
             }
-
             
         }
         
@@ -46,7 +77,8 @@ namespace final_project4.classes
 
         public void UpdateImgSize()
         {
-            imgPolygon.Points = RectPoints(body.x,body.y,width,height,angle);
+            _pointsImg= RectPoints(body.x, body.y, width, height, angle);
+            
             UpdateRealSize();
         }
 
@@ -63,6 +95,7 @@ namespace final_project4.classes
 
             // Define the points of the polygon
             myPolygon.Points = RectPoints(x, y, height, width, angle);
+            
             return myPolygon;
 
         }
@@ -92,9 +125,45 @@ namespace final_project4.classes
             return polygonPoints;
         }
 
-        public Windows.Foundation.Point ConvertToPoint(double x, double y)=> new Windows.Foundation.Point(x, y);
-        public Windows.Foundation.Point Convert_To_Real_Point(double x, double y) => new Windows.Foundation.Point((SettingsClass.Convert_To_Real(x)),SettingsClass.Convert_To_Real(y));
+        public void CreateLineList()
+        {
+      
+            
+            if (_pointsImg == null) return;//if there isn't a list of points there nothing to draw 
+
+            lines  = new List<LineCol>();// reset the list 
 
 
+            //this method connects all the point , and leave the last point to connects with first point 
+            for (int i = 0; i < _pointsImg.Count- 1; i++)
+            {
+                lines.Add(new LineCol(_pointsImg[i], _pointsImg[i+1]));
+            }
+            lines.Add(new LineCol(_pointsImg.Last(), _pointsImg[0])) ;
+
+        }
+
+
+        public bool CollCheck(ReSizablePolygon Polygon2)
+        {
+            if (Polygon2 == null || Polygon2.lines==null||lines==null) return false;
+            foreach (LineCol line1 in lines)
+            {
+                foreach (LineCol line2 in Polygon2.lines )
+                {
+                    if (line1.Collision(line2))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        
+        public Point ConvertToPoint(double x, double y)=> new Point(x, y);
+        public Point Convert_To_Real_Point(double x, double y) => new Point((SettingsClass.Convert_To_Real(x)),SettingsClass.Convert_To_Real(y));
+
+       
     }
 }

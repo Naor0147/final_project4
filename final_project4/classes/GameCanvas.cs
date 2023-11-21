@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Composition;
@@ -33,14 +35,34 @@ namespace final_project4.classes
             count++;
         }
 
-        public void moveAll(double dx, double dy)
+        //public update
+
+
+        public void MoveAll()
         {
+            
             foreach (ReSizablePolygon polygon in reSizablePolygonList)
             {
+                
                 polygon.body.Move(SettingsClass.current_FPS);
                 polygon.UpdateImgSize();
             }
         }
+        public bool checkCol()
+        {
+            for (int i = 0; i < reSizablePolygonList.Count-1; i++)
+            {
+                for (int j = i+1; j < reSizablePolygonList.Count; j++)
+                {
+                    if (reSizablePolygonList[i].CollCheck(reSizablePolygonList[j]))
+                    {
+                        return true;
+                    } 
+                }
+            }
+            return false;
+        }
+        
         
     }
 }

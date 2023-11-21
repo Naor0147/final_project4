@@ -8,18 +8,18 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Canvas x:Name="GameCanvas">
-        <Polygon
-    Points="300,200 400,125 400,275"
-    Stroke="Purple"
-    StrokeThickness="2">
-            <Polygon.Fill>
-                <SolidColorBrush Color="Blue" Opacity="0.4"/>
-            </Polygon.Fill>
-        </Polygon>
+    <Grid x:Name="GameCanvas" Background="LightSkyBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
-        <Polygon Fill="Blue" Points="100.5,50.5 20.5,15.5 300.5,25.5" />
-
-        <Button Content="Button" Canvas.Left="739" Canvas.Top="495" Height="228" VerticalAlignment="Top" Width="355" FontSize="60" Click="Button_Click"/>
-    </Canvas>
+        <Button Content="Button" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="100" Foreground="Black" Click="Button_Click"/>
+    </Grid>
 </Page>

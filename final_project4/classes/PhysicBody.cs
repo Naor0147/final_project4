@@ -41,7 +41,7 @@ namespace final_project4.classes
 
             //add a/fps so you move the same if you diffrent fps 
             vx += ax * dt;
-            vy += gravity * dt;
+            vy += ay * dt;
 
             //you move the same in every frame 
             x+= vx * dt;

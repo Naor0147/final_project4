@@ -1,6 +1,7 @@
 ﻿using final_project4.classes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -35,8 +36,12 @@ namespace final_project4.pages
         {
             this.InitializeComponent();
             gameCanvas = new GameCanvas(GameCanvas);
-            reSizablePolygon = new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 3, vy: -10, ax: 0, ay: 3), 50, 50,angle);
-            gameCanvas.AddToCanvas(reSizablePolygon);
+            
+            ReSizablePolygon pol1 =new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 100, vy: 0, ax: 0, ay: 0), 120, 100, 1);
+            ReSizablePolygon pol2 = new ReSizablePolygon(new PhysicBody(x: 900, y: 100, vx: -100, vy: 0, ax: 0, ay: 0), 120, 100, 0);
+            gameCanvas.AddToCanvas(pol1);
+            gameCanvas.AddToCanvas(pol2);
+
             Functions_add();
         }
 
@@ -52,7 +57,7 @@ namespace final_project4.pages
             fpsTimer.Interval = TimeSpan.FromSeconds(1);
             fpsTimer.Tick += FpsTimer_Tick;
             fpsTimer.Start();
-        }
+         }
 
 
         private void FpsTimer_Tick(object sender, object e)
@@ -68,11 +73,17 @@ namespace final_project4.pages
         private void CompositionTarget_Rendering(object sender, object e)
         {
             frameCount++;
-            angle++;
-            reSizablePolygon = new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 3, vy: -10, ax: 0, ay: 3), 50, 50, angle);
-            gameCanvas.AddToCanvas(reSizablePolygon);
+            gameCanvas.MoveAll();
+            if (gameCanvas.checkCol())
+            {
+                Debug.Print("true");
 
-            gameCanvas.moveAll(1, 1);
+            }
+            
+           // reSizablePolygon = new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 3, vy: -10, ax: 0, ay: 3), 50, 50, angle);
+            //gameCanvas.AddToCanvas(reSizablePolygon);
+
+//            gameCanvas.MoveAll(1, 2);
 
         }
     }
