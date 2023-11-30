@@ -28,7 +28,9 @@ namespace final_project4.classes.Shapes
         public virtual void CollCheck(ReSizablePolygon reSizablePolygons) { }
         public virtual void CollCheck(ReSizableBall reSizableBall) { }
 
-        public virtual bool CollCheck( ReSizableBall reSizableBall) { }
+        public bool CollCheckbb( ReSizableBall reSizableBall) {
+            return true;
+        }
 
 
 
