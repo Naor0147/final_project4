@@ -17,12 +17,14 @@ namespace final_project4.classes.Shapes
         public Ellipse RealEllipse;
 
         public double size;
+        public ReSizablePolygon rect;
 
 
         public ReSizableBall(PhysicBody body, double size,GameCanvas gameCanvas):base(body,size,size,gameCanvas)
         {
             this.size = size;
 
+            rect = new ReSizablePolygon(body,size,size,gameCanvas);
             
            // this.ImgEllipse = CreateEllipse(body.x,body.y,size,Colors.Red);
             this.RealEllipse = CreateEllipse(SettingsClass.Convert_To_Real(body.x), SettingsClass.Convert_To_Real(body.y), SettingsClass.Convert_To_Real(size), Colors.Red);
@@ -48,8 +50,9 @@ namespace final_project4.classes.Shapes
         {
             Canvas.SetLeft(RealEllipse, body.x);
             Canvas.SetTop(RealEllipse, body.y);
-            RealEllipse.Width = size;
-            RealEllipse.Height = size;
+            rect.UpdatePosAndSize();
+            RealEllipse.Width = SettingsClass.Convert_To_Real(size);
+            RealEllipse.Height = SettingsClass.Convert_To_Real(size);
         }
 
 

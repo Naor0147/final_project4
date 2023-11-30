@@ -85,7 +85,7 @@ namespace final_project4.classes
 
         public override void AddToCanvas()
         {
-            GameCanvas.AddToCanvas(this);
+            GameCanvas.MainCanvas.Children.Add(realPolygon);
         }
         
       
@@ -152,7 +152,7 @@ namespace final_project4.classes
 
 
         //don't do inerantce for coll maybe check 
-        public override bool CollCheck(ReSizablePolygon Polygon2) // need to check what i can do for 
+        public virtual bool CollCheckForPolygon(ReSizablePolygon Polygon2) // need to check what i can do for 
         {
             if (Polygon2 == null || Polygon2.lines==null||lines==null) return false;
             foreach (LineCol line1 in lines)
@@ -167,6 +167,12 @@ namespace final_project4.classes
             }
             return false;
         }
+
+       public bool collCheckForBall(ReSizableBall ball)
+        {
+            return CollCheckForPolygon(ball.rect);
+        }
+       
 
         
         public Point ConvertToPoint(double x, double y)=> new Point(x, y);

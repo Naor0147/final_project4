@@ -19,6 +19,8 @@ namespace final_project4.classes
         public Canvas MainCanvas { get; set; }
 
        public List<ReSizable> reSizablePolygonList { get; set; }
+
+       public List<ReSizablePolygon> reSizablePolygonsList { get; set; }
        int count = 0;
 
 
@@ -32,7 +34,11 @@ namespace final_project4.classes
         public void AddToCanvas(ReSizable polygon)
         {
             reSizablePolygonList.Add(polygon);
-            polygon.AddToCanvas();
+            if (polygon is ReSizablePolygon)
+            {
+                ReSizablePolygon add= (ReSizablePolygon)polygon;
+                add.AddToCanvas();
+            }
             count++;
         }
 
@@ -66,10 +72,13 @@ namespace final_project4.classes
             {
                 for (int j = i+1; j < reSizablePolygonList.Count; j++)
                 {
+                   
                     if (reSizablePolygonList[i].CollCheck(reSizablePolygonList[j]))
                     {
                         return true;
-                    } 
+                    }
+                   
+                    
                 }
             }
             return false;
