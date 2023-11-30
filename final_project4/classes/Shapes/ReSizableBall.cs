@@ -61,5 +61,12 @@ namespace final_project4.classes.Shapes
         {
             return $"physic[{body.x}] ball size:{size}";
         }
+
+        public override bool CollCheck(ReSizable reSizable)
+        {
+            return rect.CollCheck(reSizable);
+        }
+
+
     }
 }

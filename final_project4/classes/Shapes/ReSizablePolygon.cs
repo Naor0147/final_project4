@@ -151,7 +151,24 @@ namespace final_project4.classes
         }
 
 
-        //don't do inerantce for coll maybe check 
+
+        public virtual bool CollCheck(ReSizable reSizable)
+        {
+            if (reSizable is ReSizablePolygon)
+            {
+                ReSizablePolygon polygon = (ReSizablePolygon)reSizable;
+                return CollCheckForPolygon(polygon);
+            }
+            else if (reSizable is ReSizableBall)
+            {
+                ReSizableBall reSizableBall = (ReSizableBall)reSizable;
+                return CollCheckForBall(reSizableBall);
+            }
+            return false;   
+        }
+
+
+        //don't do inertance for coll maybe check 
         public virtual bool CollCheckForPolygon(ReSizablePolygon Polygon2) // need to check what i can do for 
         {
             if (Polygon2 == null || Polygon2.lines==null||lines==null) return false;
@@ -168,10 +185,10 @@ namespace final_project4.classes
             return false;
         }
 
-       public override bool collCheckForBall(ReSizableBall ball)
-        {
+       public bool CollCheckForBall(ReSizableBall ball)
+       {
             return CollCheckForPolygon(ball.rect);
-        }
+       }
        
 
         

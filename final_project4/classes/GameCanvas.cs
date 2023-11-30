@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Media.Core;
 using Windows.UI.Composition;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
@@ -72,11 +73,25 @@ namespace final_project4.classes
             {
                 for (int j = i+1; j < reSizablePolygonList.Count; j++)
                 {
-                   
-                    if (reSizablePolygonList[i].CollCheck(reSizablePolygonList[j]))
+                    bool temp = false;
+
+                    switch (reSizablePolygonList[i])
+                    {
+                        case ReSizablePolygon reSizablePolygon:
+                            temp= reSizablePolygon.CollCheck(reSizablePolygonList[j]);
+                            break;
+                        case ReSizableBall reSizableBall:
+                            temp= reSizableBall.CollCheck(reSizablePolygonList[j]);
+                            break;
+                    }
+
+                    if (temp)
                     {
                         return true;
                     }
+
+
+                   
                    
                     
                 }
