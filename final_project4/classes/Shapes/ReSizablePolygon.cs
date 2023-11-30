@@ -168,7 +168,7 @@ namespace final_project4.classes
             return false;
         }
 
-       public bool collCheckForBall(ReSizableBall ball)
+       public override bool collCheckForBall(ReSizableBall ball)
         {
             return CollCheckForPolygon(ball.rect);
         }
