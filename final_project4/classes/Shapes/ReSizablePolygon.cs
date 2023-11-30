@@ -11,7 +11,7 @@ using Point = Windows.Foundation.Point;
 
 namespace final_project4.classes
 {
-    public class ReSizablePolygon
+    public class ReSizablePolygon:ReSizable
     {
         public Polygon imgPolygon { get; set; }
 
@@ -43,7 +43,7 @@ namespace final_project4.classes
 
 
 
-        public ReSizablePolygon(PhysicBody physicBody,double height ,double width,double angle,string Id="")
+        public ReSizablePolygon(PhysicBody physicBody,double height ,double width,GameCanvas gameCanvas,double angle=0,string Id=""):base(physicBody,height,width,gameCanvas)
         {
             //physics
             this.body = physicBody;
@@ -75,7 +75,7 @@ namespace final_project4.classes
         
 
 
-        public void UpdateImgSize()
+        public override void UpdatePosAndSize()
         {
             _pointsImg= RectPoints(body.x, body.y, width, height, angle);
             
@@ -83,10 +83,12 @@ namespace final_project4.classes
         }
 
 
-        public void AddToCanvas(Canvas canvas)
+        public override void AddToCanvas()
         {
-            canvas.Children.Add(realPolygon);
+            GameCanvas.AddToCanvas(this);
         }
+        
+      
 
 
         private Polygon CreateRect(double x, double y, double height, double width, double angle)
@@ -114,7 +116,9 @@ namespace final_project4.classes
 
         private PointCollection RectPoints(double x, double y, double height, double width,double angle)
         {
-            double radian = angle * 0.0174532925;//convert the angle to radian 
+
+            /// if i put the angle to a really small number close to 0 , collition will work properly , need to if there is posiible way to fix 
+            double radian = SettingsClass.GetRadian(angle);//convert the angle to radian 
             double sin = Math.Sin(radian);//the sin , cos works in radian so i convert the angle to radian
             double cos = Math.Cos(radian);
 
@@ -126,7 +130,9 @@ namespace final_project4.classes
             return polygonPoints;
         }
 
-        public void CreateLineList()
+     
+
+        public  void CreateLineList()
         {
       
             
@@ -145,7 +151,8 @@ namespace final_project4.classes
         }
 
 
-        public bool CollCheck(ReSizablePolygon Polygon2)
+        //don't do inerantce for coll maybe check 
+        public override bool CollCheck(ReSizablePolygon Polygon2) // need to check what i can do for 
         {
             if (Polygon2 == null || Polygon2.lines==null||lines==null) return false;
             foreach (LineCol line1 in lines)

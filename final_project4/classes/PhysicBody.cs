@@ -49,6 +49,10 @@ namespace final_project4.classes
 
         }
 
+        public override string ToString()
+        {
+            return $"({x},{y}), vx:{vx} vy:{vy} ax:{ax} ay:{ay}";
+        }
 
     }
 }

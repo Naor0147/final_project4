@@ -39,7 +39,8 @@ namespace final_project4.classes
 
             return value * (Window_VisibleBounds_Height / IMAGINARY_SCREEN_HEIGHT);
         }
-
+        public static double GetRadian(double angle) => angle* 0.0174532925;
+        
 
 
 

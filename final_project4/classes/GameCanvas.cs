@@ -1,4 +1,5 @@
-﻿using System;
+﻿using final_project4.classes.Shapes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,25 +18,36 @@ namespace final_project4.classes
     {
         public Canvas MainCanvas { get; set; }
 
-       public List<ReSizablePolygon> reSizablePolygonList { get; set; }
-        int count = 0;
+       public List<ReSizable> reSizablePolygonList { get; set; }
+       int count = 0;
 
 
 
         public GameCanvas(Canvas canvas)
         {
             MainCanvas = canvas;
-            reSizablePolygonList = new List<ReSizablePolygon>();
+            reSizablePolygonList = new List<ReSizable>();
         }
 
-        public void AddToCanvas(ReSizablePolygon polygon)
+        public void AddToCanvas(ReSizable polygon)
         {
             reSizablePolygonList.Add(polygon);
-            polygon.AddToCanvas(MainCanvas);
+            polygon.AddToCanvas();
             count++;
         }
 
         //public update
+        public void UpdateObjects()
+        {
+            foreach(var item in reSizablePolygonList)
+            {
+                item.UpdatePosAndSize();  
+            }
+        }
+
+
+
+
 
 
         public void MoveAll()
@@ -45,7 +57,7 @@ namespace final_project4.classes
             {
                 
                 polygon.body.Move(SettingsClass.current_FPS);
-                polygon.UpdateImgSize();
+                polygon.UpdatePosAndSize();
             }
         }
         public bool checkCol()

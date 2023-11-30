@@ -64,6 +64,14 @@ namespace final_project4.classes.Shapes
 
 
         }
+
+        public double GetDistance()
+        {
+            return Math.Sqrt(Power2(x2 - x1) - Power2(y2 - y1));
+        }
+        public double Power2(double v) => v * v;
+
+
         public  void ConvertData()
         {
             if (x1==x2)
@@ -90,7 +98,12 @@ namespace final_project4.classes.Shapes
             }
             
         }
+        public double Get_Y_Value_On_X(double x_temp)
+        {
+            return m * x_temp + b;
+        }
 
+        //working 
         public bool Collision(LineCol line)
         {
             
@@ -112,9 +125,8 @@ namespace final_project4.classes.Shapes
                 }
                 if (this.b == line.b)
                 {
-                    return true;//the same line
+                    return SettingsClass.isBetween(x1, line.x1, x2) || SettingsClass.isBetween(x1, line.x2, x2);
                 }
-                return false;
             }
 
 
@@ -137,6 +149,8 @@ namespace final_project4.classes.Shapes
 
         }
 
+
+        // <image src="C:\Vs_Projects\Final_Projects\Project1\final_project4\final_project4\Images\garrett-parker-DlkF4-dbCOU-unsplash.jpg" scale="0.1" /> 
         private bool CollisionForVerticalLines(LineCol line, bool line1Vertical, bool line2Vertical)
         {
             /* if two lines are vertical , you need to check if two lines have the same x=value
@@ -163,10 +177,6 @@ namespace final_project4.classes.Shapes
             return SettingsClass.isBetween(line2.x1,_x,x2)&&(SettingsClass.isBetween(line2.y1, _y, line2.y2));
         }
 
-        public double Get_Y_Value_On_X(double x_temp)
-        {
-            return m * x_temp + b;
-        }
 
     }
 }

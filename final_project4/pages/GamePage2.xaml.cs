@@ -37,7 +37,7 @@ namespace final_project4.pages
             this.InitializeComponent();
             gameCanvas = new GameCanvas(GameCanvas);
             
-            pol1 =new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 100, vy: 0, ax: 0, ay: 0), 120, 100, 0);
+            pol1 =new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 100, vy: 0, ax: 0, ay: 0), 120, 100, 54);
             ReSizablePolygon pol2 = new ReSizablePolygon(new PhysicBody(x: 900, y: 100, vx: -100, vy: 0, ax: 0, ay: 0), 120, 100, 0);
             gameCanvas.AddToCanvas(pol1);
             gameCanvas.AddToCanvas(pol2);
@@ -74,19 +74,16 @@ namespace final_project4.pages
         {
             frameCount++;
             gameCanvas.MoveAll();
+            gameCanvas.UpdateObjects();
             if (gameCanvas.checkCol())
             {
-                Debug.Print("true");
-
+                Debug.Print("True ");
             }
             angle+=0.5;
-            //pol1.angle = angle;
-            //pol1.UpdateImgSize();
+            pol1.angle = angle;
+            //pol1.UpdatePosAndSize();
             fpstextblock.Text = $"angle: {angle:F2}";
-            // reSizablePolygon = new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 3, vy: -10, ax: 0, ay: 3), 50, 50, angle);
-            //gameCanvas.AddToCanvas(reSizablePolygon);
 
-            //            gameCanvas.MoveAll(1, 2);
 
         }
     }
