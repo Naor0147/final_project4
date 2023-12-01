@@ -14,7 +14,7 @@ namespace final_project4.classes.Shapes
     {
         
         public Ellipse ImgEllipse;
-        public Ellipse RealEllipse;
+        public Ellipse realEllipse;
 
         public double size;
         public ReSizablePolygon rect;
@@ -27,7 +27,7 @@ namespace final_project4.classes.Shapes
             rect = new ReSizablePolygon(body,size,size,gameCanvas);
             
            // this.ImgEllipse = CreateEllipse(body.x,body.y,size,Colors.Red);
-            this.RealEllipse = CreateEllipse(SettingsClass.Convert_To_Real(body.x), SettingsClass.Convert_To_Real(body.y), SettingsClass.Convert_To_Real(size), Colors.Red);
+            this.realEllipse = CreateEllipse(SettingsClass.Convert_To_Real(body.x), SettingsClass.Convert_To_Real(body.y), SettingsClass.Convert_To_Real(size), Colors.Red);
 
         }
 
@@ -48,23 +48,27 @@ namespace final_project4.classes.Shapes
 
         public override void UpdatePosAndSize()
         {
-            Canvas.SetLeft(RealEllipse, body.x);
-            Canvas.SetTop(RealEllipse, body.y);
+            Canvas.SetLeft(realEllipse, body.xReal);
+            Canvas.SetTop(realEllipse, body.yReal);
             rect.UpdatePosAndSize();
-            RealEllipse.Width = SettingsClass.Convert_To_Real(size);
-            RealEllipse.Height = SettingsClass.Convert_To_Real(size);
+            realEllipse.Width = SettingsClass.Convert_To_Real(size);
+            realEllipse.Height = SettingsClass.Convert_To_Real(size);
         }
 
 
 
         public override string ToString()
         {
-            return $"physic[{body.x}] ball size:{size}";
+            return $"physic[{body}] ball size:{size}";
         }
 
         public override bool CollCheck(ReSizable reSizable)
         {
             return rect.CollCheck(reSizable);
+        }
+        public override void AddToCanvas()
+        {
+            GameCanvas.MainCanvas.Children.Add(realEllipse);
         }
 
 

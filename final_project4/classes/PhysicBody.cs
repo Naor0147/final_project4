@@ -9,6 +9,11 @@ namespace final_project4.classes
     public class PhysicBody
     {
         public double x,y;
+        //Real x that changes accordingly 
+        public double xReal => SettingsClass.Convert_To_Real(x);
+
+        //Real y that changes accordingly 
+        public double yReal => SettingsClass.Convert_To_Real(x);
 
 
         //The speed of the body in for sec 

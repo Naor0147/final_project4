@@ -1,17 +1,6 @@
 ﻿using final_project4.classes.Shapes;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Media.Core;
-using Windows.UI.Composition;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Maps;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Shapes;
 
 namespace final_project4.classes
 {
@@ -19,9 +8,12 @@ namespace final_project4.classes
     {
         public Canvas MainCanvas { get; set; }
 
-       public List<ReSizable> reSizablePolygonList { get; set; }
+       public List<ReSizable> reList { get; set; }
 
-       public List<ReSizablePolygon> reSizablePolygonsList { get; set; }
+       public List<ReSizablePolygon> rePolList { get; set; }
+
+       public List<ReSizableBall> reBallList { get; set; }
+
        int count = 0;
 
 
@@ -29,24 +21,40 @@ namespace final_project4.classes
         public GameCanvas(Canvas canvas)
         {
             MainCanvas = canvas;
-            reSizablePolygonList = new List<ReSizable>();
+            reList = new List<ReSizable>();
+            rePolList = new List<ReSizablePolygon>();
+            reBallList = new List<ReSizableBall>();
         }
 
         public void AddToCanvas(ReSizable polygon)
         {
-            reSizablePolygonList.Add(polygon);
-            if (polygon is ReSizablePolygon)
+            reList.Add(polygon);
+          
+            switch (polygon)
             {
-                ReSizablePolygon add= (ReSizablePolygon)polygon;
-                add.AddToCanvas();
+                case ReSizablePolygon re:
+                    ReSizablePolygon pol = (ReSizablePolygon)polygon;
+                    MainCanvas.Children.Add(pol.realPolygon);
+                    rePolList.Add(pol);
+                    break;
+
+                case ReSizableBall ba:
+                    ReSizableBall ball = (ReSizableBall)polygon;
+                    MainCanvas.Children.Add(ball.realEllipse);
+                    reBallList.Add(ball);
+                    break;
+
             }
+
+
+
             count++;
         }
 
         //public update
         public void UpdateObjects()
         {
-            foreach(var item in reSizablePolygonList)
+            foreach(var item in reList)
             {
                 item.UpdatePosAndSize();  
             }
@@ -60,45 +68,45 @@ namespace final_project4.classes
         public void MoveAll()
         {
             
-            foreach (ReSizablePolygon polygon in reSizablePolygonList)
+            foreach (ReSizablePolygon polygon in rePolList)
             {
-                
                 polygon.body.Move(SettingsClass.current_FPS);
                 polygon.UpdatePosAndSize();
             }
         }
         public bool checkCol()
         {
-            for (int i = 0; i < reSizablePolygonList.Count-1; i++)
+            for (int i = 0; i < reList.Count-1; i++)
             {
-                for (int j = i+1; j < reSizablePolygonList.Count; j++)
+                for (int j = i+1; j < reList.Count; j++)
                 {
-                    bool temp = false;
-
-                    switch (reSizablePolygonList[i])
-                    {
-                        case ReSizablePolygon reSizablePolygon:
-                            temp= reSizablePolygon.CollCheck(reSizablePolygonList[j]);
-                            break;
-                        case ReSizableBall reSizableBall:
-                            temp= reSizableBall.CollCheck(reSizablePolygonList[j]);
-                            break;
-                    }
-
-                    if (temp)
+                    if (reCheck(reList[i], reList[j]))
                     {
                         return true;
                     }
 
-
-                   
-                   
-                    
                 }
             }
             return false;
         }
-        
-        
+
+        private bool reCheck(ReSizable re1, ReSizable re2)
+        {
+            
+
+            switch (re1)
+            {
+
+                case ReSizablePolygon reSizablePolygon:
+                    return reSizablePolygon.CollCheck(re2);
+                    
+                case ReSizableBall reSizableBall:
+                    return reSizableBall.CollCheck(re2);
+                   
+            }
+
+            return false;
+        }
+
     }
 }

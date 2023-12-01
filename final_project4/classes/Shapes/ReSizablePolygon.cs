@@ -11,14 +11,15 @@ using Point = Windows.Foundation.Point;
 
 namespace final_project4.classes
 {
+    //Resizable Polygon
     public class ReSizablePolygon:ReSizable
     {
         public Polygon imgPolygon { get; set; }
 
         public Polygon realPolygon{ get; set; }
 
-        public double height, width, angle;
-        public PhysicBody body;
+        public double  angle;
+        
 
         public string Id;
 
@@ -152,26 +153,32 @@ namespace final_project4.classes
 
 
 
-        public virtual bool CollCheck(ReSizable reSizable)
+        public override bool CollCheck(ReSizable reSizable)
         {
-            if (reSizable is ReSizablePolygon)
+
+            switch (reSizable)
             {
-                ReSizablePolygon polygon = (ReSizablePolygon)reSizable;
-                return CollCheckForPolygon(polygon);
+                case ReSizablePolygon re:
+                    ReSizablePolygon polygon = (ReSizablePolygon)reSizable;
+                    return CollCheckForPolygon(polygon);
+
+                case ReSizableBall ba:
+                    ReSizableBall reSizableBall = (ReSizableBall)reSizable;
+                    return CollCheckForBall(reSizableBall);
+
             }
-            else if (reSizable is ReSizableBall)
-            {
-                ReSizableBall reSizableBall = (ReSizableBall)reSizable;
-                return CollCheckForBall(reSizableBall);
-            }
+
+            
             return false;   
         }
 
 
         //don't do inertance for coll maybe check 
-        public virtual bool CollCheckForPolygon(ReSizablePolygon Polygon2) // need to check what i can do for 
+        private bool CollCheckForPolygon(ReSizablePolygon Polygon2) // need to check what i can do for 
         {
-            if (Polygon2 == null || Polygon2.lines==null||lines==null) return false;
+            if (Polygon2 == null || Polygon2.lines==null||lines==null) return false;//if there isn't a polygon there isn't collision
+
+
             foreach (LineCol line1 in lines)
             {
                 foreach (LineCol line2 in Polygon2.lines )
@@ -185,7 +192,7 @@ namespace final_project4.classes
             return false;
         }
 
-       public bool CollCheckForBall(ReSizableBall ball)
+       private bool CollCheckForBall(ReSizableBall ball)
        {
             return CollCheckForPolygon(ball.rect);
        }

@@ -1,4 +1,5 @@
 ﻿using final_project4.classes;
+using final_project4.classes.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -41,6 +42,11 @@ namespace final_project4.pages
             ReSizablePolygon pol2 = new ReSizablePolygon(new PhysicBody(x: 900, y: 100, vx: -100, vy: 0, ax: 0, ay: 0), 120, 100, gameCanvas);
             gameCanvas.AddToCanvas(pol1);
             gameCanvas.AddToCanvas(pol2);
+
+
+            ReSizableBall reSizableBall = new ReSizableBall(new PhysicBody(x: 100, y: 100, vx: -100, vy: 0, ax: 0, ay: 0), 400, gameCanvas);
+           
+            gameCanvas.AddToCanvas(reSizableBall);
 
             Functions_add();
         }

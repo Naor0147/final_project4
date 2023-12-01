@@ -25,10 +25,10 @@ namespace final_project4.classes.Shapes
         public virtual void AddToCanvas() { }
         
         public virtual bool CollCheck(ReSizable reSizableBall) {
-            return true;
+            return false;
 
         }
-        public virtual void CollCheck(ReSizablePolygon reSizablePolygons) { }
+        //public virtual void CollCheck(ReSizablePolygon reSizablePolygons) { }
         //public virtual void CollCheck(ReSizableBall reSizableBall) { }
 
        // public virtual bool collCheckForPolygon( ReSizableBall reSizableBall) {}
