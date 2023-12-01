@@ -68,7 +68,7 @@ namespace final_project4.classes
         public void MoveAll()
         {
             
-            foreach (ReSizablePolygon polygon in rePolList)
+            foreach (ReSizable polygon in reList)
             {
                 polygon.body.Move(SettingsClass.current_FPS);
                 polygon.UpdatePosAndSize();

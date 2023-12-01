@@ -44,9 +44,11 @@ namespace final_project4.pages
             gameCanvas.AddToCanvas(pol2);
 
 
-            ReSizableBall reSizableBall = new ReSizableBall(new PhysicBody(x: 100, y: 100, vx: -100, vy: 0, ax: 0, ay: 0), 400);
+            ReSizableBall reSizableBall = new ReSizableBall(new PhysicBody(x: 100, y: 100, vx: 90, vy: 0, ax: 0, ay: 0), 400);
            
             gameCanvas.AddToCanvas(reSizableBall);
+            gameCanvas.AddToCanvas(reSizableBall.rect);
+
 
             Functions_add();
         }

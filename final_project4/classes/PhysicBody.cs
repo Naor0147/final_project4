@@ -13,7 +13,7 @@ namespace final_project4.classes
         public double xReal => SettingsClass.Convert_To_Real(x);
 
         //Real y that changes accordingly 
-        public double yReal => SettingsClass.Convert_To_Real(x);
+        public double yReal => SettingsClass.Convert_To_Real(y);
 
 
         //The speed of the body in for sec 
@@ -44,7 +44,7 @@ namespace final_project4.classes
         {
             double dt = 1 / SettingsClass.current_FPS;
 
-            //add a/fps so you move the same if you diffrent fps 
+            //add a/fps so you move the same if you different fps 
             vx += ax * dt;
             vy += ay * dt;
 
