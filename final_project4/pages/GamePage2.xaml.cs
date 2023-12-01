@@ -50,12 +50,20 @@ namespace final_project4.pages
             gameCanvas.AddToCanvas(reSizableBall.rect);
 
 
+            for (int i = 0; i < 500; i++)
+            {
+                ReSizablePolygon pol3 = new ReSizablePolygon(new PhysicBody(x: i*10, y: 1000-i*10, vx: -100, vy: 0, ax: 0, ay: 0), 50, 50);
+                gameCanvas.AddToCanvas(pol3);
+            }
+
+
             Functions_add();
         }
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             SettingsClass.Change_To_Right_Screen_Ratio();
+            gameCanvas.UpdateObjects();
         }
 
         private void Functions_add()
@@ -81,8 +89,8 @@ namespace final_project4.pages
         private void CompositionTarget_Rendering(object sender, object e)
         {
             frameCount++;
-            gameCanvas.MoveAll();
-            gameCanvas.UpdateObjects();
+          //  gameCanvas.MoveAll();
+           
             if (gameCanvas.checkCol())
             {
                 Debug.Print("True ");
@@ -90,7 +98,7 @@ namespace final_project4.pages
             angle+=0.5;
             pol1.angle = angle;
             //pol1.UpdatePosAndSize();
-            fpstextblock.Text = $"angle: {angle:F2}";
+            fpstextblock.Text = $"frame: {SettingsClass.current_FPS:F4}";
 
 
         }
