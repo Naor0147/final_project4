@@ -38,13 +38,13 @@ namespace final_project4.pages
             this.InitializeComponent();
             gameCanvas = new GameCanvas(GameCanvas);
             
-            pol1 =new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 100, vy: 0, ax: 0, ay: 0), 120, 100, gameCanvas);
-            ReSizablePolygon pol2 = new ReSizablePolygon(new PhysicBody(x: 900, y: 100, vx: -100, vy: 0, ax: 0, ay: 0), 120, 100, gameCanvas);
+            pol1 =new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 100, vy: 0, ax: 0, ay: 0), 120, 100);
+            ReSizablePolygon pol2 = new ReSizablePolygon(new PhysicBody(x: 900, y: 100, vx: -100, vy: 0, ax: 0, ay: 0), 120, 100);
             gameCanvas.AddToCanvas(pol1);
             gameCanvas.AddToCanvas(pol2);
 
 
-            ReSizableBall reSizableBall = new ReSizableBall(new PhysicBody(x: 100, y: 100, vx: -100, vy: 0, ax: 0, ay: 0), 400, gameCanvas);
+            ReSizableBall reSizableBall = new ReSizableBall(new PhysicBody(x: 100, y: 100, vx: -100, vy: 0, ax: 0, ay: 0), 400);
            
             gameCanvas.AddToCanvas(reSizableBall);
 

@@ -20,11 +20,11 @@ namespace final_project4.classes.Shapes
         public ReSizablePolygon rect;
 
 
-        public ReSizableBall(PhysicBody body, double size,GameCanvas gameCanvas):base(body,size,size,gameCanvas)
+        public ReSizableBall(PhysicBody body, double size):base(body,size,size)
         {
             this.size = size;
 
-            rect = new ReSizablePolygon(body,size,size,gameCanvas);
+            rect = new ReSizablePolygon(body,size,size);
             
            // this.ImgEllipse = CreateEllipse(body.x,body.y,size,Colors.Red);
             this.realEllipse = CreateEllipse(SettingsClass.Convert_To_Real(body.x), SettingsClass.Convert_To_Real(body.y), SettingsClass.Convert_To_Real(size), Colors.Red);
@@ -66,10 +66,7 @@ namespace final_project4.classes.Shapes
         {
             return rect.CollCheck(reSizable);
         }
-        public override void AddToCanvas()
-        {
-            GameCanvas.MainCanvas.Children.Add(realEllipse);
-        }
+       
 
 
     }

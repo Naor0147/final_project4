@@ -10,14 +10,14 @@ namespace final_project4.classes.Shapes
     {
         public PhysicBody body;
         public double width,height;
-        public GameCanvas GameCanvas;
+        
 
-        public ReSizable(PhysicBody body,double width,double height ,GameCanvas gameCanvas)
+        public ReSizable(PhysicBody body,double width,double height )
         {
             this.body = body;
             this.width = width;
             this.height = height;
-            this.GameCanvas = gameCanvas;
+           
         }
 
         public virtual void UpdatePosAndSize() { }

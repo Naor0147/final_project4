@@ -44,7 +44,7 @@ namespace final_project4.classes
 
 
 
-        public ReSizablePolygon(PhysicBody physicBody,double height ,double width,GameCanvas gameCanvas,double angle=0,string Id=""):base(physicBody,height,width,gameCanvas)
+        public ReSizablePolygon(PhysicBody physicBody,double height ,double width ,double angle=0,string Id=""):base(physicBody,height,width)
         {
             //physics
             this.body = physicBody;
@@ -84,10 +84,7 @@ namespace final_project4.classes
         }
 
 
-        public override void AddToCanvas()
-        {
-            GameCanvas.MainCanvas.Children.Add(realPolygon);
-        }
+        
         
       
 

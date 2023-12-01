@@ -26,20 +26,20 @@ namespace final_project4.classes
             reBallList = new List<ReSizableBall>();
         }
 
-        public void AddToCanvas(ReSizable polygon)
+        public void AddToCanvas(ReSizable shape)
         {
-            reList.Add(polygon);
+            reList.Add(shape);
           
-            switch (polygon)
+            switch (shape)
             {
                 case ReSizablePolygon re:
-                    ReSizablePolygon pol = (ReSizablePolygon)polygon;
+                    ReSizablePolygon pol = (ReSizablePolygon)shape;
                     MainCanvas.Children.Add(pol.realPolygon);
                     rePolList.Add(pol);
                     break;
 
                 case ReSizableBall ba:
-                    ReSizableBall ball = (ReSizableBall)polygon;
+                    ReSizableBall ball = (ReSizableBall)shape;
                     MainCanvas.Children.Add(ball.realEllipse);
                     reBallList.Add(ball);
                     break;
