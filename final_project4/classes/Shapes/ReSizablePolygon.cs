@@ -182,14 +182,31 @@ namespace final_project4.classes
                 {
                     if (line1.Collision(line2))
                     {
+                        
+                        //line is the the line i need to focus on , i need to get the perpendicular of line2 
+                        //tex: $$vx, vy;$$
+                        //$$angle =\arctan{(m_2)}$$
+                        //$$vx=-vx*\cos{(a)}$$
+                        //$$vy=-vy*\sin{(a)}$$
+                        double angle = 0;//the angle the two line make
+                        if (line2._LineType == LineType.VerticalLine)
+                        {
+                            angle = 0; // cos(0)==1 so vy stay same 
+                        }
+                        else
+                        {
+                            angle = Math.Atan2(-1, line2.m) ;
+                        }
+                        body.vx*= -Math.Cos(angle);
+                        body.vy*= -Math.Sin(angle);
                         return true;
                     }
                 }
             }
             return false;
         }
-
-       private bool CollCheckForBall(ReSizableBall ball)
+        // <image src="C:\Vs_Projects\Final_Projects\Project1\final_project4\final_project4\Images\Screenshot 2023-12-16 000120.png" scale="1" /> 
+        private bool CollCheckForBall(ReSizableBall ball)
        {
             return CollCheckForPolygon(ball.rect);
        }

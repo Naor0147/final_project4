@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Shapes;
 
 namespace final_project4.classes.Shapes
 {
-    enum LineType
+    public enum LineType
     {
         VerticalLine,// x=value
         RegularLine,//y= mx+b 
@@ -19,11 +19,12 @@ namespace final_project4.classes.Shapes
     {
         double x1, y1, x2, y2;
 
-        double m, b; // y=mx+b
+        public double m, b; // y=mx+b
 
         string function;//for better readiblty 
 
-        private LineType _LineType { get; set; }
+        
+        public LineType _LineType { get; set; }
 
 
         
@@ -106,7 +107,9 @@ namespace final_project4.classes.Shapes
         //working 
         public bool Collision(LineCol line)
         {
+
             
+
             bool line1Vertical = this._LineType == LineType.VerticalLine;
             bool line2Vertical = line._LineType == LineType.VerticalLine;
 
@@ -138,13 +141,7 @@ namespace final_project4.classes.Shapes
             bool condition1 = SettingsClass.isBetween(x1, x, x2);
             bool condition2 = SettingsClass.isBetween(line.x1, x, line.x2);
 
-            /*pretty sure i dont need this check 
-             * cause i allready cheked the x of the line so i dont need to check the y 
-             * 
-            bool condtion3 = Settings_class.isBetween(y1, y, y2);
-            bool condtion4 = Settings_class.isBetween(line.y1, y, line.y2);
-            return (condtion1 && condtion2 && condtion3 && condtion4);*/
-
+         
             return (condition1 && condition2);
 
         }

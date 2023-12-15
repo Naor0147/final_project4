@@ -50,12 +50,7 @@ namespace final_project4.pages
             gameCanvas.AddToCanvas(reSizableBall.rect);
 
 
-            for (int i = 0; i < 500; i++)
-            {
-                ReSizablePolygon pol3 = new ReSizablePolygon(new PhysicBody(x: i*10, y: 1000-i*10, vx: -100, vy: 0, ax: 0, ay: 0), 50, 50);
-                gameCanvas.AddToCanvas(pol3);
-            }
-
+            
 
             Functions_add();
         }
@@ -97,7 +92,8 @@ namespace final_project4.pages
             }
             angle+=0.5;
             pol1.angle = angle;
-            //pol1.UpdatePosAndSize();
+            gameCanvas.MoveAll();
+            pol1.UpdatePosAndSize();
             fpstextblock.Text = $"frame: {SettingsClass.current_FPS:F4}";
 
 
