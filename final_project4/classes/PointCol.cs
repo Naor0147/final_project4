@@ -6,20 +6,28 @@ using System.Threading.Tasks;
 
 namespace final_project4.classes
 {
-    public class PointCol
+    public struct PointCol
     {
+        bool collation;
         public double x;
         public double y;
 
-        public double angle1;
-        public double angle2;
+        public double angle;
 
-        public PointCol(double x, double y, double angle1, double angle2)
+        public PointCol(double x, double y, double angle)
         {
+            collation = true;
             this.x = x;
             this.y = y;
-            this.angle1 = angle1;
-            this.angle2 = angle2;
+            this.angle = angle;
         }
+        public PointCol(double x = 0)
+        {
+            collation = false;
+            this.x = 0;
+            this.y = 0;
+            this.angle =0;
+        }
+        
     } 
 }

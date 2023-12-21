@@ -39,8 +39,8 @@ namespace final_project4.classes
 
             return value * (Window_VisibleBounds_Height / IMAGINARY_SCREEN_HEIGHT);
         }
-        public static double GetRadian(double angle) => angle* 0.0174532925;
-        
+        public static double ConvertAngleRadian(double angle) => angle* 0.0174532925;
+        public static double ConvertRadianDegree(double radian) => (180 / Math.PI) * radian;
 
 
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace final_project4.classes.Shapes
 {
-    public class ReSizable
+    public abstract class ReSizable
     {
         public PhysicBody body;
         public double width,height;

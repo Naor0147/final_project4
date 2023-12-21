@@ -19,7 +19,7 @@ namespace final_project4.classes.Shapes
         RegularLine,//y= mx+b 
 
     }
-    public struct LineCol
+    public class LineCol
     {
         double x1, y1, x2, y2;
 
@@ -35,23 +35,25 @@ namespace final_project4.classes.Shapes
 
         public LineCol(Point p1,Point p2)
         {
-            x1 = p1.X;
-            y1 = p1.Y;
-            x2 = p2.X;
-            y2 = p2.Y;
-
-
-            //default values in struct
-            function = "";
-            _LineType = LineType.RegularLine;
-            m = 0;
-            b = 0;
-
-            ConvertData();
+            createLine(p1.X,p1.Y,p2.X,p2.Y);
         }
       
-        public LineCol(double x1,double y1, double x2 ,double y2) 
-        { 
+        public LineCol(double x1,double y1, double x2 ,double y2)
+        {
+            createLine(x1, y1, x2, y2);
+
+        }
+        public LineCol(double VectorMagnitude ,double angle,Point point)
+        {
+            
+            angle= SettingsClass.ConvertAngleRadian(angle);
+            double dx = VectorMagnitude*Math.Cos(angle);
+            double dy= VectorMagnitude*Math.Sin(angle);
+            createLine(point.X, point.Y, point.X + dx, point.Y + dy);
+        }
+
+        private void createLine(double x1, double y1, double x2, double y2)
+        {
             this.x1 = x1;
             this.y1 = y1;
             this.x2 = x2;
@@ -66,9 +68,8 @@ namespace final_project4.classes.Shapes
 
 
             ConvertData();
-
-
         }
+
 
         public double GetDistance()
         {

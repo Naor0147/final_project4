@@ -3,7 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using Windows.Foundation;
+using Windows.UI.ViewManagement.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
@@ -119,7 +122,7 @@ namespace final_project4.classes
         {
 
             /// if i put the angle to a really small number close to 0 , collition will work properly , need to if there is posiible way to fix 
-            double radian = SettingsClass.GetRadian(angle);//convert the angle to radian 
+            double radian = SettingsClass.ConvertAngleRadian(angle);//convert the angle to radian 
             double sin = Math.Sin(radian);//the sin , cos works in radian so i convert the angle to radian
             double cos = Math.Cos(radian);
 
@@ -192,18 +195,25 @@ namespace final_project4.classes
                         //$$vx=-vx*\cos{(a)}$$
                         //$$vy=-vy*\sin{(a)}$$
                         double angle = 0;//the angle the two line make
+                        double vectorValue = Math.Sqrt(body.vx * body.vx + body.vy * body.vy);
+
                         if (line2._LineType == LineType.VerticalLine)
                         {
                             angle = 0; // cos(0)==1 so vy stay same 
                         }
                         else
                         {
-                            angle = Math.Atan2(line1.m, line2.m) ;
+                            angle = Math.Atan(-1/line2.m) ;
+                            //debug
                             line1.drawLine(gameCanvas);
                             line2.drawLine(gameCanvas);
+                            double degree = SettingsClass.ConvertRadianDegree(angle);
+                            LineCol lineCol = new LineCol(vectorValue, degree, new Point(400, 400));
+                            lineCol.drawLine(gameCanvas);
                         }
-                        body.vx*= -Math.Cos(angle);
-                        body.vy*= -Math.Sin(angle);
+                        
+                        body.vx= vectorValue*Math.Cos(angle);
+                        body.vy*= vectorValue*-Math.Sin(angle);
                         return true;
                     }
                 }
@@ -216,6 +226,8 @@ namespace final_project4.classes
             return CollCheckForPolygon(ball.rect);
        }
        
+
+        
 
         
         public Point ConvertToPoint(double x, double y)=> new Point(x, y);
