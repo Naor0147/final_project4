@@ -4,7 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.VoiceCommands;
+using Windows.Devices.PointOfService;
 using Windows.Foundation;
+using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
 namespace final_project4.classes.Shapes
@@ -174,6 +178,18 @@ namespace final_project4.classes.Shapes
             return SettingsClass.isBetween(line2.x1,_x,x2)&&(SettingsClass.isBetween(line2.y1, _y, line2.y2));
         }
 
-
+        public void drawLine(GameCanvas canvas)
+        {
+            Line line = new Line()
+            {
+                X1 = x1,
+                Y1 = y1,
+                X2 = x2,
+                Y2 = y2,
+            };
+            line.Stroke= new SolidColorBrush(Windows.UI.Colors.Black);
+            line.StrokeThickness = 5;
+            canvas.AddToCanvas(line);
+        }
     }
 }

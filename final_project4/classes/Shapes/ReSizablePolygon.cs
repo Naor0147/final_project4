@@ -42,9 +42,9 @@ namespace final_project4.classes
 
         List<LineCol> lines;
 
+        public GameCanvas gameCanvas;
 
-
-        public ReSizablePolygon(PhysicBody physicBody,double height ,double width ,double angle=0,string Id=""):base(physicBody,height,width)
+        public ReSizablePolygon(PhysicBody physicBody,double height ,double width ,GameCanvas gameCanvas,double angle=0,string Id=""):base(physicBody,height,width)
         {
             //physics
             this.body = physicBody;
@@ -63,6 +63,9 @@ namespace final_project4.classes
             //_pointsImg = new PointCollection();
             _pointsImg = imgPolygon.Points;
             realPolygon= CreateRect(SettingsClass.Convert_To_Real(x),SettingsClass.Convert_To_Real(y), SettingsClass.Convert_To_Real(width), SettingsClass.Convert_To_Real(height), angle);
+
+
+            this.gameCanvas = gameCanvas;
         }
         public void UpdateRealSize()
         {
@@ -182,7 +185,7 @@ namespace final_project4.classes
                 {
                     if (line1.Collision(line2))
                     {
-                        
+                         
                         //line is the the line i need to focus on , i need to get the perpendicular of line2 
                         //tex: $$vx, vy;$$
                         //$$angle =\arctan{(m_2)}$$
@@ -195,7 +198,9 @@ namespace final_project4.classes
                         }
                         else
                         {
-                            angle = Math.Atan2(-1, line2.m) ;
+                            angle = Math.Atan2(line1.m, line2.m) ;
+                            line1.drawLine(gameCanvas);
+                            line2.drawLine(gameCanvas);
                         }
                         body.vx*= -Math.Cos(angle);
                         body.vy*= -Math.Sin(angle);

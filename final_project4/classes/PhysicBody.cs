@@ -24,11 +24,11 @@ namespace final_project4.classes
         public double ax;
         public double ay;
 
-
+        public bool movable;
         //const
 
         public const double gravity = 9.8;
-        public PhysicBody(double x ,double y, double vx=0,double vy=0,double ax=0,double ay = 0)
+        public PhysicBody(double x ,double y, double vx=0,double vy=0,double ax=0,double ay = 0,bool movable =false)
         {
             this.x = x;
             this.y = y;
@@ -38,6 +38,11 @@ namespace final_project4.classes
                 
             this.ax = ax;
             this.ay = ay;
+            if (vx!=0||vy!=0||ax!=0||ay!=0)
+            {
+                movable = true;
+            }
+            this.movable=movable;
         }
 
         public void Move(double Fps)

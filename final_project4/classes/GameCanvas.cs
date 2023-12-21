@@ -1,6 +1,7 @@
 ﻿using final_project4.classes.Shapes;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Shapes;
 
 namespace final_project4.classes
 {
@@ -51,12 +52,23 @@ namespace final_project4.classes
             count++;
         }
 
+        public void AddToCanvas(Line line)
+        {
+            MainCanvas.Children.Add(line);   
+        }
+
+
+
         //public update
         public void UpdateObjects()
         {
+            if (reList.Count == 0) return; 
             foreach(var item in reList)
             {
-                item.UpdatePosAndSize();  
+                if (item != null)
+                {
+                    item.UpdatePosAndSize();
+                }
             }
         }
 
@@ -70,8 +82,12 @@ namespace final_project4.classes
             
             foreach (ReSizable polygon in reList)
             {
-                polygon.body.Move(SettingsClass.current_FPS);
-                polygon.UpdatePosAndSize();
+                if (polygon != null)
+                {
+
+                    polygon.body.Move(SettingsClass.current_FPS);
+                    polygon.UpdatePosAndSize();
+                }
             }
         }
         public bool checkCol()
@@ -80,9 +96,12 @@ namespace final_project4.classes
             {
                 for (int j = i+1; j < reList.Count; j++)
                 {
-                    if (reCheck(reList[i], reList[j]))
+                    if (reList[i]!=null &&reList[i].body.movable== true)
                     {
-                        return true;
+                        if (reCheck(reList[i], reList[j]))
+                        {
+                            return true;
+                        }
                     }
 
                 }
