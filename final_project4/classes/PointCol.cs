@@ -8,12 +8,19 @@ namespace final_project4.classes
 {
     public struct PointCol
     {
-        bool collation;
+        public bool collation;
         public double x;
         public double y;
 
         public double angle;
 
+        public PointCol(double x, double y)
+        {
+            collation = true;
+            this.x = x;
+            this.y = y;
+            this.angle = 0;
+        }
         public PointCol(double x, double y, double angle)
         {
             collation = true;
@@ -21,6 +28,21 @@ namespace final_project4.classes
             this.y = y;
             this.angle = angle;
         }
+        public PointCol(double x, double y, bool collation)
+        {
+            this.collation = collation;
+            this.x = x;
+            this.y = y;
+            this.angle = 0;
+        }
+        public PointCol(double x, double y, double angle, bool collation)
+        {
+            this.collation = collation;
+            this.x = x;
+            this.y = y;
+            this.angle = angle ;
+        }
+
         public PointCol(double x = 0)
         {
             collation = false;

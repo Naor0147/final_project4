@@ -186,7 +186,8 @@ namespace final_project4.classes
             {
                 foreach (LineCol line2 in Polygon2.lines )
                 {
-                    if (line1.Collision(line2))
+                    PointCol point = line1.Collision(line2);
+                    if (point.collation)
                     {
                          
                         //line is the the line i need to focus on , i need to get the perpendicular of line2 
@@ -208,7 +209,7 @@ namespace final_project4.classes
                             line1.drawLine(gameCanvas);
                             line2.drawLine(gameCanvas);
                             double degree = SettingsClass.ConvertRadianDegree(angle);
-                            LineCol lineCol = new LineCol(vectorValue, degree, new Point(400, 400));
+                            LineCol lineCol = new LineCol(vectorValue, degree, new Point(point.x,point.y));
                             lineCol.drawLine(gameCanvas);
                         }
                         
