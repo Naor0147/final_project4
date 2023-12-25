@@ -31,8 +31,9 @@ namespace final_project4.classes.Shapes
         
         public LineType _LineType { get; set; }
 
+        private Line line;
 
-        
+
 
         public LineCol(Point p1,Point p2)
         {
@@ -211,9 +212,9 @@ namespace final_project4.classes.Shapes
             
         }
 
-        public void drawLine(GameCanvas canvas)
+        public void DrawLine(GameCanvas canvas)
         {
-            Line line = new Line()
+            line = new Line()
             {
                 X1 = x1,
                 Y1 = y1,
@@ -223,6 +224,14 @@ namespace final_project4.classes.Shapes
             line.Stroke= new SolidColorBrush(Windows.UI.Colors.Black);
             line.StrokeThickness = 5;
             canvas.AddToCanvas(line);
+        }
+        
+        public void UpdateLineSize()
+        {
+            line.X1 = SettingsClass.Convert_To_Real(x1);
+            line.Y1 = SettingsClass.Convert_To_Real(y1);
+            line.X2 = SettingsClass.Convert_To_Real(x2);
+            line.Y2 = SettingsClass.Convert_To_Real(y2);
         }
     }
 }

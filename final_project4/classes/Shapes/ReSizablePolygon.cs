@@ -206,11 +206,11 @@ namespace final_project4.classes
                         {
                             angle = Math.Atan(-1/line2.m) ;
                             //debug
-                            line1.drawLine(gameCanvas);
-                            line2.drawLine(gameCanvas);
+                            line1.DrawLine(gameCanvas);
+                            line2.DrawLine(gameCanvas);
                             double degree = SettingsClass.ConvertRadianDegree(angle);
                             LineCol lineCol = new LineCol(vectorValue, degree, new Point(point.x,point.y));
-                            lineCol.drawLine(gameCanvas);
+                            lineCol.DrawLine(gameCanvas);
                         }
                         
                         body.vx= vectorValue*Math.Cos(angle);

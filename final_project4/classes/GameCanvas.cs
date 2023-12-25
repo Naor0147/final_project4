@@ -5,15 +5,17 @@ using Windows.UI.Xaml.Shapes;
 
 namespace final_project4.classes
 {
-    public class GameCanvas
+    public class GameCanvas 
     {
         public Canvas MainCanvas { get; set; }
 
-       public List<ReSizable> reList { get; set; }
+        public List<ReSizable> reList { get; set; }
 
-       public List<ReSizablePolygon> rePolList { get; set; }
+        public List<ReSizablePolygon> rePolList { get; set; }
 
-       public List<ReSizableBall> reBallList { get; set; }
+        public List<ReSizableBall> reBallList { get; set; }
+       
+        public List<LineCol> ReLineList { get; set; }
 
        int count = 0;
 
@@ -25,6 +27,7 @@ namespace final_project4.classes
             reList = new List<ReSizable>();
             rePolList = new List<ReSizablePolygon>();
             reBallList = new List<ReSizableBall>();
+            ReLineList = new List<LineCol>();
         }
 
         public void AddToCanvas(ReSizable shape)
@@ -49,11 +52,11 @@ namespace final_project4.classes
 
 
 
-            count++;
         }
 
-        public void AddToCanvas(Line line)
+        public void AddToCanvas(LineCol line)
         {
+            ReLineList.Add(line);
             MainCanvas.Children.Add(line);   
         }
 
@@ -68,6 +71,13 @@ namespace final_project4.classes
                 if (item != null)
                 {
                     item.UpdatePosAndSize();
+                }
+            }
+            foreach (var item in ReLineList)
+            {
+                if(item != null)
+                {
+                    item.
                 }
             }
         }
