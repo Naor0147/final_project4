@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Shapes;
 
 namespace final_project4.classes
 {
-    public class GameCanvas 
+    public class GameCanvas : Canvas
     {
         public Canvas MainCanvas { get; set; }
 
@@ -56,8 +56,8 @@ namespace final_project4.classes
 
         public void AddToCanvas(LineCol line)
         {
+            MainCanvas.Children.Add(line.line);
             ReLineList.Add(line);
-            MainCanvas.Children.Add(line);   
         }
 
 
@@ -77,7 +77,7 @@ namespace final_project4.classes
             {
                 if(item != null)
                 {
-                    item.
+                    item.UpdateLineSize();
                 }
             }
         }

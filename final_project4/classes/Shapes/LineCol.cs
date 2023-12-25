@@ -31,7 +31,7 @@ namespace final_project4.classes.Shapes
         
         public LineType _LineType { get; set; }
 
-        private Line line;
+        public Line line;
 
 
 
@@ -223,7 +223,8 @@ namespace final_project4.classes.Shapes
             };
             line.Stroke= new SolidColorBrush(Windows.UI.Colors.Black);
             line.StrokeThickness = 5;
-            canvas.AddToCanvas(line);
+            canvas.AddToCanvas(this);
+            UpdateLineSize();
         }
         
         public void UpdateLineSize()
