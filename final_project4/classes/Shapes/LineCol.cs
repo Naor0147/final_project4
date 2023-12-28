@@ -49,7 +49,7 @@ namespace final_project4.classes.Shapes
                 _radian = value;
                 Degree= SettingsClass.ConvertRadianDegree(value);
 
-
+                //need to update all the other variable x1 ,x2 ...
             }
         }
 
