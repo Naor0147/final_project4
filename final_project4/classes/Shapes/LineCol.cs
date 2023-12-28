@@ -20,7 +20,7 @@ namespace final_project4.classes.Shapes
         RegularLine,//y= mx+b 
 
     }
-    public class LineCol
+    public class LineCol:ReSizable
     {
         double x1, y1, x2, y2;
 
@@ -28,24 +28,49 @@ namespace final_project4.classes.Shapes
 
         string function;//for better readiblty 
 
-        
+        private double _degree;
+        public double Degree
+        {
+            get { return _degree; }
+            set
+            {
+                _degree = value;
+                Radian = SettingsClass.ConvertAngleRadian(value);
+
+
+            }
+        }
+        public double _radian;
+        public double Radian
+        {
+            get { return _radian; }
+            set
+            {
+                _radian = value;
+                Degree= SettingsClass.ConvertRadianDegree(value);
+
+
+            }
+        }
+
+
         public LineType _LineType { get; set; }
 
-        private Line line;
+        public Line line;
 
 
 
-        public LineCol(Point p1,Point p2)
+        public LineCol(Point p1,Point p2):base()
         {
             createLine(p1.X,p1.Y,p2.X,p2.Y);
         }
       
-        public LineCol(double x1,double y1, double x2 ,double y2)
+        public LineCol(double x1,double y1, double x2 ,double y2) : base()
         {
             createLine(x1, y1, x2, y2);
 
         }
-        public LineCol(double VectorMagnitude ,double angle,Point point)
+        public LineCol(double VectorMagnitude ,double angle,Point point) : base()
         {
             
             angle= SettingsClass.ConvertAngleRadian(angle);
@@ -212,20 +237,25 @@ namespace final_project4.classes.Shapes
             
         }
 
-        public void DrawLine(GameCanvas canvas)
+        // this just create the line and render it on the screen you need to add it to your current gamecanvs
+        public void CreateLineVisualization()
         {
             line = new Line()
             {
-                X1 = x1,
-                Y1 = y1,
-                X2 = x2,
-                Y2 = y2,
+                X1 = SettingsClass.Convert_To_Real(x1),
+                Y1 = SettingsClass.Convert_To_Real(y1),
+                X2 = SettingsClass.Convert_To_Real(x2),
+            Y2 = SettingsClass.Convert_To_Real(y2)
             };
             line.Stroke= new SolidColorBrush(Windows.UI.Colors.Black);
             line.StrokeThickness = 5;
-            canvas.AddToCanvas(line);
         }
-        
+        public override void AddToCanvas(GameCanvas gameCanvas)
+        {
+            CreateLineVisualization();
+            gameCanvas.AddToCanvas(this);
+        }
+
         public void UpdateLineSize()
         {
             line.X1 = SettingsClass.Convert_To_Real(x1);

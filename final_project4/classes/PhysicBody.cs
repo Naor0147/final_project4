@@ -28,7 +28,7 @@ namespace final_project4.classes
         //const
 
         public const double gravity = 9.8;
-        public PhysicBody(double x ,double y, double vx=0,double vy=0,double ax=0,double ay = 0,bool movable =false)
+        public PhysicBody(double x=0 ,double y=0, double vx=0,double vy=0,double ax=0,double ay = 0,bool movable =false)
         {
             this.x = x;
             this.y = y;

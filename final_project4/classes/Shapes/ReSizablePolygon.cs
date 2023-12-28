@@ -206,11 +206,11 @@ namespace final_project4.classes
                         {
                             angle = Math.Atan(-1/line2.m) ;
                             //debug
-                            line1.DrawLine(gameCanvas);
-                            line2.DrawLine(gameCanvas);
+                            line1.AddToCanvas(gameCanvas);
+                            line2.AddToCanvas(gameCanvas);
                             double degree = SettingsClass.ConvertRadianDegree(angle);
                             LineCol lineCol = new LineCol(vectorValue, degree, new Point(point.x,point.y));
-                            lineCol.DrawLine(gameCanvas);
+                            lineCol.AddToCanvas(gameCanvas);
                         }
                         
                         body.vx= vectorValue*Math.Cos(angle);
@@ -226,11 +226,14 @@ namespace final_project4.classes
        {
             return CollCheckForPolygon(ball.rect);
        }
-       
 
-        
 
-        
+        public override void AddToCanvas(GameCanvas gameCanvas)
+        {
+            gameCanvas.AddToCanvas(this);
+        }
+
+
         public Point ConvertToPoint(double x, double y)=> new Point(x, y);
         public Point Convert_To_Real_Point(double x, double y) => new Point((SettingsClass.Convert_To_Real(x)),SettingsClass.Convert_To_Real(y));
 
