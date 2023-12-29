@@ -22,7 +22,55 @@ namespace final_project4.classes.Shapes
     }
     public class LineCol:ReSizable
     {
-        double x1, y1, x2, y2;
+        private double _x1, _y1, _x2, _y2;
+        public double x1
+        {
+            get
+            {
+                return _x1;
+            }
+            set
+            {
+                _x1 = value;
+                updateLine();
+            }
+        }
+        public double y1
+        {
+            get
+            {
+                return _y1;
+            }
+            set
+            {
+                _y1 = value;
+                updateLine();
+            }
+        }
+        public double x2
+        {
+            get
+            {
+                return _x2;
+            }
+            set
+            {
+                _x2 = value;
+                updateLine();
+            }
+        }
+        public double y2
+        {
+            get
+            {
+                return _y2;
+            }
+            set
+            {
+                _y2 = value;
+                updateLine();
+            }
+        }
 
         public double m, b; // y=mx+b
 
@@ -80,8 +128,8 @@ namespace final_project4.classes.Shapes
         }
         public LineCol(double VectorMagnitude ,double angle,Point point) : base()
         {
-            ConvertLineToVector(x1, y1, x2, y2);
             ConvertVectorToLine(VectorMagnitude, angle, point);
+            //ConvertLineToVector(x1, y1, x2, y2);
         }
 
         private void ConvertVectorToLine(double VectorMagnitude, double angle, Point point)
@@ -91,6 +139,13 @@ namespace final_project4.classes.Shapes
             double dy = VectorMagnitude * Math.Sin(Radian);
             CreateLine(point.X, point.Y, point.X + dx, point.Y + dy);
         }
+
+        private void updateLine()
+        {
+            CreateLine(x1, y1, x2, y2);
+            ConvertLineToVector(x1, y1, x2, y2);
+        }
+
         private void ConvertLineToVector(double x1, double y1, double x2, double y2)
         {
             double dx = x2 - x1;
@@ -105,10 +160,10 @@ namespace final_project4.classes.Shapes
         }
         private void CreateLine(double x1, double y1, double x2, double y2)
         {
-            this.x1 = x1;
-            this.y1 = y1;
-            this.x2 = x2;
-            this.y2 = y2;
+            this._x1 = x1;
+            this._y1 = y1;
+            this._x2 = x2;
+            this._y2 = y2;
 
 
             //default values in struct
@@ -136,17 +191,26 @@ namespace final_project4.classes.Shapes
             if (x1==x2)
             {
                 _LineType = LineType.VerticalLine;
-
-                function = $"x={x1}";
-                return;
+                x2 += 0.00001;
+                /*make a f(x)= x to f(x) =mx+b , 
+                 but still look the same so i don't need to check edge cases . 
+                */
             }
             _LineType = LineType.RegularLine;
             m =(y1-y2)/(x1-x2);
             
             //the y value when x=0 
             this.b = y1 - (m * x1);
+            
             //convert to function 
-            function = $"y= {m}*x";
+            if (_LineType==LineType.VerticalLine)
+            {
+                function = $"x={x1}";
+            }
+            else if (_LineType == LineType.RegularLine){
+                function = $"y= {m}*x";
+            }
+
             if (b > 0)
             {
                 function += " +" + b;
@@ -172,10 +236,10 @@ namespace final_project4.classes.Shapes
             bool line2Vertical = line._LineType == LineType.VerticalLine;
 
 
-            if (line1Vertical || line2Vertical)
+           /* if (line1Vertical || line2Vertical) //not need if i make m approach infinity 
             {
                 return CollisionForVerticalLines(line);
-            }
+            }*/
             
             
             if (this.m == line.m)
@@ -230,12 +294,13 @@ namespace final_project4.classes.Shapes
 
         // <image src="C:\Vs_Projects\Final_Projects\Project1\final_project4\final_project4\Images\Screenshot 2023-12-22 091410.png" scale="0.5" /> 
 
-        private PointCol CollisionForVerticalLines(LineCol line)
+        //not need anyomore 
+       /* private PointCol CollisionForVerticalLines(LineCol line)
         {
             bool line1Vertical = this._LineType == LineType.VerticalLine;
             bool line2Vertical = line._LineType == LineType.VerticalLine;
             /* if two lines are vertical , you need to check if two lines have the same x=value
-             and if they are they you need to check if the one of the two lines point are found between those two lines */
+             *and if they are they you need to check if the one of the two lines point are found between those two lines 
             if (line1Vertical && line2Vertical)
             {
                 if ((x1 == line.x1) && (SettingsClass.isBetween(y1, line.y1, y2) || SettingsClass.isBetween(y1, line.y2, y2)))
@@ -261,7 +326,7 @@ namespace final_project4.classes.Shapes
             double _y = line2.Get_Y_Value_On_X(x1);// one is vertical one line is normal , so there  meeting point on x must be the same , dosent work properly 
             return new PointCol(_x,_y, SettingsClass.isBetween(line2.x1, _x, x2) && (SettingsClass.isBetween(line2.y1, _y, line2.y2)));
             
-        }
+        }*/
 
         // this just create the line and render it on the screen you need to add it to your current gamecanvs
         public void CreateLineVisualization()

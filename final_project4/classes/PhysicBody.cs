@@ -1,6 +1,8 @@
-﻿using System;
+﻿using final_project4.classes.Shapes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,6 +26,8 @@ namespace final_project4.classes
         public double ax;
         public double ay;
 
+        public LineCol BodyVector;
+
         public bool movable;
         //const
 
@@ -32,17 +36,23 @@ namespace final_project4.classes
         {
             this.x = x;
             this.y = y;
-                
+
             this.vx = vx;
             this.vy = vy;
-                
+
             this.ax = ax;
             this.ay = ay;
-            if (vx!=0||vy!=0||ax!=0||ay!=0)
+            if (vx != 0 || vy != 0 || ax != 0 || ay != 0)
             {
                 movable = true;
             }
-            this.movable=movable;
+            
+            this.movable = movable;
+        }
+
+        private void CreateVectorRepresentation(double x, double y, double vx, double vy)
+        {
+            BodyVector = new LineCol(SettingsClass.PythagoreanTheorem(vy, vx), Math.Atan(vy / vx), new Windows.Foundation.Point(x, y));
         }
 
         public void Move(double Fps)
@@ -56,6 +66,11 @@ namespace final_project4.classes
             //you move the same in every frame 
             x+= vx * dt;
             y+= vy * dt;
+            if (BodyVector!= null)
+            {
+                BodyVector.
+            }
+
 
         }
 
