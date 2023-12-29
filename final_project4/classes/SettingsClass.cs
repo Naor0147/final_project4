@@ -42,6 +42,7 @@ namespace final_project4.classes
         public static double ConvertAngleRadian(double angle) => angle* 0.0174532925;
         public static double ConvertRadianDegree(double radian) => (180 / Math.PI) * radian;
 
+        public static double PythagoreanTheorem(double a, double b)=>(Math.Sqrt(a*a + b*b));
 
 
         //Every time the screen size change the function make sure the ratio of the width and height stay the same 

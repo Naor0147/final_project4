@@ -44,7 +44,7 @@ namespace final_project4.pages
             gameCanvas.AddToCanvas(pol2);
 
 
-            ReSizablePolygon reSizableBall = new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 0, vy: 0, ax: 0, ay: 0), 400,400,gameCanvas,27);
+            ReSizablePolygon reSizableBall = new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 0, vy: 0, ax: 0, ay: 0), 400,400,gameCanvas,0.00001);
            
             gameCanvas.AddToCanvas(reSizableBall);
             //gameCanvas.AddToCanvas(reSizableBall.rect);

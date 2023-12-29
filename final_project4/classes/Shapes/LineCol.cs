@@ -28,6 +28,9 @@ namespace final_project4.classes.Shapes
 
         string function;//for better readiblty 
 
+
+
+        //the line as a vector
         private double _degree;
         public double Degree
         {
@@ -35,7 +38,7 @@ namespace final_project4.classes.Shapes
             set
             {
                 _degree = value;
-                Radian = SettingsClass.ConvertAngleRadian(value);
+                _radian = SettingsClass.ConvertAngleRadian(value);
 
 
             }
@@ -47,11 +50,14 @@ namespace final_project4.classes.Shapes
             set
             {
                 _radian = value;
-                Degree= SettingsClass.ConvertRadianDegree(value);
+                _degree= SettingsClass.ConvertRadianDegree(value);
 
                 //need to update all the other variable x1 ,x2 ...
             }
         }
+
+        public double VectorMagnitude;
+        
 
 
         public LineType _LineType { get; set; }
@@ -62,24 +68,42 @@ namespace final_project4.classes.Shapes
 
         public LineCol(Point p1,Point p2):base()
         {
-            createLine(p1.X,p1.Y,p2.X,p2.Y);
+            
+            CreateLine(p1.X,p1.Y,p2.X,p2.Y);
         }
       
         public LineCol(double x1,double y1, double x2 ,double y2) : base()
         {
-            createLine(x1, y1, x2, y2);
+            ConvertLineToVector(x1 ,y1 ,x2,y2); 
+            CreateLine(x1, y1, x2, y2);
 
         }
         public LineCol(double VectorMagnitude ,double angle,Point point) : base()
         {
-            
-            angle= SettingsClass.ConvertAngleRadian(angle);
-            double dx = VectorMagnitude*Math.Cos(angle);
-            double dy= VectorMagnitude*Math.Sin(angle);
-            createLine(point.X, point.Y, point.X + dx, point.Y + dy);
+            ConvertLineToVector(x1, y1, x2, y2);
+            ConvertVectorToLine(VectorMagnitude, angle, point);
         }
 
-        private void createLine(double x1, double y1, double x2, double y2)
+        private void ConvertVectorToLine(double VectorMagnitude, double angle, Point point)
+        {
+            Degree = angle;// the radian is set automatically 
+            double dx = VectorMagnitude * Math.Cos(Radian);
+            double dy = VectorMagnitude * Math.Sin(Radian);
+            CreateLine(point.X, point.Y, point.X + dx, point.Y + dy);
+        }
+        private void ConvertLineToVector(double x1, double y1, double x2, double y2)
+        {
+            double dx = x2 - x1;
+            double dy = y2 - y1;
+            if (dx==0)
+                Radian = 0;
+
+            else
+                Radian = Math.Atan((dy)/(dx));
+
+            VectorMagnitude=SettingsClass.PythagoreanTheorem(dy,dx);
+        }
+        private void CreateLine(double x1, double y1, double x2, double y2)
         {
             this.x1 = x1;
             this.y1 = y1;
@@ -92,6 +116,8 @@ namespace final_project4.classes.Shapes
             _LineType = LineType.RegularLine;
             m = 0;
             b = 0;
+
+
 
 
             ConvertData();
