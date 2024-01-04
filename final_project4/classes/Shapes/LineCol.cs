@@ -132,6 +132,12 @@ namespace final_project4.classes.Shapes
             //ConvertLineToVector(x1, y1, x2, y2);
         }
 
+        //i put id just for makeing diffreant fuctions
+        public LineCol(double vx, double vy, Point point , int id) : base()
+        {
+            ConvertSpeedToLineCol(vx, vy, point);
+        }
+
         private void ConvertVectorToLine(double VectorMagnitude, double angle, Point point)
         {
             Degree = angle;// the radian is set automatically 
@@ -139,6 +145,16 @@ namespace final_project4.classes.Shapes
             double dy = VectorMagnitude * Math.Sin(Radian);
             CreateLine(point.X, point.Y, point.X + dx, point.Y + dy);
         }
+        private void ConvertSpeedToLineCol(double vx ,double vy ,Point point)
+        {
+            double _angle = Math.Atan(vy / vx);
+            double _VectorMagnitude =SettingsClass.PythagoreanTheorem(vx,vy);
+
+            double dx = _VectorMagnitude * Math.Cos(_angle);
+            double dy = _VectorMagnitude * Math.Sin(_angle);
+            CreateLine(point.X, point.Y, point.X+  dx, point.Y + dy);
+        }
+
 
         private void updateLine()
         {

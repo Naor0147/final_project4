@@ -68,7 +68,7 @@ namespace final_project4.classes
             y+= vy * dt;
             if (BodyVector!= null)
             {
-                BodyVector.
+                
             }
 
 

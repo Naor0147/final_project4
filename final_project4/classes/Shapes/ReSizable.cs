@@ -21,7 +21,6 @@ namespace final_project4.classes.Shapes
         }
         public ReSizable()
         {
-            this.body = new PhysicBody();
             this.width = 0;
             this.height =0;
         }

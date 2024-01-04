@@ -46,6 +46,7 @@ namespace final_project4.classes
         List<LineCol> lines;
 
         public GameCanvas gameCanvas;
+        public LineCol speedVector;
 
         public ReSizablePolygon(PhysicBody physicBody,double height ,double width ,GameCanvas gameCanvas,double angle=0,string Id=""):base(physicBody,height,width)
         {
@@ -181,7 +182,7 @@ namespace final_project4.classes
         {
             if (Polygon2 == null || Polygon2.lines==null||lines==null) return false;//if there isn't a polygon there isn't collision
 
-
+            List<LineCol> lineCols = new List<LineCol>();
             foreach (LineCol line1 in lines)
             {
                 foreach (LineCol line2 in Polygon2.lines )
@@ -189,7 +190,9 @@ namespace final_project4.classes
                     PointCol point = line1.Collision(line2);
                     if (point.collation)
                     {
-                         
+                        double a = line1.Degree;
+                        double b = line2.Degree;
+                        double ang = 2 * b - a;
                         //line is the the line i need to focus on , i need to get the perpendicular of line2 
                         //tex: $$vx, vy;$$
                         //$$angle =\arctan{(m_2)}$$
@@ -198,26 +201,35 @@ namespace final_project4.classes
                         double angle = 0;//the angle the two line make
                         double vectorValue = Math.Sqrt(body.vx * body.vx + body.vy * body.vy);
 
-                        if (line2._LineType == LineType.VerticalLine)
-                        {
-                            angle = 0; // cos(0)==1 so vy stay same 
-                        }
-                        else
-                        {
-                            angle = Math.Atan(-1/line2.m) ;
-                            //debug
-                            line1.AddToCanvas(gameCanvas);
-                            line2.AddToCanvas(gameCanvas);
-                            double degree = SettingsClass.ConvertRadianDegree(angle);
-                            LineCol lineCol = new LineCol(vectorValue, degree, new Point(point.x,point.y));
-                            lineCol.AddToCanvas(gameCanvas);
-                        }
-                        
+                        /* if (line2._LineType == LineType.VerticalLine)
+                         {
+                             angle = 0; // cos(0)==1 so vy stay same 
+                         }
+                         else
+                         {
+                             angle = Math.Atan(-1/line2.m) ;
+                             //debug
+                             line1.AddToCanvas(gameCanvas);
+                             line2.AddToCanvas(gameCanvas);
+                             double degree = SettingsClass.ConvertRadianDegree(angle);
+                             LineCol lineCol = new LineCol(vectorValue, degree, new Point(point.x,point.y));
+                             lineCol.AddToCanvas(gameCanvas);
+                         }
+                         */
+                        LineCol lineCol4 = new LineCol(body.vx, body.vy, new Point(point.x, point.y), 4);
+
+                        lineCol4.AddToCanvas(gameCanvas);
+                        LineCol lineCol5 = new LineCol(vectorValue, ang, new Point(point.x, point.y));
+                        lineCol5.AddToCanvas(gameCanvas);
+
                         body.vx= vectorValue*Math.Cos(angle);
                         body.vy*= vectorValue*-Math.Sin(angle);
                         return true;
                     }
                 }
+                // if i recive true now i can check if 2 or 1 side have been coliided 
+
+
             }
             return false;
         }

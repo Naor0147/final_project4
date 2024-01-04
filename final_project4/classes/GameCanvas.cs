@@ -98,8 +98,11 @@ namespace final_project4.classes
             {
                 if (polygon != null)
                 {
+                    if (polygon.body!=null)
+                    {
+                        polygon.body.Move(SettingsClass.current_FPS);
 
-                    polygon.body.Move(SettingsClass.current_FPS);
+                    }
                     polygon.UpdatePosAndSize();
                 }
             }
@@ -110,9 +113,9 @@ namespace final_project4.classes
             {
                 for (int j = i+1; j < ReList.Count; j++)
                 {
-                    if (ReList[i]!=null &&ReList[i].body.movable== true)
+                    if (IsValidCollCheck(i))
                     {
-                        if (reCheck(ReList[i], ReList[j]))
+                        if (CollCheckTwoObjects(ReList[i], ReList[j]))
                         {
                             return true;
                         }
@@ -123,7 +126,12 @@ namespace final_project4.classes
             return false;
         }
 
-        private bool reCheck(ReSizable re1, ReSizable re2)
+        private bool IsValidCollCheck(int i)
+        {
+            return ReList[i] != null && ReList[i].body != null && ReList[i].body.movable == true;
+        }
+
+        private bool CollCheckTwoObjects(ReSizable re1, ReSizable re2)
         {
             
 
