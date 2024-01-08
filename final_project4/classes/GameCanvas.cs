@@ -1,5 +1,6 @@
 ﻿using final_project4.classes.Shapes;
 using System.Collections.Generic;
+using System.Threading;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Shapes;
 
@@ -115,10 +116,9 @@ namespace final_project4.classes
                 {
                     if (IsValidCollCheck(i))
                     {
-                        if (CollCheckTwoObjects(ReList[i], ReList[j]))
-                        {
-                            return true;
-                        }
+                        CollCheckTwoObjects(ReList[i], ReList[j]);
+                        
+                        
                     }
 
                 }

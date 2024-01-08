@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Numerics;
+using System.Threading;
 using Windows.Foundation;
 using Windows.UI.ViewManagement.Core;
 using Windows.UI.Xaml;
@@ -45,10 +47,10 @@ namespace final_project4.classes
 
         List<LineCol> lines;
 
-        public GameCanvas gameCanvas;
+        //public GameCanvas gameCanvas; does'nt need game canvas
         public LineCol speedVector;
 
-        public ReSizablePolygon(PhysicBody physicBody,double height ,double width ,GameCanvas gameCanvas,double angle=0,string Id=""):base(physicBody,height,width)
+        public ReSizablePolygon(PhysicBody physicBody,double height ,double width ,double angle=0,string Id=""):base(physicBody,height,width)
         {
             //physics
             this.body = physicBody;
@@ -69,7 +71,7 @@ namespace final_project4.classes
             realPolygon= CreateRect(SettingsClass.Convert_To_Real(x),SettingsClass.Convert_To_Real(y), SettingsClass.Convert_To_Real(width), SettingsClass.Convert_To_Real(height), angle);
 
 
-            this.gameCanvas = gameCanvas;
+            
         }
         public void UpdateRealSize()
         {
@@ -182,58 +184,49 @@ namespace final_project4.classes
         {
             if (Polygon2 == null || Polygon2.lines==null||lines==null) return false;//if there isn't a polygon there isn't collision
 
-            List<LineCol> lineCols = new List<LineCol>();
+           
             foreach (LineCol line1 in lines)
             {
                 foreach (LineCol line2 in Polygon2.lines )
                 {
                     PointCol point = line1.Collision(line2);
-                    if (point.collation)
+                    if (point.collation && SettingsClass.justChanged<=0 )
                     {
-                        double a = line1.Degree;
+                    
+                        LineCol lineCol4 = this.body.CreateVectorRepresentation(point);
+                        double a = lineCol4.Degree;// i need to change it to speed line
                         double b = line2.Degree;
-                        double ang = 2 * b - a;
-                        //line is the the line i need to focus on , i need to get the perpendicular of line2 
-                        //tex: $$vx, vy;$$
-                        //$$angle =\arctan{(m_2)}$$
-                        //$$vx=-vx*\cos{(a)}$$
-                        //$$vy=-vy*\sin{(a)}$$
-                        double angle = 0;//the angle the two line make
+                        double ang = (2 * b - a);
+                       
+                        
                         double vectorValue = Math.Sqrt(body.vx * body.vx + body.vy * body.vy);
 
-                        /* if (line2._LineType == LineType.VerticalLine)
-                         {
-                             angle = 0; // cos(0)==1 so vy stay same 
-                         }
-                         else
-                         {
-                             angle = Math.Atan(-1/line2.m) ;
-                             //debug
-                             line1.AddToCanvas(gameCanvas);
-                             line2.AddToCanvas(gameCanvas);
-                             double degree = SettingsClass.ConvertRadianDegree(angle);
-                             LineCol lineCol = new LineCol(vectorValue, degree, new Point(point.x,point.y));
-                             lineCol.AddToCanvas(gameCanvas);
-                         }
-                         */
-                        LineCol lineCol4 = new LineCol(body.vx, body.vy, new Point(point.x, point.y), 4);
+                     
+                  
+                        LineCol lineCol5 = new LineCol(vectorValue, SettingsClass.ConvertRadianDegree( ang), new Point(point.x, point.y));
+                        
+                        double rad = SettingsClass.ConvertAngleRadian(ang);
+                        if (SettingsClass.justChanged<=1)
+                        {
+                            body.vx = vectorValue * Math.Cos(rad);
+                            body.vy = vectorValue * Math.Sin(rad);
+                        }
+                        SettingsClass.justChanged = 50;
 
-                        lineCol4.AddToCanvas(gameCanvas);
-                        LineCol lineCol5 = new LineCol(vectorValue, ang, new Point(point.x, point.y));
-                        lineCol5.AddToCanvas(gameCanvas);
 
-                        body.vx= vectorValue*Math.Cos(angle);
-                        body.vy*= vectorValue*-Math.Sin(angle);
+
                         return true;
                     }
                 }
-                // if i recive true now i can check if 2 or 1 side have been coliided 
 
 
             }
             return false;
         }
-        // <image src="C:\Vs_Projects\Final_Projects\Project1\final_project4\final_project4\Images\Screenshot 2023-12-16 000120.png" scale="1" /> 
+
+       
+
+        
         private bool CollCheckForBall(ReSizableBall ball)
        {
             return CollCheckForPolygon(ball.rect);

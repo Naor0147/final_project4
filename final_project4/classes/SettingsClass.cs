@@ -26,7 +26,7 @@ namespace final_project4.classes
          
          */
 
-
+        public static int justChanged=0;
 
         public static double current_FPS = 144;//sets the value really high so the object doesn't move until the fps has been set
 

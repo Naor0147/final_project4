@@ -116,7 +116,8 @@ namespace final_project4.classes.Shapes
 
         public LineCol(Point p1,Point p2):base()
         {
-            
+            ConvertLineToVector(p1.X, p1.Y, p2.X, p2.Y);
+
             CreateLine(p1.X,p1.Y,p2.X,p2.Y);
         }
       

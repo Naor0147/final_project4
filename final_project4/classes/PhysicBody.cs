@@ -50,9 +50,13 @@ namespace final_project4.classes
             this.movable = movable;
         }
 
-        private void CreateVectorRepresentation(double x, double y, double vx, double vy)
+        public  LineCol CreateVectorRepresentation()
         {
-            BodyVector = new LineCol(SettingsClass.PythagoreanTheorem(vy, vx), Math.Atan(vy / vx), new Windows.Foundation.Point(x, y));
+            return new LineCol(SettingsClass.PythagoreanTheorem(vy, vx), SettingsClass.ConvertRadianDegree( Math.Atan(vy / vx)), new Windows.Foundation.Point(x, y));
+        }
+        public LineCol CreateVectorRepresentation(PointCol point)
+        {
+            return new LineCol(SettingsClass.PythagoreanTheorem(vy, vx), SettingsClass.ConvertRadianDegree( Math.Atan(vy / vx)), new Windows.Foundation.Point(point.x, point.y));
         }
 
         public void Move(double Fps)
