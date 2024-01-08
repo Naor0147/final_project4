@@ -1,4 +1,5 @@
 ﻿using final_project4.classes.Shapes;
+using NetTopologySuite.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -180,53 +181,142 @@ namespace final_project4.classes
 
 
         //don't do inertance for coll maybe check 
-        private bool CollCheckForPolygon(ReSizablePolygon Polygon2) // need to check what i can do for 
-        {
-            if (Polygon2 == null || Polygon2.lines==null||lines==null) return false;//if there isn't a polygon there isn't collision
+           private bool CollCheckForPolygon(ReSizablePolygon Polygon2) // need to check what i can do for 
+           {
+               if (Polygon2 == null || Polygon2.lines==null||lines==null) return false;//if there isn't a polygon there isn't collision
 
-           
+
+               foreach (LineCol line1 in lines)
+               {
+                   foreach (LineCol line2 in Polygon2.lines )
+                   {
+                       PointCol point = line1.Collision(line2);
+                       if (point.collation)
+                       {
+                           //just for debugging
+                           LineCol lineCol = new LineCol(new Point(point.x, point.y), new Point(point.x+1 , point.y));
+                           lineCol.AddToCanvas(SettingsClass.GameCanvas);
+
+                           LineCol lineCol4 = this.body.CreateVectorRepresentation(point);
+                           lineCol4.AddToCanvas(SettingsClass.GameCanvas);
+                           double a = lineCol4.Degree;// i need to change it to speed line
+                           double b = line2.Degree;
+                           double ang = (2 * b - a);
+
+
+                           double vectorValue = Math.Sqrt(body.vx * body.vx + body.vy * body.vy);
+
+
+
+
+                           double rad = SettingsClass.ConvertAngleRadian(ang);
+
+
+                           body.vx = vectorValue * Math.Cos(rad);
+                           body.vy = vectorValue * Math.Sin(rad);
+
+
+
+                          /* if (body.vy>0 )
+                           {
+                               body.y += 20;
+
+                           }
+                           else
+                           {
+                               body.y -= 20;
+
+                           }
+                           if (body.vx>0)
+                           {
+                               body.x += 20;
+                           }
+                           else
+                           {
+                               body.x -= 20;
+                           }
+        */
+
+
+
+
+                           return true;
+                       }
+                   }
+
+
+               }
+               return false;
+           }
+   
+        /*
+        private bool CollCheckForPolygon(ReSizablePolygon Polygon2)
+        {
+            if (Polygon2 == null || Polygon2.lines == null || lines == null) return false;
+
+            bool collisionDetected = false;
+            double totalCollisionNormalX = 0.0;
+            double totalCollisionNormalY = 0.0;
+
             foreach (LineCol line1 in lines)
             {
-                foreach (LineCol line2 in Polygon2.lines )
+                foreach (LineCol line2 in Polygon2.lines)
                 {
                     PointCol point = line1.Collision(line2);
-                    if (point.collation && SettingsClass.justChanged<=0 )
+                    if (point.collation)
                     {
-                    
-                        LineCol lineCol4 = this.body.CreateVectorRepresentation(point);
-                        double a = lineCol4.Degree;// i need to change it to speed line
-                        double b = line2.Degree;
-                        double ang = (2 * b - a);
-                       
-                        
-                        double vectorValue = Math.Sqrt(body.vx * body.vx + body.vy * body.vy);
+                        // Calculate collision normal (normalized vector pointing away from the collision point)
+                        double collisionNormalX = line2.y2 - line2.y1;
+                        double collisionNormalY = line2.x1 - line2.x2;
 
-                     
-                  
-                        LineCol lineCol5 = new LineCol(vectorValue, SettingsClass.ConvertRadianDegree( ang), new Point(point.x, point.y));
-                        
-                        double rad = SettingsClass.ConvertAngleRadian(ang);
-                        if (SettingsClass.justChanged<=1)
-                        {
-                            body.vx = vectorValue * Math.Cos(rad);
-                            body.vy = vectorValue * Math.Sin(rad);
-                        }
-                        SettingsClass.justChanged = 50;
+                        double length = Math.Sqrt(collisionNormalX * collisionNormalX + collisionNormalY * collisionNormalY);
 
+                        // Accumulate collision normals
+                        totalCollisionNormalX += collisionNormalX / length;
+                        totalCollisionNormalY += collisionNormalY / length;
 
-
-                        return true;
+                        collisionDetected = true;
                     }
                 }
-
-
             }
+
+            if (collisionDetected)
+            {
+                // Calculate average collision normal
+                double averageCollisionNormalX = totalCollisionNormalX / (lines.Count * Polygon2.lines.Count);
+                double averageCollisionNormalY = totalCollisionNormalY / (lines.Count * Polygon2.lines.Count);
+
+                // Reflect the current velocity vector across the average collision normal
+                double currentVelocityX = body.vx;
+                double currentVelocityY = body.vy;
+
+                // Dot product
+                double dotProduct = currentVelocityX * averageCollisionNormalX + currentVelocityY * averageCollisionNormalY;
+
+                // Calculate reflected velocity
+                double reflectedVelocityX = currentVelocityX - 2 * dotProduct * averageCollisionNormalX;
+                double reflectedVelocityY = currentVelocityY - 2 * dotProduct * averageCollisionNormalY;
+
+                // Update body's velocity
+                body.vx = reflectedVelocityX;
+                body.vy = reflectedVelocityY;
+
+                double smallValue = 10;
+                // Move the object slightly away from the collision point to avoid repeated collisions
+                body.x += averageCollisionNormalX * smallValue;
+                body.y += averageCollisionNormalY * smallValue;
+
+                // Return true to indicate that at least one collision occurred
+                return true;
+            }
+
             return false;
-        }
+        }*/
 
-       
 
-        
+
+
+
         private bool CollCheckForBall(ReSizableBall ball)
        {
             return CollCheckForPolygon(ball.rect);

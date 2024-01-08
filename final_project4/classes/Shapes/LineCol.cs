@@ -14,12 +14,7 @@ using Windows.UI.Xaml.Shapes;
 
 namespace final_project4.classes.Shapes
 {
-    public enum LineType
-    {
-        VerticalLine,// x=value
-        RegularLine,//y= mx+b 
-
-    }
+    
     public class LineCol:ReSizable
     {
         private double _x1, _y1, _x2, _y2;
@@ -74,7 +69,7 @@ namespace final_project4.classes.Shapes
 
         public double m, b; // y=mx+b
 
-        string function;//for better readiblty 
+        string Function;//for better readiblty 
 
 
 
@@ -87,7 +82,7 @@ namespace final_project4.classes.Shapes
             {
                 _degree = value;
                 _radian = SettingsClass.ConvertAngleRadian(value);
-
+               
 
             }
         }
@@ -99,7 +94,7 @@ namespace final_project4.classes.Shapes
             {
                 _radian = value;
                 _degree= SettingsClass.ConvertRadianDegree(value);
-
+                
                 //need to update all the other variable x1 ,x2 ...
             }
         }
@@ -108,7 +103,7 @@ namespace final_project4.classes.Shapes
         
 
 
-        public LineType _LineType { get; set; }
+     
 
         public Line line;
 
@@ -183,11 +178,6 @@ namespace final_project4.classes.Shapes
             this._y2 = y2;
 
 
-            //default values in struct
-            function = "";
-            _LineType = LineType.RegularLine;
-            m = 0;
-            b = 0;
 
 
 
@@ -207,34 +197,29 @@ namespace final_project4.classes.Shapes
         {
             if (x1==x2)
             {
-                _LineType = LineType.VerticalLine;
+                //convert to Function 
+                Function = $"x={x1}";
                 x2 += 0.00001;
                 /*make a f(x)= x to f(x) =mx+b , 
                  but still look the same so i don't need to check edge cases . 
                 */
+                return;
             }
-            _LineType = LineType.RegularLine;
+            
             m =(y1-y2)/(x1-x2);
             
             //the y value when x=0 
             this.b = y1 - (m * x1);
             
-            //convert to function 
-            if (_LineType==LineType.VerticalLine)
-            {
-                function = $"x={x1}";
-            }
-            else if (_LineType == LineType.RegularLine){
-                function = $"y= {m}*x";
-            }
+            Function = $"y= {m}*x";
 
             if (b > 0)
             {
-                function += " +" + b;
+                Function += " +" + b;
             }
             else if (b < 0)
             {
-                function += " -" + b;
+                Function += " -" + b;
             }
             
         }
@@ -249,15 +234,7 @@ namespace final_project4.classes.Shapes
 
             
 
-            bool line1Vertical = this._LineType == LineType.VerticalLine;
-            bool line2Vertical = line._LineType == LineType.VerticalLine;
-
-
-           /* if (line1Vertical || line2Vertical) //not need if i make m approach infinity 
-            {
-                return CollisionForVerticalLines(line);
-            }*/
-            
+          
             
             if (this.m == line.m)
             {
@@ -275,7 +252,7 @@ namespace final_project4.classes.Shapes
                 {
                     if (SettingsClass.isBetween(x1, line.x1, x2) || SettingsClass.isBetween(x1, line.x2, x2))
                     {
-                        //because it is the same function ,
+                        //because it is the same Function ,
                         //just with a different limit there is things we need to check
                         //we need to check what points are on the line 
                         // Overlapping segment, find the middle point
@@ -309,43 +286,6 @@ namespace final_project4.classes.Shapes
             return new PointCol(tempX, Get_Y_Value_On_X(tempX));
         }
 
-        // <image src="C:\Vs_Projects\Final_Projects\Project1\final_project4\final_project4\Images\Screenshot 2023-12-22 091410.png" scale="0.5" /> 
-
-        //not need anyomore 
-       /* private PointCol CollisionForVerticalLines(LineCol line)
-        {
-            bool line1Vertical = this._LineType == LineType.VerticalLine;
-            bool line2Vertical = line._LineType == LineType.VerticalLine;
-            /* if two lines are vertical , you need to check if two lines have the same x=value
-             *and if they are they you need to check if the one of the two lines point are found between those two lines 
-            if (line1Vertical && line2Vertical)
-            {
-                if ((x1 == line.x1) && (SettingsClass.isBetween(y1, line.y1, y2) || SettingsClass.isBetween(y1, line.y2, y2)))
-                {
-                    return GetMiddlePoint(y1,y2,line.y1,line.y2);
-                }
-                return new PointCol();
-            }
-            //reaccuse it a continuous line line there got a be Collision in the x of the straight line 
-            return CollisionVerticalWithNormalLine(this, line);
-        }
-
-        private PointCol CollisionVerticalWithNormalLine(LineCol line1, LineCol line2)
-        {
-            LineCol line;
-            if (line2._LineType== LineType.VerticalLine)
-            {
-                line = line1;
-                line1 = line2;
-                line2 = line;
-            }
-            double _x = line1.x1;
-            double _y = line2.Get_Y_Value_On_X(x1);// one is vertical one line is normal , so there  meeting point on x must be the same , dosent work properly 
-            return new PointCol(_x,_y, SettingsClass.isBetween(line2.x1, _x, x2) && (SettingsClass.isBetween(line2.y1, _y, line2.y2)));
-            
-        }*/
-
-        // this just create the line and render it on the screen you need to add it to your current gamecanvs
         public void CreateLineVisualization()
         {
             line = new Line()
@@ -353,7 +293,7 @@ namespace final_project4.classes.Shapes
                 X1 = SettingsClass.Convert_To_Real(x1),
                 Y1 = SettingsClass.Convert_To_Real(y1),
                 X2 = SettingsClass.Convert_To_Real(x2),
-            Y2 = SettingsClass.Convert_To_Real(y2)
+                Y2 = SettingsClass.Convert_To_Real(y2)
             };
             line.Stroke= new SolidColorBrush(Windows.UI.Colors.Black);
             line.StrokeThickness = 5;

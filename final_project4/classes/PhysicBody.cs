@@ -70,10 +70,7 @@ namespace final_project4.classes
             //you move the same in every frame 
             x+= vx * dt;
             y+= vy * dt;
-            if (BodyVector!= null)
-            {
-                
-            }
+            
 
 
         }
