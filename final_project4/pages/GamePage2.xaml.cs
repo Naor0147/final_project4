@@ -94,7 +94,7 @@ namespace final_project4.pages
         {
             frameCount++;
 
-            SettingsClass.justChanged -= 1;
+            DebugClass.FrameCounter += 1;
 
 
             if (gameCanvas.checkCol())
@@ -104,7 +104,8 @@ namespace final_project4.pages
             
             gameCanvas.MoveAll();
            
-            fpstextblock.Text = $"vx: {pol2.body.vx:F2} \n vy: {pol2.body.vy:F2} \n ";
+            
+            fpstextblock.Text = $"vx: {pol2.body.vx:F2} \n vy: {pol2.body.vy:F2} \n ang {pol2.body.angle} \n {DebugClass.angleCollision}";
             
           
             gameCanvas.UpdateObjects() ;

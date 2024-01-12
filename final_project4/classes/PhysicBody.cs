@@ -5,6 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
 
 namespace final_project4.classes
 {
@@ -25,6 +26,15 @@ namespace final_project4.classes
         //The acceleration of the body in sec 
         public double ax;
         public double ay;
+
+
+        public double angle
+        {
+            get
+            {
+              return SettingsClass.ConvertRadianDegree(Math.Atan(vy / vx));
+            }
+        }
 
         public LineCol BodyVector;
 
@@ -54,9 +64,9 @@ namespace final_project4.classes
         {
             return new LineCol(SettingsClass.PythagoreanTheorem(vy, vx), SettingsClass.ConvertRadianDegree( Math.Atan(vy / vx)), new Windows.Foundation.Point(x, y));
         }
-        public LineCol CreateVectorRepresentation(PointCol point)
+        public LineCol CreateVectorRepresentation(Point point)
         {
-            return new LineCol(SettingsClass.PythagoreanTheorem(vy, vx), SettingsClass.ConvertRadianDegree( Math.Atan(vy / vx)), new Windows.Foundation.Point(point.x, point.y));
+            return new LineCol(SettingsClass.PythagoreanTheorem(vy, vx), SettingsClass.ConvertRadianDegree( Math.Atan(vy / vx)), point);
         }
 
         public void Move(double Fps)

@@ -119,6 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="classes\DebugClass.cs" />
     <Compile Include="classes\PointCol.cs" />
     <Compile Include="classes\Shapes\LineCol.cs" />
     <Compile Include="classes\Shapes\ReSizable.cs" />
