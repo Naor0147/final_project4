@@ -1,6 +1,8 @@
-﻿using System;
+﻿using final_project4.classes.Shapes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,25 +26,37 @@ namespace final_project4.classes
         public double ax;
         public double ay;
 
+        public LineCol BodyVector;
+
         public bool movable;
         //const
 
         public const double gravity = 9.8;
-        public PhysicBody(double x ,double y, double vx=0,double vy=0,double ax=0,double ay = 0,bool movable =false)
+        public PhysicBody(double x=0 ,double y=0, double vx=0,double vy=0,double ax=0,double ay = 0,bool movable =false)
         {
             this.x = x;
             this.y = y;
-                
+
             this.vx = vx;
             this.vy = vy;
-                
+
             this.ax = ax;
             this.ay = ay;
-            if (vx!=0||vy!=0||ax!=0||ay!=0)
+            if (vx != 0 || vy != 0 || ax != 0 || ay != 0)
             {
                 movable = true;
             }
-            this.movable=movable;
+            
+            this.movable = movable;
+        }
+
+        public  LineCol CreateVectorRepresentation()
+        {
+            return new LineCol(SettingsClass.PythagoreanTheorem(vy, vx), SettingsClass.ConvertRadianDegree( Math.Atan(vy / vx)), new Windows.Foundation.Point(x, y));
+        }
+        public LineCol CreateVectorRepresentation(PointCol point)
+        {
+            return new LineCol(SettingsClass.PythagoreanTheorem(vy, vx), SettingsClass.ConvertRadianDegree( Math.Atan(vy / vx)), new Windows.Foundation.Point(point.x, point.y));
         }
 
         public void Move(double Fps)
@@ -56,6 +70,8 @@ namespace final_project4.classes
             //you move the same in every frame 
             x+= vx * dt;
             y+= vy * dt;
+            
+
 
         }
 

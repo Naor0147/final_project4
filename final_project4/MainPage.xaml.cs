@@ -50,8 +50,19 @@ namespace final_project4
         {
             Frame.Navigate(typeof(GamePage2));
 
+            Button button = sender as Button;
+            switch (button.Content.ToString())
+            {
+                case "page 1":
+                    Frame.Navigate(typeof(GamePage1));
+                    break;
+                case "page 2":
+                    Frame.Navigate(typeof(GamePage2));
+                    break;
+
+            }
         }
 
 
-    }
+        }
 }

@@ -1,19 +1,20 @@
 ﻿using final_project4.classes.Shapes;
 using System.Collections.Generic;
+using System.Threading;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Shapes;
 
 namespace final_project4.classes
 {
-    public class GameCanvas : Canvas
+    public class GameCanvas 
     {
         public Canvas MainCanvas { get; set; }
 
-        public List<ReSizable> reList { get; set; }
+        public List<ReSizable> ReList { get; set; }
 
-        public List<ReSizablePolygon> rePolList { get; set; }
+        public List<ReSizablePolygon> RePolList { get; set; }
 
-        public List<ReSizableBall> reBallList { get; set; }
+        public List<ReSizableBall> ReBallList { get; set; }
        
         public List<LineCol> ReLineList { get; set; }
 
@@ -24,28 +25,32 @@ namespace final_project4.classes
         public GameCanvas(Canvas canvas)
         {
             MainCanvas = canvas;
-            reList = new List<ReSizable>();
-            rePolList = new List<ReSizablePolygon>();
-            reBallList = new List<ReSizableBall>();
+            ReList = new List<ReSizable>();
+            RePolList = new List<ReSizablePolygon>();
+            ReBallList = new List<ReSizableBall>();
             ReLineList = new List<LineCol>();
         }
 
         public void AddToCanvas(ReSizable shape)
         {
-            reList.Add(shape);
+            ReList.Add(shape);
           
             switch (shape)
             {
-                case ReSizablePolygon re:
-                    ReSizablePolygon pol = (ReSizablePolygon)shape;
+                case ReSizablePolygon pol:
+                   // ReSizablePolygon pol = (ReSizablePolygon)shape;
                     MainCanvas.Children.Add(pol.realPolygon);
-                    rePolList.Add(pol);
+                    RePolList.Add(pol);
                     break;
 
-                case ReSizableBall ba:
-                    ReSizableBall ball = (ReSizableBall)shape;
+                case ReSizableBall ball:
+                    //ReSizableBall ball = (ReSizableBall)shape;
                     MainCanvas.Children.Add(ball.realEllipse);
-                    reBallList.Add(ball);
+                    ReBallList.Add(ball);
+                    break;
+                case LineCol lineCol:
+                    MainCanvas.Children.Add(lineCol.line);
+                    ReLineList.Add(lineCol);
                     break;
 
             }
@@ -54,19 +59,19 @@ namespace final_project4.classes
 
         }
 
-        public void AddToCanvas(LineCol line)
+      /*  public void AddToCanvas(LineCol line)
         {
-            MainCanvas.Children.Add(line.line);
             ReLineList.Add(line);
-        }
+            MainCanvas.Children.Add(line.line);   
+        }*/
 
 
 
         //public update
         public void UpdateObjects()
         {
-            if (reList.Count == 0) return; 
-            foreach(var item in reList)
+            if (ReList.Count == 0) return; 
+            foreach(var item in ReList)
             {
                 if (item != null)
                 {
@@ -90,28 +95,30 @@ namespace final_project4.classes
         public void MoveAll()
         {
             
-            foreach (ReSizable polygon in reList)
+            foreach (ReSizable polygon in ReList)
             {
                 if (polygon != null)
                 {
+                    if (polygon.body!=null)
+                    {
+                        polygon.body.Move(SettingsClass.current_FPS);
 
-                    polygon.body.Move(SettingsClass.current_FPS);
+                    }
                     polygon.UpdatePosAndSize();
                 }
             }
         }
         public bool checkCol()
         {
-            for (int i = 0; i < reList.Count-1; i++)
+            for (int i = 0; i < ReList.Count-1; i++)
             {
-                for (int j = i+1; j < reList.Count; j++)
+                for (int j = i+1; j < ReList.Count; j++)
                 {
-                    if (reList[i]!=null &&reList[i].body.movable== true)
+                    if (IsValidCollCheck(i))
                     {
-                        if (reCheck(reList[i], reList[j]))
-                        {
-                            return true;
-                        }
+                        CollCheckTwoObjects(ReList[i], ReList[j]);
+                        
+                        
                     }
 
                 }
@@ -119,7 +126,12 @@ namespace final_project4.classes
             return false;
         }
 
-        private bool reCheck(ReSizable re1, ReSizable re2)
+        private bool IsValidCollCheck(int i)
+        {
+            return ReList[i] != null && ReList[i].body != null && ReList[i].body.movable == true;
+        }
+
+        private bool CollCheckTwoObjects(ReSizable re1, ReSizable re2)
         {
             
 

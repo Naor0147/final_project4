@@ -66,7 +66,10 @@ namespace final_project4.classes.Shapes
         {
             return rect.CollCheck(reSizable);
         }
-       
+        public override void AddToCanvas(GameCanvas gameCanvas)
+        {
+            gameCanvas.AddToCanvas(this);
+        }
 
 
     }

@@ -25,8 +25,8 @@ namespace final_project4.classes
         update their size accordingly to the screen size 
          
          */
-
-
+        public static GameCanvas GameCanvas;
+        public static int justChanged=0;
 
         public static double current_FPS = 144;//sets the value really high so the object doesn't move until the fps has been set
 
@@ -42,9 +42,10 @@ namespace final_project4.classes
         public static double ConvertAngleRadian(double angle) => angle* 0.0174532925;
         public static double ConvertRadianDegree(double radian) => (180 / Math.PI) * radian;
 
+        public static double PythagoreanTheorem(double a, double b)=>(Math.Sqrt(a*a + b*b));
 
 
-        //Every time the screen size change the function make sure the ratio of the width and height stay the same 
+        //Every time the screen size change the Function make sure the ratio of the width and height stay the same 
         public static void Change_To_Right_Screen_Ratio()
         {
             var window = ApplicationView.GetForCurrentView();

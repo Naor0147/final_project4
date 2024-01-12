@@ -14,59 +14,172 @@ using Windows.UI.Xaml.Shapes;
 
 namespace final_project4.classes.Shapes
 {
-    public enum LineType
+    
+    public class LineCol:ReSizable
     {
-        VerticalLine,// x=value
-        RegularLine,//y= mx+b 
-
-    }
-    public class LineCol
-    {
-        double x1, y1, x2, y2;
+        private double _x1, _y1, _x2, _y2;
+        public double x1
+        {
+            get
+            {
+                return _x1;
+            }
+            set
+            {
+                _x1 = value;
+                updateLine();
+            }
+        }
+        public double y1
+        {
+            get
+            {
+                return _y1;
+            }
+            set
+            {
+                _y1 = value;
+                updateLine();
+            }
+        }
+        public double x2
+        {
+            get
+            {
+                return _x2;
+            }
+            set
+            {
+                _x2 = value;
+                updateLine();
+            }
+        }
+        public double y2
+        {
+            get
+            {
+                return _y2;
+            }
+            set
+            {
+                _y2 = value;
+                updateLine();
+            }
+        }
 
         public double m, b; // y=mx+b
 
-        string function;//for better readiblty 
+        string Function;//for better readiblty 
 
+
+
+        //the line as a vector
+        private double _degree;
+        public double Degree
+        {
+            get { return _degree; }
+            set
+            {
+                _degree = value;
+                _radian = SettingsClass.ConvertAngleRadian(value);
+               
+
+            }
+        }
+        public double _radian;
+        public double Radian
+        {
+            get { return _radian; }
+            set
+            {
+                _radian = value;
+                _degree= SettingsClass.ConvertRadianDegree(value);
+                
+                //need to update all the other variable x1 ,x2 ...
+            }
+        }
+
+        public double VectorMagnitude;
         
-        public LineType _LineType { get; set; }
+
+
+     
 
         public Line line;
 
 
 
-        public LineCol(Point p1,Point p2)
+        public LineCol(Point p1,Point p2):base()
         {
-            createLine(p1.X,p1.Y,p2.X,p2.Y);
+            ConvertLineToVector(p1.X, p1.Y, p2.X, p2.Y);
+
+            CreateLine(p1.X,p1.Y,p2.X,p2.Y);
         }
       
-        public LineCol(double x1,double y1, double x2 ,double y2)
+        public LineCol(double x1,double y1, double x2 ,double y2) : base()
         {
-            createLine(x1, y1, x2, y2);
+            ConvertLineToVector(x1 ,y1 ,x2,y2); 
+            CreateLine(x1, y1, x2, y2);
 
         }
-        public LineCol(double VectorMagnitude ,double angle,Point point)
+        public LineCol(double VectorMagnitude ,double angle,Point point) : base()
         {
-            
-            angle= SettingsClass.ConvertAngleRadian(angle);
-            double dx = VectorMagnitude*Math.Cos(angle);
-            double dy= VectorMagnitude*Math.Sin(angle);
-            createLine(point.X, point.Y, point.X + dx, point.Y + dy);
+            ConvertVectorToLine(VectorMagnitude, angle, point);
+            //ConvertLineToVector(x1, y1, x2, y2);
         }
 
-        private void createLine(double x1, double y1, double x2, double y2)
+        //i put id just for makeing diffreant fuctions
+        public LineCol(double vx, double vy, Point point , int id) : base()
         {
-            this.x1 = x1;
-            this.y1 = y1;
-            this.x2 = x2;
-            this.y2 = y2;
+            ConvertSpeedToLineCol(vx, vy, point);
+        }
+
+        private void ConvertVectorToLine(double VectorMagnitude, double angle, Point point)
+        {
+            Degree = angle;// the radian is set automatically 
+            double dx = VectorMagnitude * Math.Cos(Radian);
+            double dy = VectorMagnitude * Math.Sin(Radian);
+            CreateLine(point.X, point.Y, point.X + dx, point.Y + dy);
+        }
+        private void ConvertSpeedToLineCol(double vx ,double vy ,Point point)
+        {
+            double _angle = Math.Atan(vy / vx);
+            double _VectorMagnitude =SettingsClass.PythagoreanTheorem(vx,vy);
+
+            double dx = _VectorMagnitude * Math.Cos(_angle);
+            double dy = _VectorMagnitude * Math.Sin(_angle);
+            CreateLine(point.X, point.Y, point.X+  dx, point.Y + dy);
+        }
 
 
-            //default values in struct
-            function = "";
-            _LineType = LineType.RegularLine;
-            m = 0;
-            b = 0;
+        private void updateLine()
+        {
+            CreateLine(x1, y1, x2, y2);
+            ConvertLineToVector(x1, y1, x2, y2);
+        }
+
+        private void ConvertLineToVector(double x1, double y1, double x2, double y2)
+        {
+            double dx = x2 - x1;
+            double dy = y2 - y1;
+            if (dx==0)
+                Radian = 0;
+
+            else
+                Radian = Math.Atan((dy)/(dx));
+
+            VectorMagnitude=SettingsClass.PythagoreanTheorem(dy,dx);
+        }
+        private void CreateLine(double x1, double y1, double x2, double y2)
+        {
+            this._x1 = x1;
+            this._y1 = y1;
+            this._x2 = x2;
+            this._y2 = y2;
+
+
+
+
 
 
             ConvertData();
@@ -84,25 +197,29 @@ namespace final_project4.classes.Shapes
         {
             if (x1==x2)
             {
-                _LineType = LineType.VerticalLine;
-
-                function = $"x={x1}";
+                //convert to Function 
+                Function = $"x={x1}";
+                x2 += 0.00001;
+                /*make a f(x)= x to f(x) =mx+b , 
+                 but still look the same so i don't need to check edge cases . 
+                */
                 return;
             }
-            _LineType = LineType.RegularLine;
+            
             m =(y1-y2)/(x1-x2);
             
             //the y value when x=0 
             this.b = y1 - (m * x1);
-            //convert to function 
-            function = $"y= {m}*x";
+            
+            Function = $"y= {m}*x";
+
             if (b > 0)
             {
-                function += " +" + b;
+                Function += " +" + b;
             }
             else if (b < 0)
             {
-                function += " -" + b;
+                Function += " -" + b;
             }
             
         }
@@ -117,15 +234,7 @@ namespace final_project4.classes.Shapes
 
             
 
-            bool line1Vertical = this._LineType == LineType.VerticalLine;
-            bool line2Vertical = line._LineType == LineType.VerticalLine;
-
-
-            if (line1Vertical || line2Vertical)
-            {
-                return CollisionForVerticalLines(line);
-            }
-            
+          
             
             if (this.m == line.m)
             {
@@ -143,7 +252,7 @@ namespace final_project4.classes.Shapes
                 {
                     if (SettingsClass.isBetween(x1, line.x1, x2) || SettingsClass.isBetween(x1, line.x2, x2))
                     {
-                        //because it is the same function ,
+                        //because it is the same Function ,
                         //just with a different limit there is things we need to check
                         //we need to check what points are on the line 
                         // Overlapping segment, find the middle point
@@ -177,56 +286,24 @@ namespace final_project4.classes.Shapes
             return new PointCol(tempX, Get_Y_Value_On_X(tempX));
         }
 
-        // <image src="C:\Vs_Projects\Final_Projects\Project1\final_project4\final_project4\Images\Screenshot 2023-12-22 091410.png" scale="0.5" /> 
-
-        private PointCol CollisionForVerticalLines(LineCol line)
-        {
-            bool line1Vertical = this._LineType == LineType.VerticalLine;
-            bool line2Vertical = line._LineType == LineType.VerticalLine;
-            /* if two lines are vertical , you need to check if two lines have the same x=value
-             and if they are they you need to check if the one of the two lines point are found between those two lines */
-            if (line1Vertical && line2Vertical)
-            {
-                if ((x1 == line.x1) && (SettingsClass.isBetween(y1, line.y1, y2) || SettingsClass.isBetween(y1, line.y2, y2)))
-                {
-                    return GetMiddlePoint(y1,y2,line.y1,line.y2);
-                }
-                return new PointCol();
-            }
-            //reaccuse it a continuous line line there got a be Collision in the x of the straight line 
-            return CollisionVerticalWithNormalLine(this, line);
-        }
-
-        private PointCol CollisionVerticalWithNormalLine(LineCol line1, LineCol line2)
-        {
-            LineCol line;
-            if (line2._LineType== LineType.VerticalLine)
-            {
-                line = line1;
-                line1 = line2;
-                line2 = line;
-            }
-            double _x = line1.x1;
-            double _y = line2.Get_Y_Value_On_X(x1);// one is vertical one line is normal , so there  meeting point on x must be the same , dosent work properly 
-            return new PointCol(_x,_y, SettingsClass.isBetween(line2.x1, _x, x2) && (SettingsClass.isBetween(line2.y1, _y, line2.y2)));
-            
-        }
-
-        public void DrawLine(GameCanvas canvas)
+        public void CreateLineVisualization()
         {
             line = new Line()
             {
-                X1 = x1,
-                Y1 = y1,
-                X2 = x2,
-                Y2 = y2,
+                X1 = SettingsClass.Convert_To_Real(x1),
+                Y1 = SettingsClass.Convert_To_Real(y1),
+                X2 = SettingsClass.Convert_To_Real(x2),
+                Y2 = SettingsClass.Convert_To_Real(y2)
             };
             line.Stroke= new SolidColorBrush(Windows.UI.Colors.Black);
             line.StrokeThickness = 5;
-            canvas.AddToCanvas(this);
-            UpdateLineSize();
         }
-        
+        public override void AddToCanvas(GameCanvas gameCanvas)
+        {
+            CreateLineVisualization();
+            gameCanvas.AddToCanvas(this);
+        }
+
         public void UpdateLineSize()
         {
             line.X1 = SettingsClass.Convert_To_Real(x1);

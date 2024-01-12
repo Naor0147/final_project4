@@ -1,9 +1,12 @@
 ﻿using final_project4.classes.Shapes;
+using NetTopologySuite.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Numerics;
+using System.Threading;
 using Windows.Foundation;
 using Windows.UI.ViewManagement.Core;
 using Windows.UI.Xaml;
@@ -45,9 +48,10 @@ namespace final_project4.classes
 
         List<LineCol> lines;
 
-        public GameCanvas gameCanvas;
+        //public GameCanvas gameCanvas; does'nt need game canvas
+        public LineCol speedVector;
 
-        public ReSizablePolygon(PhysicBody physicBody,double height ,double width ,GameCanvas gameCanvas,double angle=0,string Id=""):base(physicBody,height,width)
+        public ReSizablePolygon(PhysicBody physicBody,double height ,double width ,double angle=0,string Id=""):base(physicBody,height,width)
         {
             //physics
             this.body = physicBody;
@@ -68,7 +72,7 @@ namespace final_project4.classes
             realPolygon= CreateRect(SettingsClass.Convert_To_Real(x),SettingsClass.Convert_To_Real(y), SettingsClass.Convert_To_Real(width), SettingsClass.Convert_To_Real(height), angle);
 
 
-            this.gameCanvas = gameCanvas;
+            
         }
         public void UpdateRealSize()
         {
@@ -177,60 +181,154 @@ namespace final_project4.classes
 
 
         //don't do inertance for coll maybe check 
-        private bool CollCheckForPolygon(ReSizablePolygon Polygon2) // need to check what i can do for 
-        {
-            if (Polygon2 == null || Polygon2.lines==null||lines==null) return false;//if there isn't a polygon there isn't collision
+           private bool CollCheckForPolygon(ReSizablePolygon Polygon2) // need to check what i can do for 
+           {
+               if (Polygon2 == null || Polygon2.lines==null||lines==null) return false;//if there isn't a polygon there isn't collision
 
+
+               foreach (LineCol line1 in lines)
+               {
+                   foreach (LineCol line2 in Polygon2.lines )
+                   {
+                       PointCol point = line1.Collision(line2);
+                       if (point.collation)
+                       {
+                           //just for debugging
+                           LineCol lineCol = new LineCol(new Point(point.x, point.y), new Point(point.x+1 , point.y));
+                           lineCol.AddToCanvas(SettingsClass.GameCanvas);
+
+                           LineCol lineCol4 = this.body.CreateVectorRepresentation(point);
+                           lineCol4.AddToCanvas(SettingsClass.GameCanvas);
+                           double a = lineCol4.Degree;// i need to change it to speed line
+                           double b = line2.Degree;
+                           double ang = (2 * b - a);
+
+
+                           double vectorValue = Math.Sqrt(body.vx * body.vx + body.vy * body.vy);
+
+
+
+
+                           double rad = SettingsClass.ConvertAngleRadian(ang);
+
+
+                           body.vx = vectorValue * Math.Cos(rad);
+                           body.vy = vectorValue * Math.Sin(rad);
+
+
+
+                          /* if (body.vy>0 )
+                           {
+                               body.y += 20;
+
+                           }
+                           else
+                           {
+                               body.y -= 20;
+
+                           }
+                           if (body.vx>0)
+                           {
+                               body.x += 20;
+                           }
+                           else
+                           {
+                               body.x -= 20;
+                           }
+        */
+
+
+
+
+                           return true;
+                       }
+                   }
+
+
+               }
+               return false;
+           }
+   
+        /*
+        private bool CollCheckForPolygon(ReSizablePolygon Polygon2)
+        {
+            if (Polygon2 == null || Polygon2.lines == null || lines == null) return false;
+
+            bool collisionDetected = false;
+            double totalCollisionNormalX = 0.0;
+            double totalCollisionNormalY = 0.0;
 
             foreach (LineCol line1 in lines)
             {
-                foreach (LineCol line2 in Polygon2.lines )
+                foreach (LineCol line2 in Polygon2.lines)
                 {
                     PointCol point = line1.Collision(line2);
                     if (point.collation)
                     {
-                         
-                        //line is the the line i need to focus on , i need to get the perpendicular of line2 
-                        //tex: $$vx, vy;$$
-                        //$$angle =\arctan{(m_2)}$$
-                        //$$vx=-vx*\cos{(a)}$$
-                        //$$vy=-vy*\sin{(a)}$$
-                        double angle = 0;//the angle the two line make
-                        double vectorValue = Math.Sqrt(body.vx * body.vx + body.vy * body.vy);
+                        // Calculate collision normal (normalized vector pointing away from the collision point)
+                        double collisionNormalX = line2.y2 - line2.y1;
+                        double collisionNormalY = line2.x1 - line2.x2;
 
-                        if (line2._LineType == LineType.VerticalLine)
-                        {
-                            angle = 0; // cos(0)==1 so vy stay same 
-                        }
-                        else
-                        {
-                            angle = Math.Atan(-1/line2.m) ;
-                            //debug
-                            line1.DrawLine(gameCanvas);
-                            line2.DrawLine(gameCanvas);
-                            double degree = SettingsClass.ConvertRadianDegree(angle);
-                            LineCol lineCol = new LineCol(vectorValue, degree, new Point(point.x,point.y));
-                            lineCol.DrawLine(gameCanvas);
-                        }
-                        
-                        body.vx= vectorValue*Math.Cos(angle);
-                        body.vy*= vectorValue*-Math.Sin(angle);
-                        return true;
+                        double length = Math.Sqrt(collisionNormalX * collisionNormalX + collisionNormalY * collisionNormalY);
+
+                        // Accumulate collision normals
+                        totalCollisionNormalX += collisionNormalX / length;
+                        totalCollisionNormalY += collisionNormalY / length;
+
+                        collisionDetected = true;
                     }
                 }
             }
+
+            if (collisionDetected)
+            {
+                // Calculate average collision normal
+                double averageCollisionNormalX = totalCollisionNormalX / (lines.Count * Polygon2.lines.Count);
+                double averageCollisionNormalY = totalCollisionNormalY / (lines.Count * Polygon2.lines.Count);
+
+                // Reflect the current velocity vector across the average collision normal
+                double currentVelocityX = body.vx;
+                double currentVelocityY = body.vy;
+
+                // Dot product
+                double dotProduct = currentVelocityX * averageCollisionNormalX + currentVelocityY * averageCollisionNormalY;
+
+                // Calculate reflected velocity
+                double reflectedVelocityX = currentVelocityX - 2 * dotProduct * averageCollisionNormalX;
+                double reflectedVelocityY = currentVelocityY - 2 * dotProduct * averageCollisionNormalY;
+
+                // Update body's velocity
+                body.vx = reflectedVelocityX;
+                body.vy = reflectedVelocityY;
+
+                double smallValue = 10;
+                // Move the object slightly away from the collision point to avoid repeated collisions
+                body.x += averageCollisionNormalX * smallValue;
+                body.y += averageCollisionNormalY * smallValue;
+
+                // Return true to indicate that at least one collision occurred
+                return true;
+            }
+
             return false;
-        }
-        // <image src="C:\Vs_Projects\Final_Projects\Project1\final_project4\final_project4\Images\Screenshot 2023-12-16 000120.png" scale="1" /> 
+        }*/
+
+
+
+
+
         private bool CollCheckForBall(ReSizableBall ball)
        {
             return CollCheckForPolygon(ball.rect);
        }
-       
 
-        
 
-        
+        public override void AddToCanvas(GameCanvas gameCanvas)
+        {
+            gameCanvas.AddToCanvas(this);
+        }
+
+
         public Point ConvertToPoint(double x, double y)=> new Point(x, y);
         public Point Convert_To_Real_Point(double x, double y) => new Point((SettingsClass.Convert_To_Real(x)),SettingsClass.Convert_To_Real(y));
 

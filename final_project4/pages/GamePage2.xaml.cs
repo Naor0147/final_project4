@@ -3,6 +3,7 @@ using final_project4.classes.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -29,7 +30,7 @@ namespace final_project4.pages
         public int frameCount = 0;
         public DispatcherTimer fpsTimer;
         public GameCanvas gameCanvas;
-        ReSizablePolygon pol1;
+        ReSizablePolygon pol2;
 
         private double angle = 0;
 
@@ -37,22 +38,30 @@ namespace final_project4.pages
         {
             this.InitializeComponent();
             gameCanvas = new GameCanvas(GameCanvas);
-            
+            SettingsClass.GameCanvas = gameCanvas;
             //pol1 =new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 100, vy: 0, ax: 0, ay: 0), 120, 100);
-            ReSizablePolygon pol2 = new ReSizablePolygon(new PhysicBody(x: 900, y: 100, vx: -100, vy: 0, ax: 0, ay: 0), 120, 100,gameCanvas,42);
-            gameCanvas.AddToCanvas(pol1);
+            pol2 = new ReSizablePolygon(new PhysicBody(x: 900, y: 200, vx: 200, vy: 400, ax: 0, ay: 0), 120, 100, 0);
+
             gameCanvas.AddToCanvas(pol2);
+            border();
+         
 
-
-            ReSizablePolygon reSizableBall = new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 0, vy: 0, ax: 0, ay: 0), 400,400,gameCanvas,27);
-           
-            gameCanvas.AddToCanvas(reSizableBall);
-            //gameCanvas.AddToCanvas(reSizableBall.rect);
-
-
-            
+            LineCol lineCol5 = pol2.body.CreateVectorRepresentation();
+            lineCol5.AddToCanvas(gameCanvas);
 
             Functions_add();
+        }
+
+        private void border()
+        {
+            ReSizablePolygon pol3 = new ReSizablePolygon(new PhysicBody(x: 0, y: 0, vx: 0, vy: 0, ax: 0, ay: 0), 1920, 1, 0.00001);
+            ReSizablePolygon pol4 = new ReSizablePolygon(new PhysicBody(x: 0, y: 990, vx: 0, vy: 0, ax: 0, ay: 0), 1920, 1, 0.00001);
+            gameCanvas.AddToCanvas(pol3);
+            gameCanvas.AddToCanvas(pol4);
+            ReSizablePolygon pol5 = new ReSizablePolygon(new PhysicBody(x: 0, y: 0, vx: 0, vy: 0, ax: 0, ay: 0), 1, 1000, 0.00001);
+            ReSizablePolygon pol6 = new ReSizablePolygon(new PhysicBody(x: 1910, y: 0, vx: 0, vy: 0, ax: 0, ay: 0), 1, 1000, 0.00001);
+            gameCanvas.AddToCanvas(pol5);
+            gameCanvas.AddToCanvas(pol6);
         }
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -73,7 +82,7 @@ namespace final_project4.pages
 
         private void FpsTimer_Tick(object sender, object e)
         {
-            fpstextblock.Text = $"FPS: {frameCount:F2}";
+           // fpstextblock.Text = $"FPS: {frameCount:F2}";
 
             classes.SettingsClass.current_FPS = frameCount;
             // Reset counters
@@ -84,18 +93,21 @@ namespace final_project4.pages
         private void CompositionTarget_Rendering(object sender, object e)
         {
             frameCount++;
-          //  gameCanvas.MoveAll();
-           
+
+            SettingsClass.justChanged -= 1;
+
+
             if (gameCanvas.checkCol())
             {
                 Debug.Print("True ");
             }
-            //angle+=0.5;
-            //pol1.angle = angle;
+            
             gameCanvas.MoveAll();
            
-            fpstextblock.Text = $"frame: {SettingsClass.current_FPS:F4}";
-
+            fpstextblock.Text = $"vx: {pol2.body.vx:F2} \n vy: {pol2.body.vy:F2} \n ";
+            
+          
+            gameCanvas.UpdateObjects() ;
 
         }
     }
