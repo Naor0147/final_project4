@@ -219,6 +219,13 @@ namespace final_project4.classes
                         body.vx = vectorValue * Math.Cos(rad);
 
                         body.vy = vectorValue * Math.Sin(rad);
+
+                        // i need to check if the object is hiting somthing again in 10 frame and let it change the speed
+                        //again and then ,put 20 fps or more stoper where the body cant have a collistion 
+
+
+
+
                      /*   if (ang < 0)
                         {
                             body.vy *= -1;
