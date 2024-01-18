@@ -40,7 +40,7 @@ namespace final_project4.pages
             gameCanvas = new GameCanvas(GameCanvas);
             SettingsClass.GameCanvas = gameCanvas;
             //pol1 =new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 100, vy: 0, ax: 0, ay: 0), 120, 100);
-            pol2 = new ReSizablePolygon(new PhysicBody(x: 900, y: 200, vx: 200, vy: 400, ax: 0, ay: 0), 120, 100, 0);
+            pol2 = new ReSizablePolygon(new PhysicBody(x: 900, y: 200, vx: 100, vy: 400, ax: 0, ay: -0.098), 120, 100, 0);
 
             gameCanvas.AddToCanvas(pol2);
             border();
@@ -58,10 +58,14 @@ namespace final_project4.pages
             ReSizablePolygon pol4 = new ReSizablePolygon(new PhysicBody(x: 0, y: 990, vx: 0, vy: 0, ax: 0, ay: 0), 1920, 1, 0.00001);
             gameCanvas.AddToCanvas(pol3);
             gameCanvas.AddToCanvas(pol4);
-            ReSizablePolygon pol5 = new ReSizablePolygon(new PhysicBody(x: 0, y: 0, vx: 0, vy: 0, ax: 0, ay: 0), 1, 1000, 0.00001);
-            ReSizablePolygon pol6 = new ReSizablePolygon(new PhysicBody(x: 1910, y: 0, vx: 0, vy: 0, ax: 0, ay: 0), 1, 1000, 0.00001);
+            ReSizablePolygon pol5 = new ReSizablePolygon(new PhysicBody(x: 0, y: 0, vx: 0, vy: 0, ax: 0, ay: 0), 1, 1000, 0);
+            ReSizablePolygon pol6 = new ReSizablePolygon(new PhysicBody(x: 1910, y: 0, vx: 0, vy: 0, ax: 0, ay: 0), 1, 1000, 0);
             gameCanvas.AddToCanvas(pol5);
             gameCanvas.AddToCanvas(pol6);
+
+            ReSizablePolygon pol8 = new ReSizablePolygon(new PhysicBody(x: 40, y: 500, vx: 0, vy: 0, ax: 0, ay: 0), 1, 1000, 280);
+            gameCanvas.AddToCanvas(pol8);
+
         }
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)

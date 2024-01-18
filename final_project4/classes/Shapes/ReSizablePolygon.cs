@@ -205,9 +205,14 @@ namespace final_project4.classes
                         lineCol4.AddToCanvas(SettingsClass.GameCanvas);
                         double a = lineCol4.Degree;// i need to change it to speed line
                         double b = line2.Degree;
-                       
-                        double ang = (2 * b - a);
-                       
+
+                        double ang = (2*b-a);
+                        if (body.vx<0)
+                        {
+                            ang = 180-(2 * b + a);
+
+                        }
+
                         double vectorValue = Math.Sqrt(body.vx * body.vx + body.vy * body.vy);
                         DebugClass.angleCollision = ang;
 
