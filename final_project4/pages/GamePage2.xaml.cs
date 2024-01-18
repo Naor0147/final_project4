@@ -40,7 +40,7 @@ namespace final_project4.pages
             gameCanvas = new GameCanvas(GameCanvas);
             SettingsClass.GameCanvas = gameCanvas;
             //pol1 =new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 100, vy: 0, ax: 0, ay: 0), 120, 100);
-            pol2 = new ReSizablePolygon(new PhysicBody(x: 900, y: 200, vx: 100, vy: 400, ax: 0, ay: -0.098), 120, 100, 0);
+            pol2 = new ReSizablePolygon(new PhysicBody(x: 900, y: 200, vx: 100, vy: 400, ax: 20, ay: 980), 120, 100, 0);
 
             gameCanvas.AddToCanvas(pol2);
             border();

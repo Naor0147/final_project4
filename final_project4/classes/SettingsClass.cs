@@ -9,9 +9,20 @@ namespace final_project4.classes
 {
     class SettingsClass
     {
+
+
+
+
+
+
         //const
         public const double IMAGINARY_SCREEN_HEIGHT = 1000;
         public const double IMAGINARY_SCREEN_WIDTH = 1920;
+
+        //let say the screen size in 19.2 meter on 10 metter
+
+
+
 
         public static double Window_VisibleBounds_Height = 1920;
         public static double Window_VisibleBounds_Width = 1000;

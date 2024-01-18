@@ -213,7 +213,7 @@ namespace final_project4.classes
 
                         }
 
-                        double vectorValue = Math.Sqrt(body.vx * body.vx + body.vy * body.vy);
+                        double vectorValue = Math.Sqrt(body.vx * body.vx + body.vy * body.vy)*0.8;
                         DebugClass.angleCollision = ang;
 
 

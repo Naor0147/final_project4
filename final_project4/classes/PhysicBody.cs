@@ -27,6 +27,9 @@ namespace final_project4.classes
         public double ax;
         public double ay;
 
+        public double[] last4SpeedsVx=new double[4] { 1, 1, 1, 1 };
+        public double[] last4SpeedsVy=new double[4] { 1, 1, 1, 1 };
+
 
         public double angle
         {
@@ -81,13 +84,43 @@ namespace final_project4.classes
             x+= vx * dt;
             y+= vy * dt;
             
-
+            UpdateSpeedArr();
+           /* if (vx < 0.001)
+            {
+                vx = 0;
+            }
+            if (vy<0.0001)
+            {
+                vy = 0;
+                ay = 0;
+            }*/
 
         }
 
         public override string ToString()
         {
             return $"({x},{y}), vx:{vx} vy:{vy} ax:{ax} ay:{ay}";
+        }
+        public void UpdateSpeedArrVx()
+        {
+            for (int i = 0;i<last4SpeedsVx.Length-1;i++)
+            {
+                last4SpeedsVx[i] = last4SpeedsVx[i + 1];
+            }
+            last4SpeedsVx[3] = vx;
+        }
+        public void UpdateSpeedArrVy()
+        {
+            for (int i = 0; i < last4SpeedsVy.Length - 1; i++)
+            {
+                last4SpeedsVy[i] = last4SpeedsVy[i + 1];
+            }
+            last4SpeedsVy[3] = vy;
+        }
+        public void UpdateSpeedArr()
+        {
+            UpdateSpeedArrVx();
+            UpdateSpeedArrVy();
         }
 
     }
