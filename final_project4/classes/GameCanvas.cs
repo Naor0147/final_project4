@@ -99,7 +99,7 @@ namespace final_project4.classes
             {
                 if (polygon != null)
                 {
-                    if (polygon.body!=null)
+                    if (polygon.body!=null &&polygon.body.movable)
                     {
                         polygon.body.Move(SettingsClass.current_FPS);
 

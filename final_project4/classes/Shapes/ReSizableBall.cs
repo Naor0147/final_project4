@@ -24,7 +24,7 @@ namespace final_project4.classes.Shapes
         {
             this.size = size;
 
-           // rect = new ReSizablePolygon(body,size,size);
+           rect = new ReSizablePolygon(body,size,size);
             
            // this.ImgEllipse = CreateEllipse(body.x,body.y,size,Colors.Red);
             this.realEllipse = CreateEllipse(body.xReal,body.yReal, SettingsClass.Convert_To_Real(size), Colors.Red);
@@ -45,7 +45,7 @@ namespace final_project4.classes.Shapes
             return ellipse;
 
         }
-
+        
         public override void UpdatePosAndSize()
         {
             Canvas.SetLeft(realEllipse, body.xReal);

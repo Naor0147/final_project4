@@ -6,6 +6,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.UI.Xaml.Documents;
 
 namespace final_project4.classes
 {
@@ -27,8 +28,8 @@ namespace final_project4.classes
         public double ax;
         public double ay;
 
-        public double[] last4SpeedsVx=new double[4] { 1, 1, 1, 1 };
-        public double[] last4SpeedsVy=new double[4] { 1, 1, 1, 1 };
+        public double[] last4SpeedsVx=new double[4] { 10, 100, 100, 100 };
+        public double[] last4SpeedsVy=new double[4] { 100, 100, 100, 100 };
 
 
         public double angle
@@ -42,10 +43,13 @@ namespace final_project4.classes
         public LineCol BodyVector;
 
         public bool movable;
+        public bool HaveGravity;
+
+        
         //const
 
-        public const double gravity = 9.8;
-        public PhysicBody(double x=0 ,double y=0, double vx=0,double vy=0,double ax=0,double ay = 0,bool movable =false)
+        public  double gravity = 980;
+        public PhysicBody(double x=0 ,double y=0, double vx=0,double vy=0,double ax=0,double ay = 0,bool gravitiy =false,bool movable =false)
         {
             this.x = x;
             this.y = y;
@@ -55,6 +59,7 @@ namespace final_project4.classes
 
             this.ax = ax;
             this.ay = ay;
+            HaveGravity = gravitiy;
             if (vx != 0 || vy != 0 || ax != 0 || ay != 0)
             {
                 movable = true;
@@ -77,24 +82,38 @@ namespace final_project4.classes
             double dt = 1 / SettingsClass.current_FPS;
 
             //add a/fps so you move the same if you different fps 
-            vx += ax * dt;
-            vy += ay * dt;
+            ChangeSpeed(dt);
 
+            DoesTheBallStop();
             //you move the same in every frame 
-            x+= vx * dt;
-            y+= vy * dt;
-            
-            UpdateSpeedArr();
-           /* if (vx < 0.001)
-            {
-                vx = 0;
-            }
-            if (vy<0.0001)
-            {
-                vy = 0;
-                ay = 0;
-            }*/
+            x += vx * dt;
+            y += vy * dt;
 
+            UpdateSpeedArr();
+            /* if (vx < 0.001)
+             {
+                 vx = 0;
+             }
+             if (vy<0.0001)
+             {
+                 vy = 0;
+                 ay = 0;
+             }*/
+
+        }
+
+        private void ChangeSpeed(double dt)
+        {
+            vx += ax * dt;
+            if (HaveGravity)
+            {
+                vy += ay * dt+ gravity *dt;
+
+            }
+            else
+            {
+                vy += ay  * dt;
+            }
         }
 
         public override string ToString()
@@ -111,6 +130,10 @@ namespace final_project4.classes
         }
         public void UpdateSpeedArrVy()
         {
+            /*if (vy==0)
+            {
+                Console.WriteLine( "0");
+            }*/
             for (int i = 0; i < last4SpeedsVy.Length - 1; i++)
             {
                 last4SpeedsVy[i] = last4SpeedsVy[i + 1];
@@ -121,6 +144,24 @@ namespace final_project4.classes
         {
             UpdateSpeedArrVx();
             UpdateSpeedArrVy();
+        }
+
+        public static double SumArr(double[] arr)
+        {
+            double sum = 0;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                sum+= arr[i];   
+            }
+            return sum;
+        }
+        public void DoesTheBallStop()
+        {
+            if (Math.Abs( SumArr(last4SpeedsVy))<8)
+            {
+                vy = 0;
+                //HaveGravity = false;
+            }
         }
 
     }

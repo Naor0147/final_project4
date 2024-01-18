@@ -195,25 +195,20 @@ namespace final_project4.classes
                    {
                        PointCol point = line1.Collision(line2);
                        if (point.collation)
-                        {
+                    {
+
+                        //by checking the last time the object was hit the object will not "drown " in the line 
                         FrameHitId = DebugClass.FrameCounter;
+
+
+
                         //just for debugging
-                        LineCol lineCol = new LineCol(new Point(point.x, point.y), new Point(point.x + 1, point.y));
-                        lineCol.AddToCanvas(SettingsClass.GameCanvas);
+                        //LineCol lineCol = new LineCol(new Point(point.x, point.y), new Point(point.x + 1, point.y));
+                        //lineCol.AddToCanvas(SettingsClass.GameCanvas);
 
-                        LineCol lineCol4 = this.body.CreateVectorRepresentation();
-                        lineCol4.AddToCanvas(SettingsClass.GameCanvas);
-                        double a = lineCol4.Degree;// i need to change it to speed line
-                        double b = line2.Degree;
+                        double ang = GetVectorFutreAngle(line2.Degree);
 
-                        double ang = (2*b-a);
-                        if (body.vx<0)
-                        {
-                            ang = 180-(2 * b + a);
-
-                        }
-
-                        double vectorValue = Math.Sqrt(body.vx * body.vx + body.vy * body.vy)*0.8;
+                        double vectorValue = Math.Sqrt(body.vx * body.vx + body.vy * body.vy) * 0.8;
                         DebugClass.angleCollision = ang;
 
 
@@ -224,40 +219,6 @@ namespace final_project4.classes
                         body.vx = vectorValue * Math.Cos(rad);
 
                         body.vy = vectorValue * Math.Sin(rad);
-
-                        // i need to check if the object is hiting somthing again in 10 frame and let it change the speed
-                        //again and then ,put 20 fps or more stoper where the body cant have a collistion 
-
-
-
-
-                     /*   if (ang < 0)
-                        {
-                            body.vy *= -1;
-                            body.vx *= -1;
-                        }
-                     */
-
-
-                        /* if (body.vy>0 )
-                         {
-                             body.y += 20;
-
-                         }
-                         else
-                         {
-                             body.y -= 20;
-
-                         }
-                         if (body.vx>0)
-                         {
-                             body.x += 20;
-                         }
-                         else
-                         {
-                             body.x -= 20;
-                         }
-      */
 
 
 
@@ -271,8 +232,24 @@ namespace final_project4.classes
                return false;
            }
 
-       
-       
+        private double GetVectorFutreAngle(double Degree)
+        {
+            LineCol lineCol4 = this.body.CreateVectorRepresentation();
+            //lineCol4.AddToCanvas(SettingsClass.GameCanvas);
+            double a = lineCol4.Degree;
+            double b = Degree;//line2.Degree
+
+            double ang = (2 * b - a);
+            if (body.vx < 0)
+            {
+                ang = 180 - (2 * b + a);
+
+            }
+
+            return ang;
+        }
+
+
 
         private bool CollCheckForBall(ReSizableBall ball)
        {
