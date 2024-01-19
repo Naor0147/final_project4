@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Shapes;
 
 namespace final_project4.classes.Shapes
@@ -33,6 +34,7 @@ namespace final_project4.classes.Shapes
 
         public Ellipse CreateEllipse(double x, double y ,double size, Color color)
         {
+            
             Ellipse ellipse= new Ellipse
             {
                 Fill = new SolidColorBrush(color),// i can also use imageBrush for photos 
@@ -40,6 +42,22 @@ namespace final_project4.classes.Shapes
                 Width = size,
                 Height = size,
             };
+            
+            
+            /*
+            Ellipse ellipse = new Ellipse
+            {
+                Fill = new ImageBrush
+                {
+                    ImageSource = new BitmapImage(new Uri("ms-appx:///Assets/LargeTile.scale-400.png")),
+                    Stretch = Stretch.Fill
+                },
+                StrokeThickness = 2,
+                Width = size,
+                Height = size,
+            };*/
+            
+             
             Canvas.SetLeft(ellipse, x);
             Canvas.SetTop(ellipse, y);
             return ellipse;

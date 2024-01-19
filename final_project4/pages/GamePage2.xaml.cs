@@ -31,7 +31,7 @@ namespace final_project4.pages
         public DispatcherTimer fpsTimer;
         public GameCanvas gameCanvas;
         ReSizablePolygon pol2;
-
+        ReSizableBall ball;
         private double angle = 0;
 
         public GamePage2()
@@ -39,35 +39,37 @@ namespace final_project4.pages
             this.InitializeComponent();
             gameCanvas = new GameCanvas(GameCanvas);
             SettingsClass.GameCanvas = gameCanvas;
-            //pol1 =new ReSizablePolygon(new PhysicBody(x: 100, y: 100, vx: 100, vy: 0, ax: 0, ay: 0), 120, 100);
-            pol2 = new ReSizablePolygon(new PhysicBody(x: 900, y: 200, vx: 100, vy: 400, ax: 0, ay: 0,true), 120, 100, 0);
-
-            ReSizableBall ball = new ReSizableBall(new PhysicBody(x: 900, y: 200, vx: -100, vy: 400, ax: 0, ay: 0, true), 100);
+            
+           
+           ball = new ReSizableBall(new PhysicBody(x: 100, y: 100, vx: -100, vy: 400, ax: 0, ay: 0, true), 50);
             gameCanvas.AddToCanvas(ball);
 
-            gameCanvas.AddToCanvas(pol2);
+
+            //            mainCanvas.PointerPressed += OnCanvasClick;
+
+
             border();
          
-
-            LineCol lineCol5 = pol2.body.CreateVectorRepresentation();
-            lineCol5.AddToCanvas(gameCanvas);
-
+            
             Functions_add();
         }
 
         private void border()
         {
-            ReSizablePolygon pol3 = new ReSizablePolygon(new PhysicBody(x: 0, y: 0, vx: 0, vy: 0, ax: 0, ay: 0), 1920, 1, 0.00001);
-            ReSizablePolygon pol4 = new ReSizablePolygon(new PhysicBody(x: 0, y: 990, vx: 0, vy: 0, ax: 0, ay: 0), 1920, 1, 0.00001);
+            ReSizablePolygon pol3 = new ReSizablePolygon(new PhysicBody(x: 0, y: 0, vx: 0, vy: 0, ax: 0, ay: 0), 1920, 50, 0);
+            ReSizablePolygon pol4 = new ReSizablePolygon(new PhysicBody(x: 0, y: 990, vx: 0, vy: 0, ax: 0, ay: 0), 1920, 50, 0);
             gameCanvas.AddToCanvas(pol3);
             gameCanvas.AddToCanvas(pol4);
-            ReSizablePolygon pol5 = new ReSizablePolygon(new PhysicBody(x: 0, y: 0, vx: 0, vy: 0, ax: 0, ay: 0), 1, 1000, 0);
-            ReSizablePolygon pol6 = new ReSizablePolygon(new PhysicBody(x: 1910, y: 0, vx: 0, vy: 0, ax: 0, ay: 0), 1, 1000, 0);
+            ReSizablePolygon pol5 = new ReSizablePolygon(new PhysicBody(x: 0, y: 0, vx: 0, vy: 0, ax: 0, ay: 0), 50, 1000, 0);
+            ReSizablePolygon pol6 = new ReSizablePolygon(new PhysicBody(x: 1910, y: 0, vx: 0, vy: 0, ax: 0, ay: 0), 50, 1000, 0);
             gameCanvas.AddToCanvas(pol5);
             gameCanvas.AddToCanvas(pol6);
 
-            ReSizablePolygon pol8 = new ReSizablePolygon(new PhysicBody(x: 40, y: 500, vx: 0, vy: 0, ax: 0, ay: 0), 1, 1000, 280);
+            ReSizablePolygon pol8 = new ReSizablePolygon(new PhysicBody(x: 40, y: 500, vx: 0, vy: 0, ax: 0, ay: 0), 50, 1000, 280);
             gameCanvas.AddToCanvas(pol8);
+           // ReSizablePolygon pol9 = new ReSizablePolygon(new PhysicBody(x: 400, y: 700, vx: 0, vy: 0, ax: 0, ay: 0), 400, 50, 280);
+           // gameCanvas.AddToCanvas(pol9);
+
 
         }
 
@@ -112,7 +114,7 @@ namespace final_project4.pages
             gameCanvas.MoveAll();
            
             
-            fpstextblock.Text = $"vx: {pol2.body.vx:F2} \n vy: {pol2.body.vy:F2} \n ang {pol2.body.angle} \n {DebugClass.angleCollision}";
+            fpstextblock.Text = $"vx: {ball.body.vx:F2} \n vy: {ball.body.vy:F2} \n ang {ball.body.angle} \n {DebugClass.angleCollision}";
             
           
             gameCanvas.UpdateObjects() ;

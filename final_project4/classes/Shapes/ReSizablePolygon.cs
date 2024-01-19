@@ -183,10 +183,10 @@ namespace final_project4.classes
         }
 
 
-        //don't do inertance for coll maybe check 
-           private bool CollCheckForPolygon(ReSizablePolygon Polygon2) // need to check what i can do for 
+        
+           private bool CollCheckForPolygon(ReSizablePolygon Polygon2) 
            {
-               if (Polygon2 == null || Polygon2.lines==null||lines==null || DebugClass.FrameCounter -FrameHitId<10) return false;//if there isn't a polygon there isn't collision
+               if (Polygon2 == null || Polygon2.lines==null||lines==null || DebugClass.FrameCounter -FrameHitId<5) return false;//if there isn't a polygon there isn't collision
 
 
                foreach (LineCol line1 in lines)
@@ -199,7 +199,10 @@ namespace final_project4.classes
 
                         //by checking the last time the object was hit the object will not "drown " in the line 
                         FrameHitId = DebugClass.FrameCounter;
-
+                        /*if (IsGround(line2))
+                        {
+                            return true;
+                        }*/
 
 
                         //just for debugging
@@ -231,6 +234,29 @@ namespace final_project4.classes
                }
                return false;
            }
+
+        private bool IsGround(LineCol line)
+        {
+            if (body.vy<5 )
+            {
+                body.HaveGravity = false;
+                if (line.m == 0)
+                {
+                    body.ay = 0;
+                    body.vy = 0;
+                }
+                else 
+                {
+                    body.ay=98*Math.Cos(line.Radian);
+                    body.ax =- 98 * Math.Sin(line.Radian);
+
+                }
+
+                return true;
+            }
+            return false;
+        }
+
 
         private double GetVectorFutreAngle(double Degree)
         {
