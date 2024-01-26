@@ -12,9 +12,9 @@ namespace final_project4.classes
 
         public List<ReSizable> ReList { get; set; }
 
-        public List<ReSizablePolygon> RePolList { get; set; }
+        public List<MyPolygon> RePolList { get; set; }
 
-        public List<ReSizableBall> ReBallList { get; set; }
+        public List<MyBall> ReBallList { get; set; }
        
         public List<MyLine> ReLineList { get; set; }
 
@@ -26,8 +26,8 @@ namespace final_project4.classes
         {
             MainCanvas = canvas;
             ReList = new List<ReSizable>();
-            RePolList = new List<ReSizablePolygon>();
-            ReBallList = new List<ReSizableBall>();
+            RePolList = new List<MyPolygon>();
+            ReBallList = new List<MyBall>();
             ReLineList = new List<MyLine>();
         }
 
@@ -37,15 +37,15 @@ namespace final_project4.classes
           
             switch (shape)
             {
-                case ReSizablePolygon pol:
-                   // ReSizablePolygon pol = (ReSizablePolygon)shape;
+                case MyPolygon pol:
+                   // MyPolygon pol = (MyPolygon)shape;
                     MainCanvas.Children.Add(pol.realPolygon);
                     RePolList.Add(pol);
                     break;
 
-                case ReSizableBall ball:
-                    //ReSizableBall ball = (ReSizableBall)shape;
-                    MainCanvas.Children.Add(ball.realEllipse);
+                case MyBall ball:
+                    //MyBall ball = (MyBall)shape;
+                    MainCanvas.Children.Add(ball.BallEllipse);
                     ReBallList.Add(ball);
                     break;
                 case MyLine lineCol:
@@ -138,10 +138,10 @@ namespace final_project4.classes
             switch (re1)
             {
 
-                case ReSizablePolygon reSizablePolygon:
+                case MyPolygon reSizablePolygon:
                     return reSizablePolygon.CollCheck(re2);
                     
-                case ReSizableBall reSizableBall:
+                case MyBall reSizableBall:
                     return reSizableBall.CollCheck(re2);
                    
             }

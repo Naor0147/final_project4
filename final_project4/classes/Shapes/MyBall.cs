@@ -11,24 +11,23 @@ using Windows.UI.Xaml.Shapes;
 
 namespace final_project4.classes.Shapes
 {
-    public class ReSizableBall:ReSizable
+    public class MyBall:ReSizable
     {
-        
-        public Ellipse ImgEllipse;
-        public Ellipse realEllipse;
+       
+        public Ellipse BallEllipse;
 
         public double size;
-        public ReSizablePolygon rect;
+        public MyPolygon rect;
 
 
-        public ReSizableBall(PhysicBody body, double size):base(body,size,size)
+        public MyBall(PhysicBody body, double size):base(body,size,size)
         {
             this.size = size;
 
-           rect = new ReSizablePolygon(body,size,size);
+           rect = new MyPolygon(body,size,size);
             
-           // this.ImgEllipse = CreateEllipse(body.x,body.y,size,Colors.Red);
-            this.realEllipse = CreateEllipse(body.xReal,body.yReal, SettingsClass.Convert_To_Real(size), Colors.Red);
+         
+            this.BallEllipse = CreateEllipse(body.xReal,body.yReal, SettingsClass.Convert_To_Real(size), Colors.Red);
 
         }
 
@@ -66,11 +65,11 @@ namespace final_project4.classes.Shapes
         
         public override void UpdatePosAndSize()
         {
-            Canvas.SetLeft(realEllipse, body.xReal);
-            Canvas.SetTop(realEllipse, body.yReal);
+            Canvas.SetLeft(BallEllipse, body.xReal);
+            Canvas.SetTop(BallEllipse, body.yReal);
             rect.UpdatePosAndSize();
-            realEllipse.Width = SettingsClass.Convert_To_Real(size);
-            realEllipse.Height = SettingsClass.Convert_To_Real(size);
+            BallEllipse.Width = SettingsClass.Convert_To_Real(size);
+            BallEllipse.Height = SettingsClass.Convert_To_Real(size);
         }
 
 

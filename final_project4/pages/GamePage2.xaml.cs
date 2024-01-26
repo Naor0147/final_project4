@@ -1,5 +1,6 @@
 ﻿using final_project4.classes;
 using final_project4.classes.Shapes;
+using final_project4.classes.Shapes.Polygons;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,12 +27,12 @@ namespace final_project4.pages
     /// </summary>
     public sealed partial class GamePage2 : Page
     {
-        ReSizablePolygon reSizablePolygon;
+        MyPolygon reSizablePolygon;
         public int frameCount = 0;
         public DispatcherTimer fpsTimer;
         public GameCanvas gameCanvas;
-        ReSizablePolygon pol2;
-        ReSizableBall ball;
+        MyPolygon pol2;
+        MyBall ball;
         private double angle = 0;
 
         public GamePage2()
@@ -41,7 +42,7 @@ namespace final_project4.pages
             SettingsClass.GameCanvas = gameCanvas;
             
            
-           ball = new ReSizableBall(new PhysicBody(x: 100, y: 100, vx: -100, vy: 400, ax: 0, ay: 0, true), 50);
+           ball = new MyBall(new PhysicBody(x: 100, y: 100, vx: -100, vy: 400, ax: 0, ay: 0, true), 50);
             gameCanvas.AddToCanvas(ball);
 
 
@@ -56,25 +57,31 @@ namespace final_project4.pages
 
         private void border()
         {
-            ReSizablePolygon pol3 = new ReSizablePolygon(new PhysicBody(x: 0, y: 0, vx: 0, vy: 0, ax: 0, ay: 0), 1920, 50, 0);
-            ReSizablePolygon pol4 = new ReSizablePolygon(new PhysicBody(x: 0, y: 990, vx: 0, vy: 0, ax: 0, ay: 0), 1920, 50, 0);
-            gameCanvas.AddToCanvas(pol3);
-            gameCanvas.AddToCanvas(pol4);
-            ReSizablePolygon pol5 = new ReSizablePolygon(new PhysicBody(x: 0, y: 0, vx: 0, vy: 0, ax: 0, ay: 0), 50, 1000, 0);
-            ReSizablePolygon pol6 = new ReSizablePolygon(new PhysicBody(x: 1910, y: 0, vx: 0, vy: 0, ax: 0, ay: 0), 50, 1000, 0);
-            gameCanvas.AddToCanvas(pol5);
-            gameCanvas.AddToCanvas(pol6);
+            //top and botoom 
+            CreateWall(0,0, 1920, 50);
+            CreateWall(0, 990, 1920, 50);
+            //wallls
+            CreateWall(0, 0, 50, 1000);
+            CreateWall(1870, 0, 50, 1000);
+            
+            //wall in angle 
+            //CreateWall(0, 550, 50, 1000, 280);
+         
 
-            ReSizablePolygon pol8 = new ReSizablePolygon(new PhysicBody(x: 40, y: 500, vx: 0, vy: 0, ax: 0, ay: 0), 50, 1000, 280);
-            gameCanvas.AddToCanvas(pol8);
-
-            ReSizableBasket basket = new ReSizableBasket(new PhysicBody(1800, 800), 100);
+            MyBasket basket = new MyBasket(new PhysicBody(150, 800), 100);
             gameCanvas.AddToCanvas(basket);
-           // ReSizablePolygon pol9 = new ReSizablePolygon(new PhysicBody(x: 400, y: 700, vx: 0, vy: 0, ax: 0, ay: 0), 400, 50, 280);
+           // MyPolygon pol9 = new MyPolygon(new PhysicBody(x: 400, y: 700, vx: 0, vy: 0, ax: 0, ay: 0), 400, 50, 280);
            // gameCanvas.AddToCanvas(pol9);
 
 
         }
+
+        public void CreateWall(double x, double y, double width, double height,double angle = 0)
+        {
+            MyWall wall = new MyWall(x, y, width, height, angle);
+            gameCanvas.AddToCanvas(wall);
+        }
+
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {

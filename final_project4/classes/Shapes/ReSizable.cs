@@ -33,10 +33,10 @@ namespace final_project4.classes.Shapes
             return false;
 
         }
-        //public virtual void CollCheck(ReSizablePolygon reSizablePolygons) { }
-        //public virtual void CollCheck(ReSizableBall reSizableBall) { }
+        //public virtual void CollCheck(MyPolygon reSizablePolygons) { }
+        //public virtual void CollCheck(MyBall reSizableBall) { }
 
-       // public virtual bool collCheckForPolygon( ReSizableBall reSizableBall) {}
+       // public virtual bool collCheckForPolygon( MyBall reSizableBall) {}
         
 
 

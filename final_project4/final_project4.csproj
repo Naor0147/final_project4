@@ -122,10 +122,11 @@
     <Compile Include="classes\DebugClass.cs" />
     <Compile Include="classes\PointCol.cs" />
     <Compile Include="classes\Shapes\MyLine.cs" />
+    <Compile Include="classes\Shapes\Polygons\MyWall.cs" />
     <Compile Include="classes\Shapes\ReSizable.cs" />
-    <Compile Include="classes\Shapes\ReSizableBall.cs" />
-    <Compile Include="classes\Shapes\ReSizableBasket.cs" />
-    <Compile Include="classes\Shapes\ReSizablePolygon.cs" />
+    <Compile Include="classes\Shapes\MyBall.cs" />
+    <Compile Include="classes\Shapes\Polygons\MyBasket.cs" />
+    <Compile Include="classes\Shapes\Polygons\MyPolygon.cs" />
     <Compile Include="classes\SettingsClass.cs" />
     <Compile Include="classes\GameCanvas.cs" />
     <Compile Include="classes\PhysicBody.cs" />
@@ -241,9 +242,7 @@
       <Version>2.5.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="classes\Shapes\Polygons\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

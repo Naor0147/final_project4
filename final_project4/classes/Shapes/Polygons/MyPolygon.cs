@@ -1,4 +1,5 @@
 ﻿using final_project4.classes.Shapes;
+using final_project4.pages;
 using NetTopologySuite.Mathematics;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ using Point = Windows.Foundation.Point;
 namespace final_project4.classes
 {
     //Resizable Polygon
-    public class ReSizablePolygon:ReSizable
+    public class MyPolygon:ReSizable
     {
       
 
@@ -47,7 +48,7 @@ namespace final_project4.classes
             }
         }
 
-        List<MyLine> lines;
+        protected List<MyLine> lines;
 
         //public GameCanvas gameCanvas; does'nt need game canvas
         public MyLine speedVector;
@@ -90,7 +91,7 @@ namespace final_project4.classes
 
 
 
-        public ReSizablePolygon(PhysicBody physicBody,double height ,double width ,double angle=0,string Id=""):base(physicBody,height,width)
+        public MyPolygon(PhysicBody physicBody,double height ,double width ,double angle=0,string Id=""):base(physicBody,height,width)
         {
             //physics
             this.body = physicBody;
@@ -182,7 +183,7 @@ namespace final_project4.classes
 
      
 
-        public  void CreateLineList()
+        public   void CreateLineList()
         {
       
             
@@ -207,12 +208,12 @@ namespace final_project4.classes
 
             switch (reSizable)
             {
-                case ReSizablePolygon re:
-                    ReSizablePolygon polygon = (ReSizablePolygon)reSizable;
+                case MyPolygon re:
+                    MyPolygon polygon = (MyPolygon)reSizable;
                     return CollCheckForPolygon(polygon);
 
-                case ReSizableBall ba:
-                    ReSizableBall reSizableBall = (ReSizableBall)reSizable;
+                case MyBall ba:
+                    MyBall reSizableBall = (MyBall)reSizable;
                     return CollCheckForBall(reSizableBall);
 
             }
@@ -240,7 +241,7 @@ namespace final_project4.classes
 
 
 
-           private bool CollCheckForPolygon(ReSizablePolygon Polygon2) 
+           private bool CollCheckForPolygon(MyPolygon Polygon2) 
            {
                if (Polygon2 == null || Polygon2.lines==null||lines==null || DebugClass.FrameCounter -FrameHitId<5) return false;//if there isn't a polygon there isn't collision
 
@@ -252,6 +253,13 @@ namespace final_project4.classes
                        PointCol point = line1.Collision(line2);
                        if (point.collation)
                     {
+                        if (line2.LineType == LineType.Win)
+                        {
+                            Polygon2.realPolygon.Stroke = new SolidColorBrush(Windows.UI.Colors.Green);
+                            Polygon2.realPolygon.StrokeThickness = 60;
+                            Polygon2.realPolygon.Fill = new SolidColorBrush(Windows.UI.Colors.Green);
+                            
+                        }
 
                         //by checking the last time the object was hit the object will not "drown " in the line 
                         FrameHitId = DebugClass.FrameCounter;
@@ -268,7 +276,7 @@ namespace final_project4.classes
                         double ang = GetVectorFutreAngle(line2.Degree);
 
 
-                        double Friction = 0.8;//0.8 is for loss of speed when coliision
+                        double Friction = line2.Friction;//0.8 is for loss of speed when coliision
                         double vectorValue = Math.Sqrt(body.vx * body.vx + body.vy * body.vy) *Friction;
                         DebugClass.angleCollision = ang;
 
@@ -335,7 +343,7 @@ namespace final_project4.classes
 
 
 
-        private bool CollCheckForBall(ReSizableBall ball)
+        private bool CollCheckForBall(MyBall ball)
        {
             return CollCheckForPolygon(ball.rect);
        }
