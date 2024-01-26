@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Shapes;
 namespace final_project4.classes.Shapes
 {
     
-    public class LineCol:ReSizable
+    public class MyLine:ReSizable
     {
         private double _x1, _y1, _x2, _y2;
         public double x1
@@ -109,27 +109,27 @@ namespace final_project4.classes.Shapes
 
 
 
-        public LineCol(Point p1,Point p2):base()
+        public MyLine(Point p1,Point p2):base()
         {
             ConvertLineToVector(p1.X, p1.Y, p2.X, p2.Y);
 
             CreateLine(p1.X,p1.Y,p2.X,p2.Y);
         }
       
-        public LineCol(double x1,double y1, double x2 ,double y2) : base()
+        public MyLine(double x1,double y1, double x2 ,double y2) : base()
         {
             ConvertLineToVector(x1 ,y1 ,x2,y2); 
             CreateLine(x1, y1, x2, y2);
 
         }
-        public LineCol(double VectorMagnitude ,double angle,Point point) : base()
+        public MyLine(double VectorMagnitude ,double angle,Point point) : base()
         {
             ConvertVectorToLine(VectorMagnitude, angle, point);
             //ConvertLineToVector(x1, y1, x2, y2);
         }
 
         //i put id just for makeing diffreant fuctions
-        public LineCol(double vx, double vy, Point point , int id) : base()
+        public MyLine(double vx, double vy, Point point , int id) : base()
         {
             ConvertSpeedToLineCol(vx, vy, point);
         }
@@ -229,7 +229,7 @@ namespace final_project4.classes.Shapes
         }
 
         //working 
-        public PointCol Collision(LineCol line)
+        public PointCol Collision(MyLine line)
         {
 
             

@@ -29,7 +29,7 @@ namespace final_project4.classes
         public double ay;
 
         public double[] last4SpeedsVx=new double[4] { 10, 100, 100, 100 };
-        public double[] last4SpeedsVy=new double[4] { 100, 100, 100, 100 };
+        public double[] last4SpeedsVy = new double[4] { 100, 100, 100, 100 };
 
 
         public double angle
@@ -40,12 +40,13 @@ namespace final_project4.classes
             }
         }
 
-        public LineCol BodyVector;
+        public MyLine BodyVector;
 
         public bool movable;
         public bool HaveGravity;
 
-        
+        public bool[] OnGround;
+
         //const
 
         public  double gravity = 980;
@@ -66,15 +67,44 @@ namespace final_project4.classes
             }
             
             this.movable = movable;
+
+
+            InitializeArr(last4SpeedsVx, 4, 100);
+            InitializeArr(last4SpeedsVy, 4, 100);
+            InitializeArr(OnGround, 4, false);
+
+
         }
 
-        public  LineCol CreateVectorRepresentation()
+
+        public static void InitializeArr<T>(T[] arr,int arraySize,T value)
         {
-            return new LineCol(SettingsClass.PythagoreanTheorem(vy, vx), SettingsClass.ConvertRadianDegree( Math.Atan(vy / vx)), new Windows.Foundation.Point(x, y));
+            if (arr == null)
+            {
+                arr = new T[arraySize];
+
+            }
+            for (int i = 0; i < arraySize; i++)
+            {
+                arr[i] = value;
+            }
         }
-        public LineCol CreateVectorRepresentation(Point point)
+      /*  public static void InitializeBoolArr(bool[] arr, int arraySize,bool value)
         {
-            return new LineCol(SettingsClass.PythagoreanTheorem(vy, vx), SettingsClass.ConvertRadianDegree( Math.Atan(vy / vx)), point);
+            arr = new bool[arraySize];
+            for (int i = 0; i < arraySize; i++)
+            {
+                arr[i] = value;
+            }
+        }*/
+
+        public  MyLine CreateVectorRepresentation()
+        {
+            return new MyLine(SettingsClass.PythagoreanTheorem(vy, vx), SettingsClass.ConvertRadianDegree( Math.Atan(vy / vx)), new Windows.Foundation.Point(x, y));
+        }
+        public MyLine CreateVectorRepresentation(Point point)
+        {
+            return new MyLine(SettingsClass.PythagoreanTheorem(vy, vx), SettingsClass.ConvertRadianDegree( Math.Atan(vy / vx)), point);
         }
 
         public void Move(double Fps)
@@ -107,7 +137,7 @@ namespace final_project4.classes
             vx += ax * dt;
             if (HaveGravity)
             {
-                vy += ay * dt+ gravity *dt;
+                vy += (ay+ gravity )*dt;
 
             }
             else
@@ -148,6 +178,7 @@ namespace final_project4.classes
 
         public static double SumArr(double[] arr)
         {
+            if (arr == null) return 0;
             double sum = 0;
             for (int i = 0; i < arr.Length; i++)
             {

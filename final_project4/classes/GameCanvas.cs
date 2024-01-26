@@ -16,7 +16,7 @@ namespace final_project4.classes
 
         public List<ReSizableBall> ReBallList { get; set; }
        
-        public List<LineCol> ReLineList { get; set; }
+        public List<MyLine> ReLineList { get; set; }
 
        int count = 0;
 
@@ -28,7 +28,7 @@ namespace final_project4.classes
             ReList = new List<ReSizable>();
             RePolList = new List<ReSizablePolygon>();
             ReBallList = new List<ReSizableBall>();
-            ReLineList = new List<LineCol>();
+            ReLineList = new List<MyLine>();
         }
 
         public void AddToCanvas(ReSizable shape)
@@ -48,7 +48,7 @@ namespace final_project4.classes
                     MainCanvas.Children.Add(ball.realEllipse);
                     ReBallList.Add(ball);
                     break;
-                case LineCol lineCol:
+                case MyLine lineCol:
                     MainCanvas.Children.Add(lineCol.line);
                     ReLineList.Add(lineCol);
                     break;
@@ -59,7 +59,7 @@ namespace final_project4.classes
 
         }
 
-      /*  public void AddToCanvas(LineCol line)
+      /*  public void AddToCanvas(MyLine line)
         {
             ReLineList.Add(line);
             MainCanvas.Children.Add(line.line);   

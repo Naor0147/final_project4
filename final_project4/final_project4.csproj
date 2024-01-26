@@ -121,9 +121,10 @@
     </Compile>
     <Compile Include="classes\DebugClass.cs" />
     <Compile Include="classes\PointCol.cs" />
-    <Compile Include="classes\Shapes\LineCol.cs" />
+    <Compile Include="classes\Shapes\MyLine.cs" />
     <Compile Include="classes\Shapes\ReSizable.cs" />
     <Compile Include="classes\Shapes\ReSizableBall.cs" />
+    <Compile Include="classes\Shapes\ReSizableBasket.cs" />
     <Compile Include="classes\Shapes\ReSizablePolygon.cs" />
     <Compile Include="classes\SettingsClass.cs" />
     <Compile Include="classes\GameCanvas.cs" />
@@ -198,6 +199,9 @@
     <Content Include="Assets\[removal.ai]_c9596534-7699-4c6f-a09e-f912718cc78c-_3a956fb9-aefa-4c4a-99af-38266c52c3d5.png" />
     <Content Include="Assets\_efd69a23-b5fe-49be-a68b-cb4b7ca9fbea_prev_ui %28Small%29.png" />
     <Content Include="Assets\_efd69a23-b5fe-49be-a68b-cb4b7ca9fbea_prev_ui.png" />
+    <Content Include="Images\basket1.jpg" />
+    <Content Include="Images\basket2.png" />
+    <Content Include="Images\bricks.jpg" />
     <Content Include="Images\garrett-parker-DlkF4-dbCOU-unsplash.jpg" />
     <Content Include="Images\Screenshot 2023-11-24 095806.png" />
     <Content Include="Images\Screenshot 2023-12-15 235821.png" />
@@ -236,6 +240,9 @@
     <PackageReference Include="NetTopologySuite">
       <Version>2.5.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="classes\Shapes\Polygons\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

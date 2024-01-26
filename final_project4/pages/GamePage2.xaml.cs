@@ -67,6 +67,9 @@ namespace final_project4.pages
 
             ReSizablePolygon pol8 = new ReSizablePolygon(new PhysicBody(x: 40, y: 500, vx: 0, vy: 0, ax: 0, ay: 0), 50, 1000, 280);
             gameCanvas.AddToCanvas(pol8);
+
+            ReSizableBasket basket = new ReSizableBasket(new PhysicBody(1800, 800), 100);
+            gameCanvas.AddToCanvas(basket);
            // ReSizablePolygon pol9 = new ReSizablePolygon(new PhysicBody(x: 400, y: 700, vx: 0, vy: 0, ax: 0, ay: 0), 400, 50, 280);
            // gameCanvas.AddToCanvas(pol9);
 
