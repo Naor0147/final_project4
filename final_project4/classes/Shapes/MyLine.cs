@@ -122,35 +122,29 @@ namespace final_project4.classes.Shapes
 
 
 
-        public MyLine(Point p1,Point p2,LineType _lineType=LineType.Wall):base()
+        public MyLine(Point p1,Point p2):base()
         {
-
             ConvertLineToVector(p1.X, p1.Y, p2.X, p2.Y);
 
             CreateLine(p1.X,p1.Y,p2.X,p2.Y);
-            LineType = _lineType;
         }
       
-        public MyLine(double x1,double y1, double x2 ,double y2, LineType _lineType = LineType.Wall) : base()
+        public MyLine(double x1,double y1, double x2 ,double y2) : base()
         {
             ConvertLineToVector(x1 ,y1 ,x2,y2); 
             CreateLine(x1, y1, x2, y2);
-            LineType = _lineType;
 
         }
-        public MyLine(double VectorMagnitude ,double angle,Point point, LineType _lineType = LineType.Wall) : base()
+        public MyLine(double VectorMagnitude ,double angle,Point point) : base()
         {
             ConvertVectorToLine(VectorMagnitude, angle, point);
             //ConvertLineToVector(x1, y1, x2, y2);
-            LineType = _lineType;
-
         }
 
         //i put id just for makeing diffreant fuctions
-        public MyLine(double vx, double vy, Point point , int id, LineType _lineType = LineType.Wall) : base()
+        public MyLine(double vx, double vy, Point point , int id) : base()
         {
             ConvertSpeedToLineCol(vx, vy, point);
-            LineType = _lineType;
         }
 
         private void ConvertVectorToLine(double VectorMagnitude, double angle, Point point)

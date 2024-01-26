@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Point = Windows.Foundation.Point;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -42,7 +43,7 @@ namespace final_project4.pages
             SettingsClass.GameCanvas = gameCanvas;
             
            
-           ball = new MyBall(new PhysicBody(x: 100, y: 100, vx: -100, vy: 400, ax: 0, ay: 0, true), 50);
+           ball = new MyBall(new PhysicBody(x: 100, y: 100, vx:10, vy: 400, ax: 0, ay: 0, true), 50);
             gameCanvas.AddToCanvas(ball);
 
 
@@ -53,6 +54,19 @@ namespace final_project4.pages
          
             
             Functions_add();
+            GameCanvas.PointerPressed += GameCanvas_PointerPressed;
+        }
+
+        private void GameCanvas_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            // Get the position of the pointer relative to the canvas
+            Point position = e.GetCurrentPoint(GameCanvas).Position;
+
+            // Display the coordinates
+            System.Diagnostics.Debug.WriteLine($"X: {position.X}, Y: {position.Y}");
+            System.Diagnostics.Debug.WriteLine($"X: {SettingsClass.Convert_To_Img( position.X)}, Y: {SettingsClass.Convert_To_Img(position.Y)}");
+            Point point = new Point(SettingsClass.Convert_To_Img(position.X), SettingsClass.Convert_To_Img(position.Y));
+            // You can do more with the click coordinates here
         }
 
         private void border()
@@ -65,13 +79,13 @@ namespace final_project4.pages
             CreateWall(1870, 0, 50, 1000);
             
             //wall in angle 
-            //CreateWall(0, 550, 50, 1000, 280);
+            CreateWall(0, 550, 50, 1000, 280);
          
 
-            MyBasket basket = new MyBasket(new PhysicBody(150, 800), 100);
+            MyBasket basket = new MyBasket(new PhysicBody(1700, 900), 100);
             gameCanvas.AddToCanvas(basket);
-           // MyPolygon pol9 = new MyPolygon(new PhysicBody(x: 400, y: 700, vx: 0, vy: 0, ax: 0, ay: 0), 400, 50, 280);
-           // gameCanvas.AddToCanvas(pol9);
+            //MyPolygon pol9 = new MyPolygon(new PhysicBody(x: 400, y: 700, vx: 0, vy: 0, ax: 0, ay: 0), 400, 50, 20);
+            //gameCanvas.AddToCanvas(pol9);
 
 
         }

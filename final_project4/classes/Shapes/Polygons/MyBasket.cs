@@ -20,11 +20,25 @@ namespace final_project4.classes.Shapes
 
         private void ChangeLineType()
         {
+            lines[3].LineType = LineType.Win;
+            /*
             for (int i = 0; i < this.lines.Count; i++)
             {
                 lines[i].LineType = LineType.Win;
+            }*/
+        }
+        private void changeFriction()
+        {
+            for (int i = 0; i < this.lines.Count; i++)
+            {
+                lines[i].Friction = 1;
             }
         }
-        private 
+        public override void CreateLineList()
+        {
+            base.CreateLineList();
+            ChangeLineType();
+            changeFriction();
+        }
     }
 }

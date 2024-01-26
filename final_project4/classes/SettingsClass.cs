@@ -41,6 +41,15 @@ namespace final_project4.classes
 
         public static double current_FPS = 144;//sets the value really high so the object doesn't move until the fps has been set
 
+        public static double Convert_To_Img(double value)
+        {
+            /*var window = ApplicationView.GetForCurrentView();
+
+
+            Debug.WriteLine($"  window visible bounds {window.VisibleBounds.Height} ");*/
+
+            return value * (  IMAGINARY_SCREEN_HEIGHT/ Window_VisibleBounds_Height);
+        }
         public static double Convert_To_Real(double value)
         {
             /*var window = ApplicationView.GetForCurrentView();

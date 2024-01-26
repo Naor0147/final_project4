@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetTopologySuite.Operation.Overlay.Validate;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,13 @@ namespace final_project4.classes.Shapes.Polygons
             realPolygon.Fill = new SolidColorBrush(Windows.UI.Colors.Blue);
             realPolygon.Opacity = 0.7;
             //this.lines[0]; 
+        }
+
+        public override bool CollCheck(ReSizable reSizable)
+        {
+           bool value= base.CollCheck(reSizable);
+
+            return value;
         }
     }
 }

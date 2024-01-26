@@ -183,7 +183,7 @@ namespace final_project4.classes
 
      
 
-        public   void CreateLineList()
+        public virtual void CreateLineList()
         {
       
             
@@ -256,8 +256,8 @@ namespace final_project4.classes
                         if (line2.LineType == LineType.Win)
                         {
                             Polygon2.realPolygon.Stroke = new SolidColorBrush(Windows.UI.Colors.Green);
-                            Polygon2.realPolygon.StrokeThickness = 60;
-                            Polygon2.realPolygon.Fill = new SolidColorBrush(Windows.UI.Colors.Green);
+                            Polygon2.realPolygon.StrokeThickness = 5;
+                            return true;
                             
                         }
 
