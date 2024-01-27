@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -87,6 +88,23 @@ namespace final_project4.classes.Shapes
         {
             gameCanvas.AddToCanvas(this);
         }
+
+        public void ClickOnTheScreen(Point point)
+        {
+            Point ballPoint = new Point(body.x + width/2, body.y+ height/2);
+            //double dis = SettingsClass.DistanceBetweenTwoPoints(ballPoint, point);
+            MyLine speedLine = new MyLine(ballPoint, point);
+            double rad = speedLine.Radian;
+            double angle = speedLine.Degree;
+            if (angle > 0)
+            {
+                rad += Math.PI ;
+            }
+            body.vx = speedLine.VectorMagnitude * Math.Cos(rad);
+            body.vy = speedLine.VectorMagnitude * Math.Sin(rad);
+
+        }
+
 
 
     }

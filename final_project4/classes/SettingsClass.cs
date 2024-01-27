@@ -64,6 +64,9 @@ namespace final_project4.classes
 
         public static double PythagoreanTheorem(double a, double b)=>(Math.Sqrt(a*a + b*b));
 
+        public static double DistanceBetweenTwoPoints(double x1, double y1,double x2,double y2)=> Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
+
+        public static double DistanceBetweenTwoPoints(Windows.Foundation.Point point1, Windows.Foundation.Point point2) => Math.Sqrt(Math.Pow(point2.X - point1.X, 2) + Math.Pow(point2.Y - point1.Y, 2));
 
         //Every time the screen size change the Function make sure the ratio of the width and height stay the same 
         public static void Change_To_Right_Screen_Ratio()
