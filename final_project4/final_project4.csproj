@@ -122,6 +122,7 @@
     <Compile Include="classes\DebugClass.cs" />
     <Compile Include="classes\PointCol.cs" />
     <Compile Include="classes\Shapes\MyLine.cs" />
+    <Compile Include="classes\Shapes\Polygons\Coin.cs" />
     <Compile Include="classes\Shapes\Polygons\MyWall.cs" />
     <Compile Include="classes\Shapes\ReSizable.cs" />
     <Compile Include="classes\Shapes\MyBall.cs" />
@@ -200,6 +201,7 @@
     <Content Include="Assets\[removal.ai]_c9596534-7699-4c6f-a09e-f912718cc78c-_3a956fb9-aefa-4c4a-99af-38266c52c3d5.png" />
     <Content Include="Assets\_efd69a23-b5fe-49be-a68b-cb4b7ca9fbea_prev_ui %28Small%29.png" />
     <Content Include="Assets\_efd69a23-b5fe-49be-a68b-cb4b7ca9fbea_prev_ui.png" />
+    <Content Include="Images\Coin.png" />
     <Content Include="Images\basket1.jpg" />
     <Content Include="Images\basket2.png" />
     <Content Include="Images\bricks.jpg" />

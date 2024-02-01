@@ -1,17 +1,7 @@
 ﻿using final_project4.classes.Shapes;
-using final_project4.pages;
-using NetTopologySuite.Mathematics;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Net.NetworkInformation;
-using System.Numerics;
-using System.Threading;
-using Windows.Foundation;
-using Windows.UI.ViewManagement.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Shapes;
@@ -203,7 +193,7 @@ namespace final_project4.classes
 
 
 
-        public override bool CollCheck(ReSizable reSizable)
+        public override CollisionType CollCheck(ReSizable reSizable)
         {
 
             switch (reSizable)
@@ -219,7 +209,7 @@ namespace final_project4.classes
             }
 
             
-            return false;   
+            return CollisionType.False;   
         }
 
 
@@ -241,9 +231,9 @@ namespace final_project4.classes
 
 
 
-           private bool CollCheckForPolygon(MyPolygon Polygon2) 
+           private CollisionType CollCheckForPolygon(MyPolygon Polygon2) 
            {
-               if (Polygon2 == null || Polygon2.lines==null||lines==null || DebugClass.FrameCounter -FrameHitId<5) return false;//if there isn't a polygon there isn't collision
+               if (Polygon2 == null || Polygon2.lines==null||lines==null || DebugClass.FrameCounter -FrameHitId<5) return CollisionType.False;//if there isn't a polygon there isn't collision
 
 
                foreach (MyLine line1 in lines)
@@ -252,54 +242,61 @@ namespace final_project4.classes
                    {
                        PointCol point = line1.Collision(line2);
                        if (point.collation)
-                    {
-                        if (line2.LineType == LineType.Win)
                         {
-                            Polygon2.realPolygon.Stroke = new SolidColorBrush(Windows.UI.Colors.Green);
-                            Polygon2.realPolygon.StrokeThickness = 5;
-                            return true;
-                            
+                         return CollionHandler(Polygon2, line2);
                         }
-
-                        //by checking the last time the object was hit the object will not "drown " in the line 
-                        FrameHitId = DebugClass.FrameCounter;
-                        /*if (IsGround(line2))
-                        {
-                            return true;
-                        }*/
-
-
-            //just for debugging
-            //MyLine lineCol = new MyLine(new Point(point.x, point.y), new Point(point.x + 1, point.y));
-            //lineCol.AddToCanvas(SettingsClass.GameCanvas);
-
-                        double ang = GetVectorFutreAngle(line2.Degree);
-
-
-                        double Friction = line2.Friction;//0.8 is for loss of speed when coliision
-                        double vectorValue = Math.Sqrt(body.vx * body.vx + body.vy * body.vy) *Friction;
-                        DebugClass.angleCollision = ang;
-
-
-
-                        double rad = SettingsClass.ConvertAngleRadian(ang);
-
-
-                        body.vx = vectorValue * Math.Cos(rad);
-
-                        body.vy = vectorValue * Math.Sin(rad);
-
-
-
-
-                        return true;
-                    }
                 }
 
 
                }
-               return false;
+               return CollisionType.False;
            }
+
+        private CollisionType CollionHandler(MyPolygon Polygon2, MyLine line2)
+        {
+            switch (line2.LineType)
+            {
+                case LineType.Win:
+                    {
+                        Polygon2.realPolygon.Stroke = new SolidColorBrush(Windows.UI.Colors.Green);
+                        Polygon2.realPolygon.StrokeThickness = 5;
+                        return CollisionType.Win;
+                    }
+                case LineType.Coin:
+                    {
+                       
+                        return CollisionType.Coin;
+
+                    }
+            }
+
+            //by checking the last time the object was hit the object will not "drown " in the line 
+            CollisionRegularLine(line2);
+
+            return CollisionType.Wall;
+        }
+
+        private void CollisionRegularLine(MyLine line2)
+        {
+            FrameHitId = DebugClass.FrameCounter;
+           
+
+            double ang = GetAngleBewteenVectorAndLine(line2.Degree);
+
+
+            double Friction = line2.Friction;//0.8 is for loss of speed when coliision
+            DebugClass.angleCollision = ang;
+
+
+
+            double rad = SettingsClass.ConvertAngleRadian(ang);
+
+            double vectorValue = Math.Sqrt(body.vx * body.vx + body.vy * body.vy) * Friction;
+
+            body.vx = vectorValue * Math.Cos(rad);
+
+            body.vy = vectorValue * Math.Sin(rad);
+        }
 
         private bool IsGround(MyLine line)
         {
@@ -324,7 +321,7 @@ namespace final_project4.classes
         }
 
 
-        private double GetVectorFutreAngle(double Degree)
+        private double GetAngleBewteenVectorAndLine(double Degree)
         {
             MyLine lineCol4 = this.body.CreateVectorRepresentation();
             //lineCol4.AddToCanvas(SettingsClass.GameCanvas);
@@ -343,7 +340,7 @@ namespace final_project4.classes
 
 
 
-        private bool CollCheckForBall(MyBall ball)
+        private CollisionType CollCheckForBall(MyBall ball)
        {
             return CollCheckForPolygon(ball.rect);
        }

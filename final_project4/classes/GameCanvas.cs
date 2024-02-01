@@ -108,7 +108,7 @@ namespace final_project4.classes
                 }
             }
         }
-        public bool checkCol()
+        public void checkCol()
         {
             for (int i = 0; i < ReList.Count-1; i++)
             {
@@ -116,14 +116,21 @@ namespace final_project4.classes
                 {
                     if (IsValidCollCheck(i))
                     {
-                        CollCheckTwoObjects(ReList[i], ReList[j]);
-                        
+                        switch (CollCheckTwoObjects(ReList[i], ReList[j]))
+                        {
+                            case CollisionType.Coin:
+                                {
+                                    ReList[j].height = 0;
+
+                                    break;
+                                }
+                        }
                         
                     }
 
                 }
             }
-            return false;
+            
         }
 
         private bool IsValidCollCheck(int i)
@@ -131,7 +138,7 @@ namespace final_project4.classes
             return ReList[i] != null && ReList[i].body != null && ReList[i].body.movable == true;
         }
 
-        private bool CollCheckTwoObjects(ReSizable re1, ReSizable re2)
+        private CollisionType CollCheckTwoObjects(ReSizable re1, ReSizable re2)
         {
             
 
@@ -146,7 +153,7 @@ namespace final_project4.classes
                    
             }
 
-            return false;
+            return CollisionType.False;
         }
 
     }

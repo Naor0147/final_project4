@@ -67,10 +67,10 @@ namespace final_project4.pages
             System.Diagnostics.Debug.WriteLine($"X: {SettingsClass.Convert_To_Img( position.X)}, Y: {SettingsClass.Convert_To_Img(position.Y)}");
             Point point = new Point(SettingsClass.Convert_To_Img(position.X), SettingsClass.Convert_To_Img(position.Y));
             Point ballPoint= new Point( ball.body.x+(ball.width/2),ball.body.y + (ball.height/2) );
-            MyLine line = new MyLine(point, ballPoint);
-            line.AddToCanvas(gameCanvas);
-            ball.ClickOnTheScreen(point);
+           // MyLine line = new MyLine(point, ballPoint);
+            //line.AddToCanvas(gameCanvas);
             
+            fpstextblock.Text = "\n \n"+ball.ClickOnTheScreen(point);
 
             // You can do more with the click coordinates here
         }
@@ -88,11 +88,12 @@ namespace final_project4.pages
            CreateWall(0, 550, 50, 1000, 280);
          
 
-            //MyBasket basket = new MyBasket(new PhysicBody(1700, 900), 100);
-            //gameCanvas.AddToCanvas(basket);
+            MyBasket basket = new MyBasket(new PhysicBody(1700, 900), 100);
+            gameCanvas.AddToCanvas(basket);
             //MyPolygon pol9 = new MyPolygon(new PhysicBody(x: 400, y: 700, vx: 0, vy: 0, ax: 0, ay: 0), 400, 50, 20);
             //gameCanvas.AddToCanvas(pol9);
-
+            Coin coin = new Coin(new PhysicBody(1200, 400), 100);
+            gameCanvas.AddToCanvas(coin);
 
         }
 
@@ -136,15 +137,13 @@ namespace final_project4.pages
             DebugClass.FrameCounter += 1;
 
 
-            if (gameCanvas.checkCol())
-            {
-                Debug.Print("True ");
-            }
+            gameCanvas.checkCol();
+          
             
             gameCanvas.MoveAll();
            
             
-            fpstextblock.Text = $"vx: {ball.body.vx:F2} \n vy: {ball.body.vy:F2} \n ang {ball.body.angle} \n {DebugClass.angleCollision}";
+           // fpstextblock.Text = $"vx: {ball.body.vx:F2} \n vy: {ball.body.vy:F2} \n ang {ball.body.angle} \n {DebugClass.angleCollision}";
             
           
             gameCanvas.UpdateObjects() ;

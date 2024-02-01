@@ -80,7 +80,7 @@ namespace final_project4.classes.Shapes
             return $"physic[{body}] ball size:{size}";
         }
 
-        public override bool CollCheck(ReSizable reSizable)
+        public override CollisionType CollCheck(ReSizable reSizable)
         {
             return rect.CollCheck(reSizable);
         }
@@ -89,20 +89,28 @@ namespace final_project4.classes.Shapes
             gameCanvas.AddToCanvas(this);
         }
 
-        public void ClickOnTheScreen(Point point)
+        public double ClickOnTheScreen(Point point)
         {
             Point ballPoint = new Point(body.x + width/2, body.y+ height/2);
             //double dis = SettingsClass.DistanceBetweenTwoPoints(ballPoint, point);
             MyLine speedLine = new MyLine(ballPoint, point);
             double rad = speedLine.Radian;
-            double angle = speedLine.Degree;
-            if (angle > 0)
+            double angle =speedLine.Degree;
+           
+          /*  if (rad > Math.PI/2)
             {
                 rad += Math.PI ;
-            }
+            }*/
+           
             body.vx = speedLine.VectorMagnitude * Math.Cos(rad);
             body.vy = speedLine.VectorMagnitude * Math.Sin(rad);
+            if (ballPoint.X>point.X)
+            {
+                body.vx *= -1;
+                body.vy *= -1;
+            }
 
+            return angle;
         }
 
 

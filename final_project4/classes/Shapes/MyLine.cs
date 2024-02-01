@@ -17,7 +17,7 @@ namespace final_project4.classes.Shapes
     
     public enum LineType
     {
-        Wall,Win
+        Wall,Win,Coin
     }
 
 
@@ -156,7 +156,7 @@ namespace final_project4.classes.Shapes
         }
         private void ConvertSpeedToLineCol(double vx ,double vy ,Point point)
         {
-            double _angle =180- Math.Atan(vy / vx);
+            double _angle = Math.Atan(vy / vx);
             double _VectorMagnitude =SettingsClass.PythagoreanTheorem(vx,vy);
 
             double dx = _VectorMagnitude * Math.Cos(_angle);
@@ -177,7 +177,6 @@ namespace final_project4.classes.Shapes
             double dy = y2 - y1;
             if (dx==0)
                 Radian = 0;
-
             else
                 Radian = Math.Atan((dy)/(dx));
 

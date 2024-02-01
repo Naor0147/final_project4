@@ -23,11 +23,10 @@ namespace final_project4.classes.Shapes.Polygons
             //this.lines[0]; 
         }
 
-        public override bool CollCheck(ReSizable reSizable)
+        public override CollisionType CollCheck(ReSizable reSizable)
         {
-           bool value= base.CollCheck(reSizable);
 
-            return value;
+            return base.CollCheck(reSizable);
         }
     }
 }

@@ -188,11 +188,11 @@ namespace final_project4.classes
         }
         public void DoesTheBallStop()
         {
-            if (Math.Abs( SumArr(last4SpeedsVy))<8)
+         /*   if (Math.Abs( SumArr(last4SpeedsVy))<8)
             {
                 vy = 0;
                 //HaveGravity = false;
-            }
+            }*/
         }
 
     }

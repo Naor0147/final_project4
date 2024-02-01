@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace final_project4.classes.Shapes
 {
+    public enum CollisionType
+    {
+        False,Wall,Coin,Win
+    }
+
+
     public abstract class ReSizable
     {
         public PhysicBody body;
@@ -29,8 +35,8 @@ namespace final_project4.classes.Shapes
 
         public virtual void AddToCanvas(GameCanvas gameCanvas) { }
         
-        public virtual bool CollCheck(ReSizable reSizableBall) {
-            return false;
+        public virtual CollisionType CollCheck(ReSizable reSizableBall) {
+            return CollisionType.False;
 
         }
         //public virtual void CollCheck(MyPolygon reSizablePolygons) { }
