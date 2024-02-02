@@ -155,6 +155,9 @@ namespace final_project4.classes
                     }
                 case CollisionType.Win:
                 {
+                    SettingsClass.current_FPS=0;
+                    CreateWall(0, 0, 1920, 1000);
+                    CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 2 - 100, SettingsClass.IMAGINARY_SCREEN_HEIGHT / 2 - 50, 100, "you won");
                     break;
                 }
             }
