@@ -1,5 +1,6 @@
 ﻿using final_project4.classes.Shapes;
 using final_project4.classes.Shapes.Polygons;
+using final_project4.classes.Stats;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
@@ -23,16 +24,18 @@ namespace final_project4.classes
         public MyText TimeClickedText;
 
         //score
-        public double score = 0;
-
-        public double timer = 0;
+        public LevelStats LevelStats { get; set; } = new LevelStats();
+       
         public int TimeClicked = 0;
 
         public GameCanvas(Canvas canvas)
         {
             MainCanvas = canvas;
-            ReList = new List<ReSizable>();
 
+            //where i save the player level stats
+            
+            //Lists 
+            ReList = new List<ReSizable>();
             ReLineList = new List<MyLine>();
             MyTextList = new List<MyText>();
         }
@@ -141,14 +144,19 @@ namespace final_project4.classes
                             MyCoin coin = ReList[j] as MyCoin;
                             if (!coin.Collected)
                             {
-                                score += coin.CoinValue;
-                                ScoreText.Variable = score + "";
-                                ScoreText.UpdatePositionAndSize();
+                                LevelStats.AmountOfCoinsCollected++;
+                                LevelStats.CoinsTotal+= coin.CoinValue;
+                                ScoreText.Variable = LevelStats.CoinsTotal + "";
+                               
                                 coin.Collected = true;
                             }
                         }
                         break;
                     }
+                case CollisionType.Win:
+                {
+                    break;
+                }
             }
         }
 
@@ -214,9 +222,11 @@ namespace final_project4.classes
             //wall in angle
             CreateWall(0, 550, 50, 1000, angle: 280);
 
-            ScoreText = CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 2 - 100, 0, 40, "ScoreText = ", (score + ""));
+            ScoreText = CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 2 - 100, 0, 40, "Money collected = ", (LevelStats.CoinsTotal + ""));
 
-            TimeClickedText = CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 2 - 100, 50, 40, "Clicked ", TimeClicked + "", " time ");
+            TimeClickedText = CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 2 - 100, 50, 40, "Clicked ", LevelStats.TimeClicked + "", " time ");
+
+            TimeText = CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 4 - 100, 0, 40, "Time passed= ", LevelStats.TimePassed + "");
         }
 
         public void Functions()

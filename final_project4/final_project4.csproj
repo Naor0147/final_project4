@@ -132,6 +132,7 @@
     <Compile Include="classes\SettingsClass.cs" />
     <Compile Include="classes\GameCanvas.cs" />
     <Compile Include="classes\PhysicBody.cs" />
+    <Compile Include="classes\Stats\LevelStats.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

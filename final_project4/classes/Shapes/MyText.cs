@@ -4,9 +4,45 @@ namespace final_project4.classes.Shapes
 {
     public class MyText
     {
-        public string Text1 { get; set; }
-        public string Text2 { get; set; }
-        public string Variable { get; set; }
+        private string _text1;
+        private string _text2;
+
+        public string Text1
+        {
+            get
+            {
+                return _text1;
+            }
+            set
+            {
+                _text1 = value;
+                UpdatePositionAndSize();
+            }
+        }
+        public string Text2
+        {
+            get
+            {
+                return _text2;
+            }
+            set
+            {
+                _text2 = value;
+                UpdatePositionAndSize();
+            }
+        }
+        private string _variable;
+        public string Variable { 
+            get
+            { 
+                return _variable;
+            }
+            set
+            {
+                _variable = value;
+                UpdatePositionAndSize();
+            }
+        }
         public double FontSize { get; set; }
         public PhysicBody PhysicBody { get; set; }
         public TextBlock TextBlock { get; set; }
@@ -42,6 +78,8 @@ namespace final_project4.classes.Shapes
 
         public void UpdatePositionAndSize()
         {
+            if (PhysicBody==null) return;
+            
             Canvas.SetLeft(TextBlock, PhysicBody.xReal);
             Canvas.SetTop(TextBlock, PhysicBody.yReal);
             TextBlock.FontSize = SettingsClass.Convert_To_Real(FontSize);

@@ -1,5 +1,6 @@
 ﻿using final_project4.classes;
 using final_project4.classes.Shapes;
+using final_project4.classes.Stats;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -22,7 +23,8 @@ namespace final_project4.pages
         public GameCanvas gameCanvas;
         
         private MyBall ball;
-        
+
+        private LevelStats LevelStats;
 
         public GamePage2()
         {
@@ -37,6 +39,9 @@ namespace final_project4.pages
 
             Functions_add();
             GameCanvas.PointerPressed += GameCanvas_PointerPressed;
+
+            LevelStats = new LevelStats();
+
         }
 
         private void GameCanvas_PointerPressed(object sender, PointerRoutedEventArgs e)
@@ -52,6 +57,9 @@ namespace final_project4.pages
             // MyLine line = new MyLine(point, ballPoint);
             //line.AddToCanvas(gameCanvas);
             ball.ClickOnTheScreen(point);
+            gameCanvas.LevelStats.TimeClicked++;
+            
+            gameCanvas.TimeClickedText.Variable = gameCanvas.LevelStats.TimeClicked + "";
         
 
         }
@@ -59,8 +67,6 @@ namespace final_project4.pages
         private void border()
         {
             gameCanvas.CreateBasket(1700, 900, 100);
-            //MyPolygon pol9 = new MyPolygon(new PhysicBody(x: 400, y: 700, vx: 0, vy: 0, ax: 0, ay: 0), 400, 50, 20);
-            //gameCanvas.AddToCanvas(pol9);
             gameCanvas.CreateCoin(1200, 200, 50);
             gameCanvas.CreateCoin(1100, 300, 50);
             gameCanvas.CreateCoin(1000, 400, 50);
@@ -84,10 +90,11 @@ namespace final_project4.pages
 
         private void FpsTimer_Tick(object sender, object e)
         {
-            // fpstextblock.Text = $"FPS: {frameCount:F2}";
 
+            gameCanvas.LevelStats.TimePassed++;
+            gameCanvas.TimeText.Variable = gameCanvas.LevelStats.TimePassed+"";
             classes.SettingsClass.current_FPS = frameCount;
-            // Reset counters
+         
             frameCount = 0;
         }
 
