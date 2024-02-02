@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace final_project4.classes.Shapes.Polygons
+﻿namespace final_project4.classes.Shapes.Polygons
 {
     public class MyCoin : MyPolygon
     {
         public double CoinValue;
         public bool Collected = false;
-        public MyCoin(PhysicBody physicBody, double size ,double value=10, string Id = "") : base(physicBody, size, size, 0, Id)
+        public MyCoin(PhysicBody physicBody, double size, double value = 10, string Id = "") : base(physicBody, size, size, 0, Id)
         {
             this.CoinValue = value;
             this.ChangeAppearance("Coin.png");
-          
+
             this.Opacity = 1.0;
             this.TheBrush = null;
             ChangeLineType();
@@ -22,7 +16,7 @@ namespace final_project4.classes.Shapes.Polygons
 
         private void ChangeLineType()
         {
-            
+
             for (int i = 0; i < this.lines.Count; i++)
             {
                 lines[i].LineType = LineType.Coin;
@@ -35,7 +29,7 @@ namespace final_project4.classes.Shapes.Polygons
         {
             base.CreateLineList();
             ChangeLineType();
-            
+
         }
     }
 }

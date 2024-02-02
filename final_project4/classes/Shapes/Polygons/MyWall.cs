@@ -1,12 +1,6 @@
-﻿using NetTopologySuite.Operation.Overlay.Validate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Shapes;
 
 namespace final_project4.classes.Shapes.Polygons
 {
@@ -14,15 +8,15 @@ namespace final_project4.classes.Shapes.Polygons
     {
         Regular, SideWall, Floor, Celling
     }
+
     public class MyWall : MyPolygon
     {
         private WallStyle Style;
-        public MyWall(PhysicBody physicBody, double height, double width,WallStyle wallStyle  ,double angle = 0, string Id = "") : base(physicBody, height, width, angle, Id)
+
+        public MyWall(PhysicBody physicBody, double height, double width, WallStyle wallStyle, double angle = 0, string Id = "") : base(physicBody, height, width, angle, Id)
         {
-            
             this.Style = wallStyle;
             ChangeAppearance();
-            
         }
 
         public void ChangeAppearance()
@@ -34,30 +28,29 @@ namespace final_project4.classes.Shapes.Polygons
             {
                 case WallStyle.Regular:
 
-                   
-                     realPolygon.Fill = new SolidColorBrush(Windows.UI.Colors.Blue);
-                     realPolygon.Opacity = 0.7;
+                    realPolygon.Fill = new SolidColorBrush(Windows.UI.Colors.Blue);
+                    realPolygon.Opacity = 0.7;
                     break;
+
                 case WallStyle.SideWall:
 
-                    
                     realPolygon.Fill = new ImageBrush
                     {
                         ImageSource = new BitmapImage(new Uri("ms-appx:///Images/BrickWall2.jpg")),
                         Stretch = Stretch.Fill
                     };
-                        
+
                     break;
 
                 case WallStyle.Floor:
 
-                   
                     realPolygon.Fill = new ImageBrush
                     {
                         ImageSource = new BitmapImage(new Uri("ms-appx:///Images/floor.png")),
                         Stretch = Stretch.Fill
                     };
                     break;
+
                 case WallStyle.Celling:
                     realPolygon.Fill = new ImageBrush
                     {
@@ -68,10 +61,8 @@ namespace final_project4.classes.Shapes.Polygons
             }
         }
 
-
         public override CollisionType CollCheck(ReSizable reSizable)
         {
-
             return base.CollCheck(reSizable);
         }
     }

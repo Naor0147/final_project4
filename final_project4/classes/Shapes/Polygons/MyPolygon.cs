@@ -1,5 +1,4 @@
 ﻿using final_project4.classes.Shapes;
-using final_project4.classes.Shapes.Polygons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +10,11 @@ using Point = Windows.Foundation.Point;
 namespace final_project4.classes
 {
     //Resizable Polygon
-    public class MyPolygon:ReSizable
+    public class MyPolygon : ReSizable
     {
-      
+        public Polygon realPolygon { get; set; }
 
-        public Polygon realPolygon{ get; set; }
-
-        public double  angle;
-        
+        public double angle;
 
         public string Id;
 
@@ -34,7 +30,7 @@ namespace final_project4.classes
             set
             {
                 __imgPoints = value;
-         
+
                 CreateLineList();
             }
         }
@@ -44,28 +40,24 @@ namespace final_project4.classes
         //public GameCanvas gameCanvas; does'nt need game canvas
         public MyLine speedVector;
 
-
         public uint FrameHitId = 0;
 
+        //parameters that could be changed
 
-
-        //parameters that could be changed 
-
-        public double Opacity 
+        public double Opacity
         {
             get { return realPolygon.Opacity; }
-            set { 
+            set
+            {
                 realPolygon.Opacity = value;
             }
         }
 
-       
         public Brush TheBrush
         {
             get
             {
                 return realPolygon.Stroke;
-                
             }
             set
             {
@@ -73,16 +65,7 @@ namespace final_project4.classes
             }
         }
 
-
-
-
-
-
-
-
-
-
-        public MyPolygon(PhysicBody physicBody,double height ,double width ,double angle=0,string Id=""):base(physicBody,height,width)
+        public MyPolygon(PhysicBody physicBody, double height, double width, double angle = 0, string Id = "") : base(physicBody, height, width)
         {
             //physics
             this.Body = physicBody;
@@ -91,42 +74,30 @@ namespace final_project4.classes
             this.Width = width;
             this.angle = angle;
 
-            //for better readability 
+            //for better readability
             double x = physicBody.x;
             double y = physicBody.y;
 
             this.Id = Id;
 
             _pointsImg = CreateRect(x, y, width, height, angle).Points;
-            realPolygon= CreateRect(SettingsClass.Convert_To_Real(x),SettingsClass.Convert_To_Real(y), SettingsClass.Convert_To_Real(width), SettingsClass.Convert_To_Real(height), angle);
-
-
-            
+            realPolygon = CreateRect(SettingsClass.Convert_To_Real(x), SettingsClass.Convert_To_Real(y), SettingsClass.Convert_To_Real(width), SettingsClass.Convert_To_Real(height), angle);
         }
+
         public void UpdateRealSize()
         {
-          
             for (int i = 0; i < _pointsImg.Count; i++)
             {
                 realPolygon.Points[i] = Convert_To_Real_Point(_pointsImg[i].X, _pointsImg[i].Y);
             }
-            
         }
-        
-
 
         public override void UpdatePosAndSize()
         {
-            _pointsImg= RectPoints(Body.x, Body.y, Width, Height, angle);
-            
+            _pointsImg = RectPoints(Body.x, Body.y, Width, Height, angle);
+
             UpdateRealSize();
         }
-
-
-        
-        
-      
-
 
         private Polygon CreateRect(double x, double y, double height, double width, double angle)
         {
@@ -134,12 +105,11 @@ namespace final_project4.classes
 
             // Define the points of the polygon
             myPolygon.Points = RectPoints(x, y, height, width, angle);
-            
-            return myPolygon;
 
+            return myPolygon;
         }
 
-        public  Polygon PolygonAppearance()
+        public Polygon PolygonAppearance()
         {
             return new Polygon()
             {
@@ -150,11 +120,10 @@ namespace final_project4.classes
             };
         }
 
-        private PointCollection RectPoints(double x, double y, double height, double width,double angle)
+        private PointCollection RectPoints(double x, double y, double height, double width, double angle)
         {
-
-            /// if i put the angle to a really small number close to 0 , collition will work properly , need to if there is posiible way to fix 
-            double radian = SettingsClass.ConvertAngleRadian(angle);//convert the angle to radian 
+            /// if i put the angle to a really small number close to 0 , collition will work properly , need to if there is posiible way to fix
+            double radian = SettingsClass.ConvertAngleRadian(angle);//convert the angle to radian
             double sin = Math.Sin(radian);//the sin , cos works in radian so i convert the angle to radian
             double cos = Math.Cos(radian);
 
@@ -166,74 +135,59 @@ namespace final_project4.classes
             return polygonPoints;
         }
 
-     
-
         public virtual void CreateLineList()
         {
-      
-            
-            if (_pointsImg == null) return;//if there isn't a list of points there nothing to draw 
+            if (_pointsImg == null) return;//if there isn't a list of points there nothing to draw
 
-            lines  = new List<MyLine>();// reset the list 
+            lines = new List<MyLine>();// reset the list
 
-
-            //this method connects all the point , and leave the last point to connects with first point 
-            for (int i = 0; i < _pointsImg.Count- 1; i++)
+            //this method connects all the point , and leave the last point to connects with first point
+            for (int i = 0; i < _pointsImg.Count - 1; i++)
             {
-                lines.Add(new MyLine(_pointsImg[i], _pointsImg[i+1]));
+                lines.Add(new MyLine(_pointsImg[i], _pointsImg[i + 1]));
             }
-            lines.Add(new MyLine(_pointsImg.Last(), _pointsImg[0])) ;
-
+            lines.Add(new MyLine(_pointsImg.Last(), _pointsImg[0]));
         }
-
-
 
         public override CollisionType CollCheck(ReSizable reSizable)
         {
-
             switch (reSizable)
             {
                 case MyPolygon re:
-                   
+
                     return CollCheckForPolygon(re);
 
                 case MyBall ba:
-                   
-                    return CollCheckForBall(ba);
 
+                    return CollCheckForBall(ba);
             }
 
-            
-            return CollisionType.False;   
+            return CollisionType.False;
         }
 
-
-         public void ChangeAppearance(SolidColorBrush solidColorBrush)
-            {
+        public void ChangeAppearance(SolidColorBrush solidColorBrush)
+        {
             if (solidColorBrush == null) return;
             realPolygon.Fill = solidColorBrush;
-          } 
+        }
 
         //this change how the block looks
         public void ChangeAppearance(string FileName)
         {
             realPolygon.Fill = new ImageBrush
             {
-                ImageSource = new BitmapImage(new Uri("ms-appx:///Images/"+FileName)),
+                ImageSource = new BitmapImage(new Uri("ms-appx:///Images/" + FileName)),
                 Stretch = Stretch.Fill
             };
         }
 
-
-
-           private CollisionType CollCheckForPolygon(MyPolygon Polygon2) 
-           {
-               if (Polygon2 == null || Polygon2.lines==null||lines==null || DebugClass.FrameCounter -FrameHitId<5) return CollisionType.False;//if there isn't a polygon there isn't collision
-
+        private CollisionType CollCheckForPolygon(MyPolygon Polygon2)
+        {
+            if (Polygon2 == null || Polygon2.lines == null || lines == null || DebugClass.FrameCounter - FrameHitId < 5) return CollisionType.False;//if there isn't a polygon there isn't collision
 
             foreach (MyLine line1 in lines)
             {
-                foreach (MyLine line2 in Polygon2.lines )
+                foreach (MyLine line2 in Polygon2.lines)
                 {
                     PointCol point = line1.Collision(line2);
                     if (point.collation)
@@ -241,13 +195,10 @@ namespace final_project4.classes
                         return CollisionHandler(Polygon2, line2);
                     }
                 }
-
-
             }
             return CollisionType.False;
 
             // crazy one-liner  return (from line1 in lines from line2 in from line2 in Polygon2.lines let point = line1.Collision(line2) where point.collation select line2 select CollisionHandler(Polygon2, line2)).FirstOrDefault();
-
         }
 
         private CollisionType CollisionHandler(MyPolygon Polygon2, MyLine line2)
@@ -262,13 +213,11 @@ namespace final_project4.classes
                     }
                 case LineType.Coin:
                     {
-                        
                         return CollisionType.Coin;
-
                     }
             }
 
-            //by checking the last time the object was hit the object will not "drown " in the line 
+            //by checking the last time the object was hit the object will not "drown " in the line
             CollisionRegularLine(line2);
 
             return CollisionType.Wall;
@@ -277,15 +226,11 @@ namespace final_project4.classes
         private void CollisionRegularLine(MyLine line2)
         {
             FrameHitId = DebugClass.FrameCounter;
-           
 
             double ang = GetAngleBetweenVectorAndLine(line2.Degree);
 
-
             double friction = line2.Friction;//0.8 is for loss of speed when coliision
             DebugClass.angleCollision = ang;
-
-
 
             double rad = SettingsClass.ConvertAngleRadian(ang);
 
@@ -297,20 +242,17 @@ namespace final_project4.classes
         }
 
         private CollisionType CollCheckForBall(MyBall ball)
-       {
+        {
             return CollCheckForPolygon(ball.Rect);
-       }
-
+        }
 
         public override void AddToCanvas(GameCanvas gameCanvas)
         {
             gameCanvas.AddToCanvas(this);
         }
 
+        public Point ConvertToPoint(double x, double y) => new Point(x, y);
 
-        public Point ConvertToPoint(double x, double y)=> new Point(x, y);
-        public Point Convert_To_Real_Point(double x, double y) => new Point((SettingsClass.Convert_To_Real(x)),SettingsClass.Convert_To_Real(y));
-
-       
+        public Point Convert_To_Real_Point(double x, double y) => new Point((SettingsClass.Convert_To_Real(x)), SettingsClass.Convert_To_Real(y));
     }
 }

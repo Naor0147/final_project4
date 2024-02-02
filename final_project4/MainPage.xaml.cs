@@ -1,18 +1,8 @@
 ﻿using final_project4.pages;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -28,7 +18,6 @@ namespace final_project4
         {
             this.InitializeComponent();
 
-
             Polygon myPolygon = new Polygon();
             myPolygon.Fill = new SolidColorBrush(Windows.UI.Colors.Blue);
             myPolygon.Points = new PointCollection()
@@ -43,7 +32,6 @@ namespace final_project4
 
             // Add the polygon to your UI element (e.g., a Canvas)
             GameCanvas.Children.Add(myPolygon);
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -56,13 +44,11 @@ namespace final_project4
                 case "page 1":
                     Frame.Navigate(typeof(GamePage1));
                     break;
+
                 case "page 2":
                     Frame.Navigate(typeof(GamePage2));
                     break;
-
             }
         }
-
-
-        }
+    }
 }
