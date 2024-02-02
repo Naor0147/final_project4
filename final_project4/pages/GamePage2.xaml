@@ -9,6 +9,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" SizeChanged="Page_SizeChanged">
     
     <Canvas x:Name="GameCanvas" Background="LightSkyBlue">
-        <TextBlock x:Name="fpstextblock" FontSize="40"></TextBlock>
+        <TextBlock x:Name="fpstextblock" FontSize="40" Canvas.Left="100" ></TextBlock>
     </Canvas>
 </Page>

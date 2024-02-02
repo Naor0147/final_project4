@@ -28,7 +28,7 @@ namespace final_project4.classes
         public double ax;
         public double ay;
 
-        public double[] last4SpeedsVx=new double[4] { 10, 100, 100, 100 };
+        public double[] last4SpeedsVx=new double[4] { 100, 100, 100, 100 };
         public double[] last4SpeedsVy = new double[4] { 100, 100, 100, 100 };
 
 
@@ -42,14 +42,14 @@ namespace final_project4.classes
 
         public MyLine BodyVector;
 
-        public bool movable;
+        public bool Movable;
         public bool HaveGravity;
 
         public bool[] OnGround;
 
         //const
 
-        public  double gravity = 980;
+        public  double Gravity = 980;
         public PhysicBody(double x=0 ,double y=0, double vx=0,double vy=0,double ax=0,double ay = 0,bool gravitiy =false,bool movable =false)
         {
             this.x = x;
@@ -66,7 +66,7 @@ namespace final_project4.classes
                 movable = true;
             }
             
-            this.movable = movable;
+            this.Movable = movable;
 
 
             InitializeArr(last4SpeedsVx, 4, 100);
@@ -137,7 +137,7 @@ namespace final_project4.classes
             vx += ax * dt;
             if (HaveGravity)
             {
-                vy += (ay+ gravity )*dt;
+                vy += (ay+ Gravity )*dt;
 
             }
             else

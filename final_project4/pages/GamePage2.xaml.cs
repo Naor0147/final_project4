@@ -40,16 +40,14 @@ namespace final_project4.pages
         {
             this.InitializeComponent();
             gameCanvas = new GameCanvas(GameCanvas);
-            SettingsClass.GameCanvas = gameCanvas;
             
-           
-           ball = new MyBall(new PhysicBody(x: 100, y: 100, vx:10, vy: 400, ax: 0, ay: 0, true), 50);
+            ball = new MyBall(new PhysicBody(x: 150, y: 150, vx:10, vy: 400, ax: 0, ay: 0, true), 50);
             gameCanvas.AddToCanvas(ball);
 
+           
 
-            //            mainCanvas.PointerPressed += OnCanvasClick;
 
-
+            gameCanvas.BuildBorders();
             border();
          
             
@@ -66,7 +64,7 @@ namespace final_project4.pages
             System.Diagnostics.Debug.WriteLine($"X: {position.X}, Y: {position.Y}");
             System.Diagnostics.Debug.WriteLine($"X: {SettingsClass.Convert_To_Img( position.X)}, Y: {SettingsClass.Convert_To_Img(position.Y)}");
             Point point = new Point(SettingsClass.Convert_To_Img(position.X), SettingsClass.Convert_To_Img(position.Y));
-            Point ballPoint= new Point( ball.body.x+(ball.width/2),ball.body.y + (ball.height/2) );
+            Point ballPoint= new Point( ball.Body.x+(ball.Width/2),ball.Body.y + (ball.Height/2) );
            // MyLine line = new MyLine(point, ballPoint);
             //line.AddToCanvas(gameCanvas);
             
@@ -77,31 +75,22 @@ namespace final_project4.pages
 
         private void border()
         {
-            //top and botoom 
-            CreateWall(0,0, 1920, 50);
-            CreateWall(0, 990, 1920, 50);
-            //wallls
-            CreateWall(0, 0, 50, 1000);
-            CreateWall(1870, 0, 50, 1000);
-            
-            //wall in angle 
-           CreateWall(0, 550, 50, 1000, 280);
-         
 
-            MyBasket basket = new MyBasket(new PhysicBody(1700, 900), 100);
-            gameCanvas.AddToCanvas(basket);
+
+
+            gameCanvas.CreateBasket(1700, 900, 100);
             //MyPolygon pol9 = new MyPolygon(new PhysicBody(x: 400, y: 700, vx: 0, vy: 0, ax: 0, ay: 0), 400, 50, 20);
             //gameCanvas.AddToCanvas(pol9);
-            Coin coin = new Coin(new PhysicBody(1200, 400), 100);
-            gameCanvas.AddToCanvas(coin);
-
+            gameCanvas.CreateCoin(1200, 200, 50);
+            gameCanvas.CreateCoin(1100, 300, 50);
+            gameCanvas.CreateCoin(1000, 400, 50);
+            MyText text = new MyText("hello", new PhysicBody(400, 50), 40);
+            gameCanvas.AddToCanvas(text);
+            MyText text2 = new MyText("fps", new PhysicBody(100, 0), 40);
+            gameCanvas.AddToCanvas(text2);
         }
 
-        public void CreateWall(double x, double y, double width, double height,double angle = 0)
-        {
-            MyWall wall = new MyWall(x, y, width, height, angle);
-            gameCanvas.AddToCanvas(wall);
-        }
+       
 
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -137,16 +126,7 @@ namespace final_project4.pages
             DebugClass.FrameCounter += 1;
 
 
-            gameCanvas.checkCol();
-          
-            
-            gameCanvas.MoveAll();
-           
-            
-           // fpstextblock.Text = $"vx: {ball.body.vx:F2} \n vy: {ball.body.vy:F2} \n ang {ball.body.angle} \n {DebugClass.angleCollision}";
-            
-          
-            gameCanvas.UpdateObjects() ;
+            gameCanvas.Functions();
 
         }
     }

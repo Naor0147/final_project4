@@ -1,4 +1,5 @@
 ﻿using final_project4.classes.Shapes;
+using final_project4.classes.Shapes.Polygons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,10 +85,10 @@ namespace final_project4.classes
         public MyPolygon(PhysicBody physicBody,double height ,double width ,double angle=0,string Id=""):base(physicBody,height,width)
         {
             //physics
-            this.body = physicBody;
+            this.Body = physicBody;
             //size and angle
-            this.height = height;
-            this.width = width;
+            this.Height = height;
+            this.Width = width;
             this.angle = angle;
 
             //for better readability 
@@ -116,7 +117,7 @@ namespace final_project4.classes
 
         public override void UpdatePosAndSize()
         {
-            _pointsImg= RectPoints(body.x, body.y, width, height, angle);
+            _pointsImg= RectPoints(Body.x, Body.y, Width, Height, angle);
             
             UpdateRealSize();
         }
@@ -138,21 +139,15 @@ namespace final_project4.classes
 
         }
 
-        private static Polygon PolygonAppearance()
+        public  Polygon PolygonAppearance()
         {
             return new Polygon()
             {
                 Stroke = new SolidColorBrush(Windows.UI.Colors.Purple),
                 StrokeThickness = 2,
-                Fill = new SolidColorBrush(Windows.UI.Colors.Blue) ,
-                Opacity =0.7,
+                Fill = new SolidColorBrush(Windows.UI.Colors.Blue),
+                Opacity = 0.7,
             };
-            /*Fill = new ImageBrush
-                {
-                    ImageSource = new BitmapImage(new Uri("ms-appx:///Assets/LargeTile.scale-400.png")),
-                    Stretch = Stretch.Fill
-                },*/
-
         }
 
         private PointCollection RectPoints(double x, double y, double height, double width,double angle)
@@ -199,12 +194,12 @@ namespace final_project4.classes
             switch (reSizable)
             {
                 case MyPolygon re:
-                    MyPolygon polygon = (MyPolygon)reSizable;
-                    return CollCheckForPolygon(polygon);
+                   
+                    return CollCheckForPolygon(re);
 
                 case MyBall ba:
-                    MyBall reSizableBall = (MyBall)reSizable;
-                    return CollCheckForBall(reSizableBall);
+                   
+                    return CollCheckForBall(ba);
 
             }
 
@@ -213,14 +208,14 @@ namespace final_project4.classes
         }
 
 
-         public void ChangeAperecnce(SolidColorBrush solidColorBrush)
+         public void ChangeAppearance(SolidColorBrush solidColorBrush)
             {
             if (solidColorBrush == null) return;
             realPolygon.Fill = solidColorBrush;
           } 
 
         //this change how the block looks
-        public void ChangeAperecnce(string FileName)
+        public void ChangeAppearance(string FileName)
         {
             realPolygon.Fill = new ImageBrush
             {
@@ -236,23 +231,26 @@ namespace final_project4.classes
                if (Polygon2 == null || Polygon2.lines==null||lines==null || DebugClass.FrameCounter -FrameHitId<5) return CollisionType.False;//if there isn't a polygon there isn't collision
 
 
-               foreach (MyLine line1 in lines)
-               {
-                   foreach (MyLine line2 in Polygon2.lines )
-                   {
-                       PointCol point = line1.Collision(line2);
-                       if (point.collation)
-                        {
-                         return CollionHandler(Polygon2, line2);
-                        }
+            foreach (MyLine line1 in lines)
+            {
+                foreach (MyLine line2 in Polygon2.lines )
+                {
+                    PointCol point = line1.Collision(line2);
+                    if (point.collation)
+                    {
+                        return CollisionHandler(Polygon2, line2);
+                    }
                 }
 
 
-               }
-               return CollisionType.False;
-           }
+            }
+            return CollisionType.False;
 
-        private CollisionType CollionHandler(MyPolygon Polygon2, MyLine line2)
+            // crazy one-liner  return (from line1 in lines from line2 in from line2 in Polygon2.lines let point = line1.Collision(line2) where point.collation select line2 select CollisionHandler(Polygon2, line2)).FirstOrDefault();
+
+        }
+
+        private CollisionType CollisionHandler(MyPolygon Polygon2, MyLine line2)
         {
             switch (line2.LineType)
             {
@@ -264,7 +262,7 @@ namespace final_project4.classes
                     }
                 case LineType.Coin:
                     {
-                       
+                        
                         return CollisionType.Coin;
 
                     }
@@ -281,68 +279,26 @@ namespace final_project4.classes
             FrameHitId = DebugClass.FrameCounter;
            
 
-            double ang = GetAngleBewteenVectorAndLine(line2.Degree);
+            double ang = GetAngleBetweenVectorAndLine(line2.Degree);
 
 
-            double Friction = line2.Friction;//0.8 is for loss of speed when coliision
+            double friction = line2.Friction;//0.8 is for loss of speed when coliision
             DebugClass.angleCollision = ang;
 
 
 
             double rad = SettingsClass.ConvertAngleRadian(ang);
 
-            double vectorValue = Math.Sqrt(body.vx * body.vx + body.vy * body.vy) * Friction;
+            double vectorValue = Math.Sqrt(Body.vx * Body.vx + Body.vy * Body.vy) * friction;
 
-            body.vx = vectorValue * Math.Cos(rad);
+            Body.vx = vectorValue * Math.Cos(rad);
 
-            body.vy = vectorValue * Math.Sin(rad);
+            Body.vy = vectorValue * Math.Sin(rad);
         }
-
-        private bool IsGround(MyLine line)
-        {
-            if (body.vy<5 )
-            {
-                body.HaveGravity = false;
-                if (line.m == 0)
-                {
-                    body.ay = 0;
-                    body.vy = 0;
-                }
-                else 
-                {
-                    body.ay=98*Math.Cos(line.Radian);
-                    body.ax =- 98 * Math.Sin(line.Radian);
-
-                }
-
-                return true;
-            }
-            return false;
-        }
-
-
-        private double GetAngleBewteenVectorAndLine(double Degree)
-        {
-            MyLine lineCol4 = this.body.CreateVectorRepresentation();
-            //lineCol4.AddToCanvas(SettingsClass.GameCanvas);
-            double a = lineCol4.Degree;
-            double b = Degree;//line2.Degree
-
-            double ang = (2 * b - a);
-            if (body.vx < 0)
-            {
-                ang = 180 - (2 * b + a);
-
-            }
-
-            return ang;
-        }
-
-
 
         private CollisionType CollCheckForBall(MyBall ball)
        {
-            return CollCheckForPolygon(ball.rect);
+            return CollCheckForPolygon(ball.Rect);
        }
 
 

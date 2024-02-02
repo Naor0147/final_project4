@@ -17,15 +17,15 @@ namespace final_project4.classes.Shapes
        
         public Ellipse BallEllipse;
 
-        public double size;
-        public MyPolygon rect;
+        public double Size;
+        public MyPolygon Rect;
 
 
         public MyBall(PhysicBody body, double size):base(body,size,size)
         {
-            this.size = size;
+            this.Size = size;
 
-           rect = new MyPolygon(body,size,size);
+           Rect = new MyPolygon(body,size,size);
             
          
             this.BallEllipse = CreateEllipse(body.xReal,body.yReal, SettingsClass.Convert_To_Real(size), Colors.Red);
@@ -66,23 +66,23 @@ namespace final_project4.classes.Shapes
         
         public override void UpdatePosAndSize()
         {
-            Canvas.SetLeft(BallEllipse, body.xReal);
-            Canvas.SetTop(BallEllipse, body.yReal);
-            rect.UpdatePosAndSize();
-            BallEllipse.Width = SettingsClass.Convert_To_Real(size);
-            BallEllipse.Height = SettingsClass.Convert_To_Real(size);
+            Canvas.SetLeft(BallEllipse, Body.xReal);
+            Canvas.SetTop(BallEllipse, Body.yReal);
+            Rect.UpdatePosAndSize();
+            BallEllipse.Width = SettingsClass.Convert_To_Real(Size);
+            BallEllipse.Height = SettingsClass.Convert_To_Real(Size);
         }
 
 
 
         public override string ToString()
         {
-            return $"physic[{body}] ball size:{size}";
+            return $"physic[{Body}] ball size:{Size}";
         }
 
         public override CollisionType CollCheck(ReSizable reSizable)
         {
-            return rect.CollCheck(reSizable);
+            return Rect.CollCheck(reSizable);
         }
         public override void AddToCanvas(GameCanvas gameCanvas)
         {
@@ -91,23 +91,25 @@ namespace final_project4.classes.Shapes
 
         public double ClickOnTheScreen(Point point)
         {
-            Point ballPoint = new Point(body.x + width/2, body.y+ height/2);
+            Point ballPoint = new Point(Body.x + Width/2, Body.y+ Height/2);
             //double dis = SettingsClass.DistanceBetweenTwoPoints(ballPoint, point);
             MyLine speedLine = new MyLine(ballPoint, point);
             double rad = speedLine.Radian;
             double angle =speedLine.Degree;
-           
-          /*  if (rad > Math.PI/2)
-            {
-                rad += Math.PI ;
-            }*/
-           
-            body.vx = speedLine.VectorMagnitude * Math.Cos(rad);
-            body.vy = speedLine.VectorMagnitude * Math.Sin(rad);
+
+            /*  if (rad > Math.PI/2)
+              {
+                  rad += Math.PI ;
+              }*/
+            double VectorSize =2* speedLine.VectorMagnitude;
+
+
+            Body.vx = VectorSize * Math.Cos(rad);
+            Body.vy = VectorSize * Math.Sin(rad);
             if (ballPoint.X>point.X)
             {
-                body.vx *= -1;
-                body.vy *= -1;
+                Body.vx *= -1;
+                Body.vy *= -1;
             }
 
             return angle;

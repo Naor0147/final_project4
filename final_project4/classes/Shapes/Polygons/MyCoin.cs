@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace final_project4.classes.Shapes.Polygons
 {
-    public class Coin : MyPolygon
+    public class MyCoin : MyPolygon
     {
-        public Coin(PhysicBody physicBody, double size , string Id = "") : base(physicBody, size, size, 0, Id)
+        public double CoinValue;
+        public bool Collected = false;
+        public MyCoin(PhysicBody physicBody, double size ,double value=10, string Id = "") : base(physicBody, size, size, 0, Id)
         {
-
-            this.ChangeAperecnce("Coin.png");
+            this.CoinValue = value;
+            this.ChangeAppearance("Coin.png");
           
             this.Opacity = 1.0;
             this.TheBrush = null;

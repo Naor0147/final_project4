@@ -14,21 +14,22 @@ namespace final_project4.classes.Shapes
 
     public abstract class ReSizable
     {
-        public PhysicBody body;
-        public double width,height;
-        
+        public PhysicBody Body;
+        public double Width,Height;
 
-        public ReSizable(PhysicBody body,double width=0,double height=0 )
+
+        protected ReSizable(PhysicBody body,double width=0,double height=0 )
         {
-            this.body = body;
-            this.width = width;
-            this.height = height;
+            this.Body = body;
+            this.Width = width;
+            this.Height = height;
            
         }
-        public ReSizable()
+
+        protected ReSizable()
         {
-            this.width = 0;
-            this.height =0;
+            this.Width = 0;
+            this.Height =0;
         }
 
         public virtual void UpdatePosAndSize() { }
@@ -38,6 +39,26 @@ namespace final_project4.classes.Shapes
         public virtual CollisionType CollCheck(ReSizable reSizableBall) {
             return CollisionType.False;
 
+        }
+
+      
+
+
+        protected double GetAngleBetweenVectorAndLine(double Degree)
+        {
+            MyLine lineCol4 = this.Body.CreateVectorRepresentation();
+            //lineCol4.AddToCanvas(SettingsClass.GameCanvas);
+            double a = lineCol4.Degree;
+            double b = Degree;//line2.Degree
+
+            double ang = (2 * b - a);
+            if (Body.vx < 0)
+            {
+                ang = 180 - (2 * b + a);
+
+            }
+
+            return ang;
         }
         //public virtual void CollCheck(MyPolygon reSizablePolygons) { }
         //public virtual void CollCheck(MyBall reSizableBall) { }
