@@ -104,13 +104,15 @@ namespace final_project4.classes
             ClickStatsUpdate();
         }
 
-
+        //display where the player clicked (on screen postion and realtive screen)
         private static Point DisplayCoordinatesInConsole(Point position)
         {
             System.Diagnostics.Debug.WriteLine($"X: {position.X}, Y: {position.Y}");
             System.Diagnostics.Debug.WriteLine($"X: {SettingsClass.Convert_To_Img(position.X)}, Y: {SettingsClass.Convert_To_Img(position.Y)}");
             return position;
         }
+
+        //updates how many time the player clicked on the screen 
         private void ClickStatsUpdate()
         {
             if (LevelStats.Won) return;
@@ -121,10 +123,11 @@ namespace final_project4.classes
 
 
 
-        //Collision checker
+        /// <summary>
+        /// This how i check collision
+        /// </summary>
         public void CheckCol()
-        {
-           
+        {    
             for (int j = 0; j < ReList.Count; j++)
             {
                 HandleCollisonPerTwoItems(j);
@@ -136,7 +139,7 @@ namespace final_project4.classes
         {
             if (MyBall==null) return;
 
-            switch (CollCheckTwoObjects(MyBall, ReList[j]))
+            switch (MyBall.CollCheck( ReList[j]))
             {
                 case CollisionType.Coin:
                     {
@@ -150,6 +153,7 @@ namespace final_project4.classes
                     }
             }
         }
+       
 
         private void CoinHandler(int j)
         {
@@ -201,13 +205,7 @@ namespace final_project4.classes
         }
 
        
-        protected static CollisionType CollCheckTwoObjects(ReSizable re1, ReSizable re2)
-        {
-          
-            return re1.CollCheck(re2);
-
-          
-        }
+       
 
 
 

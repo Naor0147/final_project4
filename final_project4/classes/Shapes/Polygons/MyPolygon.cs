@@ -165,25 +165,9 @@ namespace final_project4.classes
             return CollisionType.False;
         }
 
-        public void ChangeAppearance(SolidColorBrush solidColorBrush)
-        {
-            if (solidColorBrush == null) return;
-            realPolygon.Fill = solidColorBrush;
-        }
-
-        //this change how the block looks
-        public void ChangeAppearance(string FileName)
-        {
-            realPolygon.Fill = new ImageBrush
-            {
-                ImageSource = new BitmapImage(new Uri("ms-appx:///Images/" + FileName)),
-                Stretch = Stretch.Fill
-            };
-        }
-
         private CollisionType CollCheckForPolygon(MyPolygon Polygon2)
         {
-            if (Polygon2 == null || Polygon2.lines == null || lines == null || DebugClass.FrameCounter - FrameHitId < 5) return CollisionType.False;//if there isn't a polygon there isn't collision
+            if (Polygon2 == null || Polygon2.lines == null || lines == null ) return CollisionType.False;//if there isn't a polygon there isn't collision
 
             foreach (MyLine line1 in lines)
             {
@@ -225,11 +209,15 @@ namespace final_project4.classes
 
         private void CollisionRegularLine(MyLine line2)
         {
-            FrameHitId = DebugClass.FrameCounter;
+            if (DebugClass.FrameCounter - FrameHitId < 5)//temproory soultion
+            {
+                this.Body.y -= 1;
+            }
+            FrameHitId = DebugClass.FrameCounter;//current frame
 
             double ang = GetAngleBetweenVectorAndLine(line2.Degree);
 
-            double friction = line2.Friction;//0.8 is for loss of speed when coliision
+            double friction = line2.Friction;//0.8 is for loss of speed when collision 
             DebugClass.angleCollision = ang;
 
             double rad = SettingsClass.ConvertAngleRadian(ang);
@@ -245,6 +233,29 @@ namespace final_project4.classes
         {
             return CollCheckForPolygon(ball.Rect);
         }
+
+
+        public void ChangeAppearance(SolidColorBrush solidColorBrush)
+        {
+            if (solidColorBrush == null) return;
+            realPolygon.Fill = solidColorBrush;
+        }
+
+        //this change how the block looks
+        public void ChangeAppearance(string FileName)
+        {
+            realPolygon.Fill = new ImageBrush
+            {
+                ImageSource = new BitmapImage(new Uri("ms-appx:///Images/" + FileName)),
+                Stretch = Stretch.Fill
+            };
+        }
+
+       
+
+     
+
+      
 
         public override void AddToCanvas(GameCanvas gameCanvas)
         {
