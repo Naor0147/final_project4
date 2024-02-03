@@ -41,6 +41,7 @@ namespace final_project4.classes
             MainCanvas.PointerPressed += MainCanvas_PointerPressed;
             Functions_add();
             BuildBorders();
+           
         }
         private void Functions_add()
         {
@@ -49,6 +50,7 @@ namespace final_project4.classes
             fpsTimer.Interval = TimeSpan.FromSeconds(1);
             fpsTimer.Tick += FpsTimer_Tick;
             fpsTimer.Start();
+            
         }
 
         private void FpsTimer_Tick(object sender, object e)
@@ -73,7 +75,7 @@ namespace final_project4.classes
         public override void Functions()
         {
             base.Functions();
-            checkCol();
+            CheckCol();
         }
 
 
@@ -120,11 +122,11 @@ namespace final_project4.classes
 
 
         //Collision checker
-        public void checkCol()
+        public void CheckCol()
         {
             for (int i = 0; i < ReList.Count - 1; i++)
             {
-                for (int j = i + 1; j < ReList.Count; j++)
+                for (int j = 0; j < ReList.Count; j++)
                 {
                     HandleCollisonPerTwoItems(i, j);
                 }
