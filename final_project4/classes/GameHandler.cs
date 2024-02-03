@@ -124,20 +124,19 @@ namespace final_project4.classes
         //Collision checker
         public void CheckCol()
         {
-            for (int i = 0; i < ReList.Count - 1; i++)
+           
+            for (int j = 0; j < ReList.Count; j++)
             {
-                for (int j = 0; j < ReList.Count; j++)
-                {
-                    HandleCollisonPerTwoItems(i, j);
-                }
+                HandleCollisonPerTwoItems(j);
             }
+            
         }
 
-        protected void HandleCollisonPerTwoItems(int i, int j)
+        protected void HandleCollisonPerTwoItems( int j)
         {
-            if (!IsValidCollCheck(i)) return;
+            if (MyBall==null) return;
 
-            switch (CollCheckTwoObjects(ReList[i], ReList[j]))
+            switch (CollCheckTwoObjects(MyBall, ReList[j]))
             {
                 case CollisionType.Coin:
                     {
@@ -193,15 +192,7 @@ namespace final_project4.classes
            
         }
 
-        private void GoBackButton(object sender, RoutedEventArgs e)
-        {
-            
-        }
-        private static void GoPage()
-        {
-            System.Type page = MainPage.FrameProperty.GetType();
-            
-        }
+     
 
         private void MoveTextObject(MyText myText, double x,double y,int z)
         {
@@ -209,24 +200,13 @@ namespace final_project4.classes
             Canvas.SetZIndex(myText.TextBlock, z);
         }
 
-        protected bool IsValidCollCheck(int i)
-        {
-            //return ReList[i] != null && ReList[i].body != null && ReList[i].body.movable == true;
-            return (ReList[i] is MyBall);
-        }
-
+       
         protected static CollisionType CollCheckTwoObjects(ReSizable re1, ReSizable re2)
         {
-            switch (re1)
-            {
-                case MyPolygon reSizablePolygon:
-                    return reSizablePolygon.CollCheck(re2);
+          
+            return re1.CollCheck(re2);
 
-                case MyBall reSizableBall:
-                    return reSizableBall.CollCheck(re2);
-            }
-
-            return CollisionType.False;
+          
         }
 
 

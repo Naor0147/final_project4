@@ -1,6 +1,7 @@
 ﻿using final_project4.classes.Shapes;
 using final_project4.classes.Shapes.Polygons;
 using final_project4.classes.Stats;
+using NetTopologySuite.Index.HPRtree;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Foundation;
@@ -41,7 +42,7 @@ namespace final_project4.classes
 
         public void AddToCanvas<T>(T shape)
         {
-            if (shape is ReSizable)
+            if (shape is ReSizable && !(shape is MyBall))
             {
                 ReList.Add(shape as ReSizable);
             }
@@ -78,6 +79,11 @@ namespace final_project4.classes
         //public update
         public void UpdateObjects()
         {
+            if (MyBall !=null)
+            {
+                 MyBall.UpdatePosAndSize();
+
+            }
             if (ReList.Count == 0) return;
             foreach (var item in ReList)
             {
@@ -100,18 +106,23 @@ namespace final_project4.classes
             //foreach (ReSizable polygon in ReList)
             foreach (ReSizable polygon in ReList.Where(polygon => polygon != null))
             {
-                if (polygon.Body != null && polygon.Body.Movable)
-                {
-                    polygon.Body.Move(SettingsClass.current_FPS);
-                }
-                polygon.UpdatePosAndSize();
+                MoveObject(polygon);
             }
-            
+            MoveObject(MyBall);
+
         }
 
-        
+        private static void MoveObject(ReSizable polygon)
+        {
+            if (polygon != null &&polygon.Body != null && polygon.Body.Movable)
+            {
+                polygon.Body.Move(SettingsClass.current_FPS);
+            }
+            polygon.UpdatePosAndSize();
+        }
 
-      
+
+
 
         public virtual void Functions()
         {
