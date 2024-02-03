@@ -290,5 +290,7 @@ namespace final_project4.classes.Shapes
             line.X2 = SettingsClass.Convert_To_Real(x2);
             line.Y2 = SettingsClass.Convert_To_Real(y2);
         }
+
+       
     }
 }

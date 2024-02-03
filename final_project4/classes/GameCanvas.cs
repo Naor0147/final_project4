@@ -3,6 +3,7 @@ using final_project4.classes.Shapes.Polygons;
 using final_project4.classes.Stats;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.Foundation;
 using Windows.UI.Xaml.Controls;
 
 namespace final_project4.classes
@@ -17,20 +18,13 @@ namespace final_project4.classes
 
         public List<MyText> MyTextList { get; set; }
 
-        //Text
-        public MyText ScoreText;
+        public MyBall MyBall { get; set; }
 
-        public MyText TimeText;
-        public MyText TimeClickedText;
-
-        //score
-        public LevelStats LevelStats { get; set; } = new LevelStats();
        
-        public int TimeClicked = 0;
 
-        public GameCanvas(Canvas canvas)
+        public GameCanvas(Canvas MainCanvas)
         {
-            MainCanvas = canvas;
+            this.MainCanvas = MainCanvas;
 
             //where i save the player level stats
             
@@ -38,7 +32,12 @@ namespace final_project4.classes
             ReList = new List<ReSizable>();
             ReLineList = new List<MyLine>();
             MyTextList = new List<MyText>();
+
+            
         }
+
+       
+      
 
         public void AddToCanvas<T>(T shape)
         {
@@ -58,7 +57,7 @@ namespace final_project4.classes
                 case MyBall ball:
 
                     MainCanvas.Children.Add(ball.BallEllipse);
-
+                    this.MyBall = ball;
                     break;
 
                 case MyLine lineCol:
@@ -69,6 +68,9 @@ namespace final_project4.classes
                 case MyText text:
                     MainCanvas.Children.Add(text.TextBlock);
                     MyTextList.Add(text);
+                    break;
+                case MyButton button:
+                    MainCanvas.Children.Add(button.Button);
                     break;
             }
         }
@@ -90,12 +92,7 @@ namespace final_project4.classes
                 item.UpdateLineSize();
             }
 
-            foreach (var item in MyTextList)
-            {
-                if (item == null) continue;
-
-                item.UpdatePositionAndSize();
-            }
+           
         }
 
         public void MoveAll()
@@ -109,133 +106,16 @@ namespace final_project4.classes
                 }
                 polygon.UpdatePosAndSize();
             }
-            foreach (MyText text in MyTextList.Where(text => text != null))
-            {
-                if (text.PhysicBody != null && text.PhysicBody.Movable)
-                {
-                    text.PhysicBody.Move(SettingsClass.current_FPS);
-                }
-                text.UpdatePositionAndSize();
-            }
+            
         }
 
-        public void checkCol()
+        
+
+      
+
+        public virtual void Functions()
         {
-            for (int i = 0; i < ReList.Count - 1; i++)
-            {
-                for (int j = i + 1; j < ReList.Count; j++)
-                {
-                    HandleCollisonPerTwoItems(i, j);
-                }
-            }
-        }
-
-        private void HandleCollisonPerTwoItems(int i, int j)
-        {
-            if (!IsValidCollCheck(i)) return;
-
-            switch (CollCheckTwoObjects(ReList[i], ReList[j]))
-            {
-                case CollisionType.Coin:
-                    {
-                        ReList[j].Height = 0;
-                        if (ReList[j] is MyCoin)
-                        {
-                            MyCoin coin = ReList[j] as MyCoin;
-                            if (!coin.Collected)
-                            {
-                                LevelStats.AmountOfCoinsCollected++;
-                                LevelStats.CoinsTotal+= coin.CoinValue;
-                                ScoreText.Variable = LevelStats.CoinsTotal + "";
-                               
-                                coin.Collected = true;
-                            }
-                        }
-                        break;
-                    }
-                case CollisionType.Win:
-                {
-                    SettingsClass.current_FPS=0;//stop the game 
-
-                    CreateWall(0, 0, 1920, 1000);
-                    CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 2 - 100, SettingsClass.IMAGINARY_SCREEN_HEIGHT / 2 - 50, 100, "you won");
-                    break;
-                }
-            }
-        }
-
-        private bool IsValidCollCheck(int i)
-        {
-            //return ReList[i] != null && ReList[i].body != null && ReList[i].body.movable == true;
-            return (ReList[i] is MyBall);
-        }
-
-        private static CollisionType CollCheckTwoObjects(ReSizable re1, ReSizable re2)
-        {
-            switch (re1)
-            {
-                case MyPolygon reSizablePolygon:
-                    return reSizablePolygon.CollCheck(re2);
-
-                case MyBall reSizableBall:
-                    return reSizableBall.CollCheck(re2);
-            }
-
-            return CollisionType.False;
-        }
-
-        public MyWall CreateWall(double x, double y, double width, double height, WallStyle wallStyle = WallStyle.Regular, double angle = 0)
-        {
-            MyWall wall = new MyWall(new PhysicBody(x, y), width, height, wallStyle, angle);
-            AddToCanvas(wall);
-            return wall;
-        }
-
-        public MyCoin CreateCoin(double x, double y, double size, double value = 10)
-        {
-            MyCoin coin = new MyCoin(new PhysicBody(x, y), size, value);
-            AddToCanvas(coin);
-            return coin;
-        }
-
-        public MyBasket CreateBasket(double x, double y, double size)
-        {
-            MyBasket myBasket = new MyBasket(new PhysicBody(x, y), size);
-            AddToCanvas(myBasket);
-            return myBasket;
-        }
-
-        public MyText CreateText(double x, double y, double font, string text1 = "", string var = "", string text2 = "")
-        {
-            MyText Score = new MyText(text1, var, text2, new PhysicBody(x, y), font);
-            AddToCanvas(Score);
-            return Score;
-        }
-
-        public void BuildBorders()
-        {
-            CreateWall(0, 0, 1920, 100);
-
-            //top and bottom
-            CreateWall(0, 100, 1920, 50, WallStyle.Celling);
-            CreateWall(0, 950, 1920, 50, WallStyle.Celling);
-            //walls
-            CreateWall(0, 150, 50, 840, WallStyle.SideWall);
-            CreateWall(1870, 150, 50, 840, WallStyle.SideWall);
-
-            //wall in angle
-            CreateWall(0, 550, 50, 1000, angle: 280);
-
-            ScoreText = CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 2 - 100, 0, 40, "Money collected = ", (LevelStats.CoinsTotal + ""));
-
-            TimeClickedText = CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 2 - 100, 50, 40, "Clicked ", LevelStats.TimeClicked + "", " time ");
-
-            TimeText = CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 4 - 100, 0, 40, "Time passed= ", LevelStats.TimePassed + "");
-        }
-
-        public void Functions()
-        {
-            checkCol();
+            
 
             MoveAll();
 

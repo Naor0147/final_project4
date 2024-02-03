@@ -1,8 +1,11 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿
+using System;
+using Windows.Foundation;
+using Windows.UI.Xaml.Controls;
 
 namespace final_project4.classes.Shapes
 {
-    public class MyText
+    public class MyText:ReSizable
     {
         private string _text1;
         private string _text2;
@@ -16,7 +19,7 @@ namespace final_project4.classes.Shapes
             set
             {
                 _text1 = value;
-                UpdatePositionAndSize();
+                UpdatePosAndSize();
             }
         }
         public string Text2
@@ -28,7 +31,7 @@ namespace final_project4.classes.Shapes
             set
             {
                 _text2 = value;
-                UpdatePositionAndSize();
+                UpdatePosAndSize();
             }
         }
         private string _variable;
@@ -40,14 +43,14 @@ namespace final_project4.classes.Shapes
             set
             {
                 _variable = value;
-                UpdatePositionAndSize();
+                UpdatePosAndSize();
             }
         }
         public double FontSize { get; set; }
         public PhysicBody PhysicBody { get; set; }
         public TextBlock TextBlock { get; set; }
 
-        public MyText(string text, PhysicBody physicBody, double FontSize = 24)
+        public MyText(string text, PhysicBody physicBody, double FontSize = 24):base(physicBody)
         {
             this.Text1 = text;
             this.Text2 = "";
@@ -58,10 +61,10 @@ namespace final_project4.classes.Shapes
                 Text = Text1,
                 FontSize = FontSize,
             };
-            UpdatePositionAndSize();
+            UpdatePosAndSize();
         }
 
-        public MyText(string text1, string variable, string text2, PhysicBody physicBody, double FontSize = 24)
+        public MyText(string text1, string variable, string text2, PhysicBody physicBody, double FontSize = 24) : base(physicBody)
         {
             this.Text1 = text1;
             this.Text2 = text2;
@@ -73,22 +76,28 @@ namespace final_project4.classes.Shapes
                 Text = text1 + variable + text2,
                 FontSize = FontSize,
             };
-            UpdatePositionAndSize();
+            UpdatePosAndSize();
         }
 
-        public void UpdatePositionAndSize()
+        public override void UpdatePosAndSize()
         {
+           
             if (PhysicBody==null) return;
-            
-            Canvas.SetLeft(TextBlock, PhysicBody.xReal);
-            Canvas.SetTop(TextBlock, PhysicBody.yReal);
             TextBlock.FontSize = SettingsClass.Convert_To_Real(FontSize);
             TextBlock.Text = this.Text1 + this.Variable + this.Text2;
+
+            Canvas.SetLeft(TextBlock , PhysicBody.xReal - (TextBlock.ActualWidth / 2));
+            Canvas.SetTop(TextBlock, PhysicBody.yReal );
+           
         }
 
-        public void AddToCanvas(GameCanvas canvas)
+        public override void AddToCanvas(GameCanvas canvas)
         {
             canvas.AddToCanvas(TextBlock);
         }
+
+        
+
+
     }
 }

@@ -20,7 +20,7 @@ namespace final_project4.pages
       
         public int frameCount = 0;
         public DispatcherTimer fpsTimer;
-        public GameCanvas gameCanvas;
+        public GameHandler gameCanvas;
         
         private MyBall ball;
 
@@ -29,7 +29,7 @@ namespace final_project4.pages
         public GamePage2()
         {
             this.InitializeComponent();
-            gameCanvas = new GameCanvas(GameCanvas);
+            gameCanvas = new GameHandler(GameCanvas);
 
             ball = new MyBall(new PhysicBody(x: 150, y: 150, vx: 10, vy: 400, ax: 0, ay: 0, true), 50);
             gameCanvas.AddToCanvas(ball);
@@ -37,32 +37,12 @@ namespace final_project4.pages
             gameCanvas.BuildBorders();
             border();
 
-            Functions_add();
-            GameCanvas.PointerPressed += GameCanvas_PointerPressed;
+          
 
-            LevelStats = new LevelStats();
-
+           
         }
 
-        private void GameCanvas_PointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-            // Get the position of the pointer relative to the canvas
-            Point position = e.GetCurrentPoint(GameCanvas).Position;
-
-            // Display the coordinates
-            System.Diagnostics.Debug.WriteLine($"X: {position.X}, Y: {position.Y}");
-            System.Diagnostics.Debug.WriteLine($"X: {SettingsClass.Convert_To_Img(position.X)}, Y: {SettingsClass.Convert_To_Img(position.Y)}");
-            Point point = new Point(SettingsClass.Convert_To_Img(position.X), SettingsClass.Convert_To_Img(position.Y));
-            Point ballPoint = new Point(ball.Body.x + (ball.Width / 2), ball.Body.y + (ball.Height / 2));
-            // MyLine line = new MyLine(point, ballPoint);
-            //line.AddToCanvas(gameCanvas);
-            ball.ClickOnTheScreen(point);
-            gameCanvas.LevelStats.TimeClicked++;
-            
-            gameCanvas.TimeClickedText.Variable = gameCanvas.LevelStats.TimeClicked + "";
-        
-
-        }
+       
 
         private void border()
         {
@@ -79,32 +59,9 @@ namespace final_project4.pages
             gameCanvas.UpdateObjects();
         }
 
-        private void Functions_add()
-        {
-            CompositionTarget.Rendering += CompositionTarget_Rendering;
-            fpsTimer = new DispatcherTimer();
-            fpsTimer.Interval = TimeSpan.FromSeconds(1);
-            fpsTimer.Tick += FpsTimer_Tick;
-            fpsTimer.Start();
-        }
+     
+     
 
-        private void FpsTimer_Tick(object sender, object e)
-        {
-
-            gameCanvas.LevelStats.TimePassed++;
-            gameCanvas.TimeText.Variable = gameCanvas.LevelStats.TimePassed+"";
-            classes.SettingsClass.current_FPS = frameCount;
-         
-            frameCount = 0;
-        }
-
-        private void CompositionTarget_Rendering(object sender, object e)
-        {
-            frameCount++;
-
-            DebugClass.FrameCounter += 1;
-
-            gameCanvas.Functions();
-        }
+       
     }
 }

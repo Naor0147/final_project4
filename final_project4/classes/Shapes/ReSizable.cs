@@ -17,6 +17,11 @@
             this.Height = height;
         }
 
+        public void stop()
+        {
+            PhysicBody body = new PhysicBody() ;
+        }
+
         protected ReSizable()
         {
             this.Width = 0;

@@ -1,6 +1,11 @@
 ﻿using final_project4.classes.Shapes;
 using System;
 using Windows.Foundation;
+using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml;
+using System.Diagnostics;
+using Windows.UI.Xaml.Controls;
 
 namespace final_project4.classes
 {
@@ -45,6 +50,14 @@ namespace final_project4.classes
         //const
 
         public double Gravity = 980;
+
+        //speacil condistions 
+
+        public double stopAtX;
+        public double stopAtY;
+        public DispatcherTimer OneSec;
+  
+
 
         public PhysicBody(double x = 0, double y = 0, double vx = 0, double vy = 0, double ax = 0, double ay = 0, bool gravitiy = false, bool movable = false)
         {
@@ -188,6 +201,30 @@ namespace final_project4.classes
                    vy = 0;
                    //HaveGravity = false;
                }*/
+        }
+        public void TransformPosition(Point position)
+        {
+             double Dx=position.X-x;
+             double Dy=position.Y- y ;
+            vx = Dx;
+            vy = Dy;
+            Movable = true;
+            
+
+            OneSec = new DispatcherTimer();
+            OneSec.Interval = TimeSpan.FromSeconds(1);
+            OneSec.Tick += OneSec_Tick;
+            OneSec.Start();
+        }
+
+        private void OneSec_Tick(object sender, object e)
+        {
+            
+            vx = 0;
+            vy= 0;
+            Movable= false;
+            OneSec.Stop();
+            //Canvas.SetZIndex()//put on top;
         }
     }
 }
