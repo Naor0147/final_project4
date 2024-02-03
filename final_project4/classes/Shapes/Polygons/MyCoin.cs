@@ -13,7 +13,10 @@
             this.TheBrush = null;
             ChangeLineType();
         }
-
+        public override CollisionType CollCheck(ReSizable reSizable)
+        {
+            return base.CollCheck(reSizable);
+        }
         private void ChangeLineType()
         {
 

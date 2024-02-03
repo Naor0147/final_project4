@@ -37,10 +37,10 @@ namespace final_project4.classes
 
         public GameHandler(Canvas MainCanvas) : base(MainCanvas)
         {
-
+           
             MainCanvas.PointerPressed += MainCanvas_PointerPressed;
             Functions_add();
-
+            BuildBorders();
         }
         private void Functions_add()
         {
@@ -85,7 +85,8 @@ namespace final_project4.classes
             // Display the coordinates and show where the player clicked on the screen
             position = DisplayCoordinatesInConsole(position);
 
-
+            if (MyBall == null) return;
+            
             Point point = new Point(SettingsClass.Convert_To_Img(position.X), SettingsClass.Convert_To_Img(position.Y));
 
 
@@ -194,7 +195,7 @@ namespace final_project4.classes
         {
             
         }
-        private static void Gopage()
+        private static void GoPage()
         {
             System.Type page = MainPage.FrameProperty.GetType();
             

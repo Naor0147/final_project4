@@ -24,7 +24,7 @@ namespace final_project4.pages
         
         private MyBall ball;
 
-        private LevelStats LevelStats;
+      
 
         public GamePage2()
         {
@@ -33,8 +33,8 @@ namespace final_project4.pages
 
             ball = new MyBall(new PhysicBody(x: 150, y: 150, vx: 10, vy: 400, ax: 0, ay: 0, true), 50);
             gameCanvas.AddToCanvas(ball);
-
-            gameCanvas.BuildBorders();
+            //gameCanvas.BuildBorders();
+            
             border();
 
           
