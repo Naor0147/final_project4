@@ -209,7 +209,7 @@ namespace final_project4.classes
 
         private void CollisionRegularLine(MyLine line2)
         {
-            if (DebugClass.FrameCounter - FrameHitId < 5)//temproory soultion
+            if (DebugClass.FrameCounter - FrameHitId < 2)//temporary solution
             {
                 this.Body.y -= 1;
             }
