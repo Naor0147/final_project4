@@ -10,9 +10,9 @@
 
     <Canvas x:Name="Canvas" Background="LightSkyBlue">
         <Polygon
-Points="300,200 400,125 400,275"
-Stroke="Purple"
-StrokeThickness="2">
+    Points="300,200 400,125 400,275"
+    Stroke="Purple"
+    StrokeThickness="2">
             <Polygon.Fill>
                 <SolidColorBrush Color="Blue" Opacity="0.4"/>
             </Polygon.Fill>
