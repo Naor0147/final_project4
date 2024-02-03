@@ -185,8 +185,19 @@ namespace final_project4.classes
 
             MoveTextObject(TimeClickedText, SettingsClass.IMAGINARY_SCREEN_WIDTH / 2, SettingsClass.IMAGINARY_SCREEN_HEIGHT / 3 + 400, 7);
 
-            MyButton myButton = new MyButton("Go back", 40, new PhysicBody(SettingsClass.IMAGINARY_SCREEN_WIDTH / 2, SettingsClass.IMAGINARY_SCREEN_HEIGHT / 3 + 500));
+            MyButton myButton = new MyButton("Go back", 40, new PhysicBody(SettingsClass.IMAGINARY_SCREEN_WIDTH / 2, SettingsClass.IMAGINARY_SCREEN_HEIGHT / 3 + 500),typeof(MainPage));
             AddToCanvas(myButton);
+           
+        }
+
+        private void GoBackButton(object sender, RoutedEventArgs e)
+        {
+            
+        }
+        private static void Gopage()
+        {
+            System.Type page = MainPage.FrameProperty.GetType();
+            
         }
 
         private void MoveTextObject(MyText myText, double x,double y,int z)

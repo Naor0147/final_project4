@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace final_project4.classes.Shapes
@@ -17,14 +18,13 @@ namespace final_project4.classes.Shapes
 
         public Button Button { get; set; }
 
-        public System.Type page;
-
+        public System.Type Page;
         public MyButton(string description, int fontSize, PhysicBody physicBody,System.Type page) : base(physicBody)
         {
             Description = description;
             FontSize = fontSize;
             PhysicBody = physicBody;
-            this.page = page;
+            Page = page;
            
             Button = new Button()
             {
@@ -35,8 +35,12 @@ namespace final_project4.classes.Shapes
             Button.Click += Button_Click;
         }
 
-       
-       
+        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(Page);
+        }
+
         public override void UpdatePosAndSize()
         {
         

@@ -36,8 +36,9 @@ namespace final_project4
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(GamePage2));
-
+           
+            //Frame.Navigate(typeof(GamePage2));
+            //System.Type page = MainPage.FrameProperty.GetType();
             Button button = sender as Button;
             switch (button.Content.ToString())
             {
