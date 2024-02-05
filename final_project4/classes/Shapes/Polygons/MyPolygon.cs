@@ -35,7 +35,7 @@ namespace final_project4.classes
             }
         }
 
-        protected List<MyLine> lines;
+        public List<MyLine> lines;
 
         //public GameCanvas gameCanvas; does'nt need game canvas
         public MyLine speedVector;

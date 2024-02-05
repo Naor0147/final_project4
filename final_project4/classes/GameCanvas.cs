@@ -106,6 +106,7 @@ namespace final_project4.classes
             //foreach (ReSizable polygon in ReList)
             foreach (ReSizable polygon in ReList.Where(polygon => polygon != null))
             {
+
                 MoveObject(polygon);
             }
             MoveObject(MyBall);

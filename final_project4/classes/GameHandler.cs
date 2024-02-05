@@ -27,6 +27,8 @@ namespace final_project4.classes
 
         public MyText TimeText;
         public MyText TimeClickedText;
+        public MyText OnGroundText;
+
 
         //score
         public LevelStats LevelStats { get; set; } = new LevelStats();
@@ -132,13 +134,14 @@ namespace final_project4.classes
             {
                 HandleCollisonPerTwoItems(j);
             }
+
             
         }
 
         protected void HandleCollisonPerTwoItems( int j)
         {
-            if (MyBall==null) return;
-
+            if (MyBall==null|| ReList[j]==MyBall) return;
+            OnGroundText.Variable= MyBall.OnGround(ReList[j] as MyPolygon)+"";
             switch (MyBall.CollCheck( ReList[j]))
             {
                 case CollisionType.Coin:
@@ -261,6 +264,7 @@ namespace final_project4.classes
             TimeClickedText = CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 2 - 100, 50, 40, "Clicked ", LevelStats.TimeClicked + "", " time ");
 
             TimeText = CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 4 - 100, 0, 40, "Time passed= ", LevelStats.TimePassed + "");
+            OnGroundText = CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 4 * 3 - 100, 0,40, "On ground ", false + ""); 
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
@@ -98,6 +99,34 @@ namespace final_project4.classes.Shapes
             }
 
             return angle;
+        }
+
+
+        public bool OnGround(MyPolygon pol)
+        {
+            if (pol == null) return false;
+            foreach (MyLine myLine in pol.lines )
+            {
+                if (OnGroundLineCheck(myLine))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool OnGroundLineCheck(MyLine line)
+        {
+            if (Body == null) { return false ; }
+            Point point = new Point(Body.x+Width/2, Body.y+Height);// the center bottom of the ball
+            double y = line.Get_Y_Value_On_X(point.X);
+
+            bool val = Math.Abs(y - point.Y) < 25;
+            if (val)
+            {
+                return true;
+            }
+            return Math.Abs(y - point.Y) < 3;
         }
     }
 }
