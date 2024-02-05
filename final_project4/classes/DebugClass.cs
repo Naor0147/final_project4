@@ -1,6 +1,6 @@
 ﻿namespace final_project4.classes
 {
-    internal class DebugClass
+    struct DebugClass
     {
         public static uint FrameCounter = 0;
 

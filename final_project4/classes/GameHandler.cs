@@ -129,19 +129,31 @@ namespace final_project4.classes
         /// This how i check collision
         /// </summary>
         public void CheckCol()
-        {    
+        {
+            bool changed = false;
+            bool temp = false;
+
             for (int j = 0; j < ReList.Count; j++)
             {
                 HandleCollisonPerTwoItems(j);
+                
+                 temp = MyBall.OnGround(ReList[j] as MyPolygon);
+                if (temp)
+                {
+                break;
+                }
+                 
+
             }
+            OnGround = temp;
+            OnGroundText.Variable = OnGround + "";
 
-            
+
         }
-
+        public bool OnGround=false;
         protected void HandleCollisonPerTwoItems( int j)
         {
             if (MyBall==null|| ReList[j]==MyBall) return;
-            OnGroundText.Variable= MyBall.OnGround(ReList[j] as MyPolygon)+"";
             switch (MyBall.CollCheck( ReList[j]))
             {
                 case CollisionType.Coin:

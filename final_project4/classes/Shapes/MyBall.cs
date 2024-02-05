@@ -121,12 +121,23 @@ namespace final_project4.classes.Shapes
             Point point = new Point(Body.x+Width/2, Body.y+Height);// the center bottom of the ball
             double y = line.Get_Y_Value_On_X(point.X);
 
-            bool val = Math.Abs(y - point.Y) < 25;
-            if (val)
+            bool val = Math.Abs(y - point.Y) < 10 && SettingsClass.isBetween(line.x1, point.X, line.x2);
+           /*
+            * debug 
+            * if (val)
             {
+                MyLine myLine = new MyLine(point ,new Point(point.X,y));
+               
+                if (SettingsClass.GameCanvas !=null)
+                {
+                    myLine.AddToCanvas( SettingsClass.GameCanvas);
+                    line.AddToCanvas(SettingsClass.GameCanvas );
+                }
                 return true;
-            }
-            return Math.Abs(y - point.Y) < 3;
+            }*/
+            return val;
         }
+
+
     }
 }

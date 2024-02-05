@@ -3,7 +3,7 @@ using Windows.UI.ViewManagement;
 
 namespace final_project4.classes
 {
-    internal class SettingsClass
+    struct SettingsClass
     {
         //const
         public const double IMAGINARY_SCREEN_HEIGHT = 1000;
@@ -24,7 +24,7 @@ namespace final_project4.classes
         update their size accordingly to the screen size
 
          */
-        public static GameCanvas GameCanvas;
+        public static GameHandler GameCanvas;
 
         public static double current_FPS = 144;//sets the value really high so the object doesn't move until the fps has been set
 

@@ -65,6 +65,8 @@ namespace final_project4.classes
             }
         }
 
+        private Queue<uint> fpsHit= new Queue<uint>(4);
+
         public MyPolygon(PhysicBody physicBody, double height, double width, double angle = 0, string Id = "") : base(physicBody, height, width)
         {
             //physics
@@ -79,7 +81,7 @@ namespace final_project4.classes
             double y = physicBody.y;
 
             this.Id = Id;
-
+            
             _pointsImg = CreateRect(x, y, width, height, angle).Points;
             realPolygon = CreateRect(SettingsClass.Convert_To_Real(x), SettingsClass.Convert_To_Real(y), SettingsClass.Convert_To_Real(width), SettingsClass.Convert_To_Real(height), angle);
         }
@@ -159,7 +161,7 @@ namespace final_project4.classes
 
                 case MyBall ba:
 
-                    return CollCheckForBall(ba);
+                    return CollCheckForPolygon(ba.Rect);
             }
 
             return CollisionType.False;
@@ -207,14 +209,16 @@ namespace final_project4.classes
             return CollisionType.Wall;
         }
 
-        private void CollisionRegularLine(MyLine line2)
+        public  void CollisionRegularLine(MyLine line2)
         {
-            if (DebugClass.FrameCounter - FrameHitId < 2)//temporary solution
+          /* if (DebugClass.FrameCounter - FrameHitId ==1)//temporary solution
             {
-                this.Body.y -= 1;
-            }
+                this.Body.y -= Body.vy/SettingsClass.current_FPS*2;
+                this.Body.x -= Body.vx / SettingsClass.current_FPS*2;
+            }*/
             FrameHitId = DebugClass.FrameCounter;//current frame
-
+            fpsHit.Enqueue(FrameHitId);
+            
             double ang = GetAngleBetweenVectorAndLine(line2.Degree);
 
             double friction = line2.Friction;//0.8 is for loss of speed when collision 
@@ -229,11 +233,7 @@ namespace final_project4.classes
             Body.vy = vectorValue * Math.Sin(rad);
         }
 
-        private CollisionType CollCheckForBall(MyBall ball)
-        {
-            return CollCheckForPolygon(ball.Rect);
-        }
-
+       
 
         public void ChangeAppearance(SolidColorBrush solidColorBrush)
         {
