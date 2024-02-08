@@ -31,7 +31,7 @@ namespace final_project4.classes
             {
                 __imgPoints = value;
 
-                CreateLineList();
+                UpdateLinesList();
             }
         }
 
@@ -40,7 +40,6 @@ namespace final_project4.classes
         //public GameCanvas gameCanvas; does'nt need game canvas
         public MyLine speedVector;
 
-        public uint FrameHitId = 0;
 
         //parameters that could be changed
 
@@ -65,7 +64,7 @@ namespace final_project4.classes
             }
         }
 
-        private Queue<uint> fpsHit= new Queue<uint>(4);
+        public uint FrameHitId = 0;
 
         public MyPolygon(PhysicBody physicBody, double height, double width, double angle = 0, string Id = "") : base(physicBody, height, width)
         {
@@ -124,7 +123,7 @@ namespace final_project4.classes
 
         private PointCollection RectPoints(double x, double y, double height, double width, double angle)
         {
-            /// if i put the angle to a really small number close to 0 , collition will work properly , need to if there is posiible way to fix
+            /// if i put the angle to a really small number close to 0 , collision will work properly , need to if there is posiible way to fix
             double radian = SettingsClass.ConvertAngleRadian(angle);//convert the angle to radian
             double sin = Math.Sin(radian);//the sin , cos works in radian so i convert the angle to radian
             double cos = Math.Cos(radian);
@@ -137,6 +136,25 @@ namespace final_project4.classes
             return polygonPoints;
         }
 
+
+        public virtual void UpdateLinesList()
+        {
+            if (_pointsImg == null) return;
+            if (lines== null || lines.Count == 0) { CreateLineList(); }
+            for (int i = 0; i < _pointsImg.Count - 1; i++)
+            {
+                lines[i].x1 = _pointsImg[i].X;
+                lines[i].y1 = _pointsImg[i].Y;
+                lines[i].x2 = _pointsImg[i+1].X;
+                lines[i].y2= _pointsImg[i+1].Y;
+            }
+            lines.Last().x1 = _pointsImg.Last().X;
+            lines.Last().y1 = _pointsImg.Last().Y;
+            lines.Last().x2 = _pointsImg[0].X;
+            lines.Last().y2= _pointsImg[0].Y;
+
+
+        }
         public virtual void CreateLineList()
         {
             if (_pointsImg == null) return;//if there isn't a list of points there nothing to draw
@@ -151,88 +169,7 @@ namespace final_project4.classes
             lines.Add(new MyLine(_pointsImg.Last(), _pointsImg[0]));
         }
 
-        public override CollisionType CollCheck(ReSizable reSizable)
-        {
-            switch (reSizable)
-            {
-                case MyPolygon re:
-
-                    return CollCheckForPolygon(re);
-
-                case MyBall ba:
-
-                    return CollCheckForPolygon(ba.Rect);
-            }
-
-            return CollisionType.False;
-        }
-
-        private CollisionType CollCheckForPolygon(MyPolygon Polygon2)
-        {
-            if (Polygon2 == null || Polygon2.lines == null || lines == null ) return CollisionType.False;//if there isn't a polygon there isn't collision
-
-            foreach (MyLine line1 in lines)
-            {
-                foreach (MyLine line2 in Polygon2.lines)
-                {
-                    PointCol point = line1.Collision(line2);
-                    if (point.collation)
-                    {
-                        return CollisionHandler(Polygon2, line2);
-                    }
-                }
-            }
-            return CollisionType.False;
-
-            // crazy one-liner  return (from line1 in lines from line2 in from line2 in Polygon2.lines let point = line1.Collision(line2) where point.collation select line2 select CollisionHandler(Polygon2, line2)).FirstOrDefault();
-        }
-
-        private CollisionType CollisionHandler(MyPolygon Polygon2, MyLine line2)
-        {
-            switch (line2.LineType)
-            {
-                case LineType.Win:
-                    {
-                        Polygon2.realPolygon.Stroke = new SolidColorBrush(Windows.UI.Colors.Green);
-                        Polygon2.realPolygon.StrokeThickness = 5;
-                        return CollisionType.Win;
-                    }
-                case LineType.Coin:
-                    {
-                        return CollisionType.Coin;
-                    }
-            }
-
-            //by checking the last time the object was hit the object will not "drown " in the line
-            CollisionRegularLine(line2);
-
-            return CollisionType.Wall;
-        }
-
-        public  void CollisionRegularLine(MyLine line2)
-        {
-          /* if (DebugClass.FrameCounter - FrameHitId ==1)//temporary solution
-            {
-                this.Body.y -= Body.vy/SettingsClass.current_FPS*2;
-                this.Body.x -= Body.vx / SettingsClass.current_FPS*2;
-            }*/
-            FrameHitId = DebugClass.FrameCounter;//current frame
-            fpsHit.Enqueue(FrameHitId);
-            
-            double ang = GetAngleBetweenVectorAndLine(line2.Degree);
-
-            double friction = line2.Friction;//0.8 is for loss of speed when collision 
-            DebugClass.angleCollision = ang;
-
-            double rad = SettingsClass.ConvertAngleRadian(ang);
-
-            double vectorValue = Math.Sqrt(Body.vx * Body.vx + Body.vy * Body.vy) * friction;
-
-            Body.vx = vectorValue * Math.Cos(rad);
-
-            Body.vy = vectorValue * Math.Sin(rad);
-        }
-
+     
        
 
         public void ChangeAppearance(SolidColorBrush solidColorBrush)

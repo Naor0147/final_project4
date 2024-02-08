@@ -32,6 +32,8 @@ namespace final_project4.classes
         public double[] last4SpeedsVx = new double[4] { 100, 100, 100, 100 };
         public double[] last4SpeedsVy = new double[4] { 100, 100, 100, 100 };
 
+        
+
         public double angle
         {
             get
@@ -43,10 +45,10 @@ namespace final_project4.classes
         public MyLine BodyVector;
 
         public bool Movable;
-        public bool HaveGravity;
+        
 
         public bool[] OnGround;
-
+        public bool HaveGravity;
         //const
 
         public double Gravity = 980;
@@ -77,12 +79,12 @@ namespace final_project4.classes
 
             this.Movable = movable;
 
-            InitializeArr(last4SpeedsVx, 4, 100);
-            InitializeArr(last4SpeedsVy, 4, 100);
-            InitializeArr(OnGround, 4, false);
+            /*InitializeArr(last4SpeedsVx, 4, 100);
+            InitializeArr(last4SpeedsVy, 4, 100);*/
+            OnGround= InitializeArr(OnGround, 5, false);
         }
 
-        public static void InitializeArr<T>(T[] arr, int arraySize, T value)
+        public static T[] InitializeArr<T>(T[] arr, int arraySize, T value)
         {
             if (arr == null)
             {
@@ -92,17 +94,10 @@ namespace final_project4.classes
             {
                 arr[i] = value;
             }
+            return arr;
         }
 
-        /*  public static void InitializeBoolArr(bool[] arr, int arraySize,bool value)
-          {
-              arr = new bool[arraySize];
-              for (int i = 0; i < arraySize; i++)
-              {
-                  arr[i] = value;
-              }
-          }*/
-
+     
         public MyLine CreateVectorRepresentation()
         {
             return new MyLine(SettingsClass.PythagoreanTheorem(vy, vx), SettingsClass.ConvertRadianDegree(Math.Atan(vy / vx)), new Windows.Foundation.Point(x, y));
@@ -120,21 +115,12 @@ namespace final_project4.classes
             //add a/fps so you move the same if you different fps
             ChangeSpeed(dt);
 
-            DoesTheBallStop();
+           
             //you move the same in every frame
             x += vx * dt;
             y += vy * dt;
 
-            UpdateSpeedArr();
-            /* if (vx < 0.001)
-             {
-                 vx = 0;
-             }
-             if (vy<0.0001)
-             {
-                 vy = 0;
-                 ay = 0;
-             }*/
+            
         }
 
         private void ChangeSpeed(double dt)
@@ -155,32 +141,22 @@ namespace final_project4.classes
             return $"({x},{y}), vx:{vx} vy:{vy} ax:{ax} ay:{ay}";
         }
 
-        public void UpdateSpeedArrVx()
+        
+        public bool IsReallyOnGround()
         {
-            for (int i = 0; i < last4SpeedsVx.Length - 1; i++)
+            foreach (bool item in OnGround)
             {
-                last4SpeedsVx[i] = last4SpeedsVx[i + 1];
+                if (!item)
+                {
+                    return false;   
+                }
             }
-            last4SpeedsVx[3] = vx;
-        }
-
-        public void UpdateSpeedArrVy()
-        {
-            /*if (vy==0)
-            {
-                Console.WriteLine( "0");
-            }*/
-            for (int i = 0; i < last4SpeedsVy.Length - 1; i++)
-            {
-                last4SpeedsVy[i] = last4SpeedsVy[i + 1];
-            }
-            last4SpeedsVy[3] = vy;
-        }
-
-        public void UpdateSpeedArr()
-        {
-            UpdateSpeedArrVx();
-            UpdateSpeedArrVy();
+            HaveGravity = false;
+            ay = 0;
+            vy = 0;
+            ax = 0;
+            vx= 0;
+            return true;
         }
 
         public static double SumArr(double[] arr)
@@ -194,14 +170,7 @@ namespace final_project4.classes
             return sum;
         }
 
-        public void DoesTheBallStop()
-        {
-            /*   if (Math.Abs( SumArr(last4SpeedsVy))<8)
-               {
-                   vy = 0;
-                   //HaveGravity = false;
-               }*/
-        }
+     
         public void TransformPosition(Point position)
         {
              double Dx=position.X-x;

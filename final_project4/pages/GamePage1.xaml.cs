@@ -1,5 +1,6 @@
 ﻿using final_project4.classes;
 using final_project4.classes.Shapes;
+using final_project4.classes.Shapes.Polygons;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -20,10 +21,19 @@ namespace final_project4.pages
         public GamePage1()
         {
             this.InitializeComponent();
-            gameCanvas = new GameHandler(Canvas);
+            gameCanvas = new GameHandler(Canvas,false);
+            SettingsClass.GameCanvas = gameCanvas;
+            gameCanvas.CreateStats();
             ball = new MyBall(new PhysicBody(x: 150, y: 150, vx: 10, vy: 400, ax: 0, ay: 0, true), 50);
             gameCanvas.AddToCanvas(ball);
-
+            MyWall mywall = new MyWall(new PhysicBody(0, 800), 1000, 100,WallStyle.Regular);
+            int id = 1;
+            foreach(var line in mywall.lines)
+            {
+                line.id=id; 
+                id++;
+            }
+            gameCanvas.AddToCanvas(mywall);
             //gameCanvas.UpdateSize(1, 1);
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
@@ -104,6 +105,11 @@ namespace final_project4.classes.Shapes
         public double Friction = 0.8;
 
         public LineType LineType = LineType.Wall;
+
+        public int[] FpsHitIds = new int[3] {-200, -100, 0 } ;
+        public int SumDifferentId = 0;
+
+        public int id = 0;
 
         public MyLine(Point p1, Point p2) : base()
         {
@@ -290,7 +296,49 @@ namespace final_project4.classes.Shapes
             line.X2 = SettingsClass.Convert_To_Real(x2);
             line.Y2 = SettingsClass.Convert_To_Real(y2);
         }
+        public void UpdateLineCollisionHitArr()
+        {
+             FpsHitIds=QueueInArrWithReturn(FpsHitIds, (int) DebugClass.FrameCounter);
+            SumDifferentId = SumOfDifferent( FpsHitIds);
+        }
+        public int SumOfDifferent(int[] arr)
+        {
+            if (arr == null) return 0;
+            int length = arr.Length; 
+            int sum = 0;    
+           for (int i = 1; i < length; i++)
+            {
+                sum += arr[i]-arr[i-1];
+            }
+            return sum; 
+        }
 
-       
+        public void update(int value)
+        {
+            FpsHitIds[0] = FpsHitIds[1];
+            FpsHitIds[1] = FpsHitIds[2];
+            FpsHitIds[2] = value ;
+        }
+
+        public  void print(int[] arr)
+        {
+            foreach (int i in arr)
+            {
+                System.Diagnostics.Debug.Write("The line is: " +id+" " +i.ToString() + ",");
+            }
+
+        }
+        public static T[] QueueInArrWithReturn<T>(T[] arr, T value)
+        {
+            if (arr == null) return new T[1] { value };
+
+            int arrLength = arr.Length;
+            for (int i = 0; i < arrLength - 1; i++)
+            {
+                arr[i] = arr[i + 1];
+            }
+            arr[arrLength - 1] = value;
+            return arr;
+        }
     }
 }

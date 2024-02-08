@@ -37,13 +37,15 @@ namespace final_project4.classes
 
 
 
-        public GameHandler(Canvas MainCanvas) : base(MainCanvas)
+        public GameHandler(Canvas MainCanvas,bool AddBorders=true) : base(MainCanvas)
         {
            
             MainCanvas.PointerPressed += MainCanvas_PointerPressed;
             Functions_add();
-            BuildBorders();
-           
+            if (AddBorders)
+            {
+                BuildBorders();
+            }
         }
         private void Functions_add()
         {
@@ -61,7 +63,7 @@ namespace final_project4.classes
             
             LevelStats.TimePassed++;
             TimeText.Variable = LevelStats.TimePassed + "";
-            classes.SettingsClass.current_FPS = frameCount;
+            classes.SettingsClass.current_FPS = (uint)frameCount;
             frameCount = 0;
         }
 
@@ -130,7 +132,7 @@ namespace final_project4.classes
         /// </summary>
         public void CheckCol()
         {
-            bool changed = false;
+            
             bool temp = false;
 
             for (int j = 0; j < ReList.Count; j++)
@@ -145,16 +147,20 @@ namespace final_project4.classes
                  
 
             }
-            OnGround = temp;
-            OnGroundText.Variable = OnGround + "";
 
-
+            SettingsClass.QueueInArr(MyBall.Body.OnGround,temp);//update the array
+           
+            OnGround = MyBall.Body.IsReallyOnGround() ;
+            OnGroundText.Variable = OnGround+ "";
+            MyBall.Body.HaveGravity= !OnGround;
+                
+            
         }
         public bool OnGround=false;
         protected void HandleCollisonPerTwoItems( int j)
         {
-            if (MyBall==null|| ReList[j]==MyBall) return;
-            switch (MyBall.CollCheck( ReList[j]))
+            if (MyBall==null|| ReList[j]==MyBall || !MyBall.Body.HaveGravity) return;
+            switch (MyBall.CollCheckForPolygon(ReList[j] as MyPolygon))
             {
                 case CollisionType.Coin:
                     {
@@ -270,14 +276,17 @@ namespace final_project4.classes
 
             //wall in angle
             CreateWall(0, 550, 50, 1000, angle: 280);
+            CreateStats();
+        }
 
+        public void CreateStats()
+        {
             ScoreText = CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 2 - 100, 0, 40, "Money collected = ", (LevelStats.CoinsTotal + ""));
 
             TimeClickedText = CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 2 - 100, 50, 40, "Clicked ", LevelStats.TimeClicked + "", " time ");
 
             TimeText = CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 4 - 100, 0, 40, "Time passed= ", LevelStats.TimePassed + "");
-            OnGroundText = CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 4 * 3 - 100, 0,40, "On ground ", false + ""); 
+            OnGroundText = CreateText(SettingsClass.IMAGINARY_SCREEN_WIDTH / 4 * 3 - 100, 0, 40, "On ground ", false + "");
         }
-
     }
 }

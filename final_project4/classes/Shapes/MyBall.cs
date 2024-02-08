@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI;
@@ -14,6 +15,10 @@ namespace final_project4.classes.Shapes
 
         public double Size;
         public MyPolygon Rect;
+
+
+        
+     
 
         public MyBall(PhysicBody body, double size) : base(body, size, size)
         {
@@ -121,10 +126,10 @@ namespace final_project4.classes.Shapes
             Point point = new Point(Body.x+Width/2, Body.y+Height);// the center bottom of the ball
             double y = line.Get_Y_Value_On_X(point.X);
 
-            bool val = Math.Abs(y - point.Y) < 10 && SettingsClass.isBetween(line.x1, point.X, line.x2);
-           /*
-            * debug 
-            * if (val)
+            return Math.Abs(y - point.Y) < 2 && SettingsClass.isBetween(line.x1, point.X, line.x2);
+           
+             //debug 
+          /*   if (val)
             {
                 MyLine myLine = new MyLine(point ,new Point(point.X,y));
                
@@ -135,7 +140,81 @@ namespace final_project4.classes.Shapes
                 }
                 return true;
             }*/
-            return val;
+           // return val;
+        }
+        public CollisionType CollCheckForPolygon(MyPolygon Polygon2)
+        {
+            
+            if (Polygon2 == null || Polygon2.lines == null || Rect.lines == null ) return CollisionType.False;//if there isn't a polygon there isn't collision
+
+            foreach (MyLine line1 in Rect.lines)
+            {
+                foreach (MyLine line2 in Polygon2.lines)
+                {
+                    PointCol point = line1.Collision(line2);
+                   
+                    if (point.Collision)
+                    {
+                        line1.UpdateLineCollisionHitArr();
+                        line2.UpdateLineCollisionHitArr();
+                        line2.print(line2.FpsHitIds);
+                        if (line2.SumDifferentId < 10)
+                        {
+                            Body.y -= Body.vy / SettingsClass.current_FPS *3;
+                            Body.x -= Body.vx / SettingsClass.current_FPS *3;
+                        }
+                        return CollisionHandler(Polygon2, line2);
+                    }
+                }
+            }
+            return CollisionType.False;
+
+            // crazy one-liner  return (from line1 in lines from line2 in from line2 in Polygon2.lines let point = line1.Collision(line2) where point.Collision select line2 select CollisionHandler(Polygon2, line2)).FirstOrDefault();
+        }
+
+        private CollisionType CollisionHandler(MyPolygon Polygon2, MyLine line2)
+        {
+            switch (line2.LineType)
+            {
+                case LineType.Win:
+                    {
+                        Polygon2.realPolygon.Stroke = new SolidColorBrush(Windows.UI.Colors.Green);
+                        Polygon2.realPolygon.StrokeThickness = 5;
+                        return CollisionType.Win;
+                    }
+                case LineType.Coin:
+                    {
+                        return CollisionType.Coin;
+                    }
+            }
+
+            //by checking the last time the object was hit the object will not "drown " in the line
+            CollisionRegularLine(line2);
+
+            return CollisionType.Wall;
+        }
+
+        public void CollisionRegularLine(MyLine line2)
+        {
+            /* if (DebugClass.FrameCounter - FrameHitId ==1)//temporary solution
+              {
+                  this.Body.y -= Body.vy/SettingsClass.current_FPS*2;
+                  this.Body.x -= Body.vx / SettingsClass.current_FPS*2;
+              }*/
+            
+
+            double ang = GetAngleBetweenVectorAndLine(line2.Degree);
+
+            double friction = line2.Friction;//0.8 is for loss of speed when collision 
+            DebugClass.angleCollision = ang;
+
+            double rad = SettingsClass.ConvertAngleRadian(ang);
+
+            double vectorValue = Math.Sqrt(Body.vx * Body.vx + Body.vy * Body.vy) * friction;
+
+            Body.vx = vectorValue * Math.Cos(rad);
+
+            Body.vy = vectorValue * Math.Sin(rad);
         }
 
 

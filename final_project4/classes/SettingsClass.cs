@@ -10,7 +10,7 @@ namespace final_project4.classes
 
         public const double IMAGINARY_SCREEN_WIDTH = 1920;
 
-        //let say the screen size in 19.2 meter on 10 metter
+        //let say the screen size in 19.2 meter on 10 meter
 
         public static double Window_VisibleBounds_Height = 1920;
         public static double Window_VisibleBounds_Width = 1000;
@@ -87,6 +87,30 @@ namespace final_project4.classes
                 v1 = temp;
             }
             return v1 < middle && middle < v2;
+        }
+        public static void QueueInArr<T>(T[] arr, T value)
+        {
+            if (arr == null) return;
+           
+            int arrLength = arr.Length;
+            for (int i = 0; i < arrLength - 1; i++)
+            {
+                arr[i] = arr[i + 1];
+            }
+            arr[arrLength - 1] = value;
+          
+        }
+        public static T[] QueueInArrWithReturn<T>(T[] arr, T value)
+        {
+            if (arr == null) return new T[1] { value };
+
+            int arrLength = arr.Length;
+            for (int i = 0; i < arrLength - 1; i++)
+            {
+                arr[i] = arr[i + 1];
+            }
+            arr[arrLength - 1] = value;
+            return arr;
         }
     }
 }
