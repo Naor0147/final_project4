@@ -137,14 +137,11 @@ namespace final_project4.classes
 
             for (int j = 0; j < ReList.Count; j++)
             {
-                HandleCollisonPerTwoItems(j);
                 
                  temp = MyBall.OnGround(ReList[j] as MyPolygon);
-                if (temp)
-                {
-                break;
-                }
-                 
+               
+                HandleCollisonPerTwoItems(j);
+
 
             }
 
@@ -172,9 +169,15 @@ namespace final_project4.classes
                         WinHandler();
                         break;
                     }
+                case CollisionType.Wall:
+
+                    break;
+                case CollisionType.False:
+                    break;
+               
             }
         }
-       
+
 
         private void CoinHandler(int j)
         {
@@ -189,6 +192,7 @@ namespace final_project4.classes
             LevelStats.CoinsTotal += coin.CoinValue;
             ScoreText.Variable = LevelStats.CoinsTotal + "";
 
+            removeObject(ReList[j]);
             coin.Collected = true;
         }
 
@@ -274,8 +278,7 @@ namespace final_project4.classes
             CreateWall(0, 150, 50, 840, WallStyle.SideWall);
             CreateWall(1870, 150, 50, 840, WallStyle.SideWall);
 
-            //wall in angle
-            CreateWall(0, 550, 50, 1000, angle: 280);
+           
             CreateStats();
         }
 

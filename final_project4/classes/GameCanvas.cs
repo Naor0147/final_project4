@@ -76,6 +76,42 @@ namespace final_project4.classes
             }
         }
 
+        public void removeObject<T>(T shape)
+        {
+            if (shape is ReSizable && !(shape is MyBall))
+            {
+                ReList.Remove(shape as ReSizable);
+            }
+
+            switch (shape)
+            {
+                case MyPolygon pol:
+
+                    MainCanvas.Children.Remove(pol.realPolygon);
+
+                    break;
+
+                case MyBall ball:
+
+                    MainCanvas.Children.Remove(ball.BallEllipse);
+                    this.MyBall = null;
+                    break;
+
+                case MyLine lineCol:
+                    MainCanvas.Children.Remove(lineCol.line);
+                    ReLineList.Remove(lineCol);
+                    break;
+
+                case MyText text:
+                    MainCanvas.Children.Remove(text.TextBlock);
+                    MyTextList.Remove(text);
+                    break;
+                case MyButton button:
+                    MainCanvas.Children.Remove(button.Button);
+                    break;
+            }
+        }
+
         //public update
         public void UpdateObjects()
         {

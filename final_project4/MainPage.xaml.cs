@@ -49,6 +49,9 @@ namespace final_project4
                 case "page 2":
                     Frame.Navigate(typeof(GamePage2));
                     break;
+                case "page 3":
+                    Frame.Navigate(typeof(gamePage3));
+                    break;
             }
         }
     }

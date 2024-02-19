@@ -144,6 +144,9 @@
     <Compile Include="pages\GamePage2.xaml.cs">
       <DependentUpon>GamePage2.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pages\gamePage3.xaml.cs">
+      <DependentUpon>gamePage3.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +242,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="pages\GamePage2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\gamePage3.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
