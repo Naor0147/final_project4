@@ -158,11 +158,28 @@ namespace final_project4.classes.Shapes
                         line1.UpdateLineCollisionHitArr();
                         line2.UpdateLineCollisionHitArr();
                         line2.print(line2.FpsHitIds);
-                        if (line2.SumDifferentId < 10)
+                        if (line2.SumDifferentId < 10 && Math.Abs( line2.m)<100)
                         {
+                            /*
                             Body.y -= Body.vy / SettingsClass.current_FPS*1.5 ;
                             Body.x -= Body.vx / SettingsClass.current_FPS *1.5 ;
-                           // return CollisionType.Wall;
+                            */
+                          /*  if (line2.m==0)
+                            {
+                                //SettingsClass.QueueInArr(Body.OnGround, true);
+                                Body.HaveNoSpeed();
+                                return CollisionType.Wall;
+
+                            }
+*/
+                            double sin = Math.Sin(line2.Radian);
+                            double cos = Math.Cos(line2.Radian);
+                            double value =  sin * 980;
+                            Body.vy = value*sin*0.1;
+                            Body.vx = value*cos;
+                            Body.y -= 2;
+                            return CollisionType.Wall;
+
                         }
                         return CollisionHandler(Polygon2, line2);
                     }

@@ -148,15 +148,20 @@ namespace final_project4.classes
             {
                 if (!item)
                 {
-                    return false;   
+                    return false;
                 }
             }
+            HaveNoSpeed();
+            return true;
+        }
+
+        public void HaveNoSpeed()
+        {
             HaveGravity = false;
             ay = 0;
             vy = 0;
             ax = 0;
-            vx= 0;
-            return true;
+            vx = 0;
         }
 
         public static double SumArr(double[] arr)

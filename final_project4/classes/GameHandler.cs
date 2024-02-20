@@ -139,7 +139,11 @@ namespace final_project4.classes
             {
                 
                  temp = MyBall.OnGround(ReList[j] as MyPolygon);
-               
+                if (temp)
+                {
+                    break;
+                }
+
                 HandleCollisonPerTwoItems(j);
 
 
