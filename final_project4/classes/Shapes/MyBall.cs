@@ -160,8 +160,9 @@ namespace final_project4.classes.Shapes
                         line2.print(line2.FpsHitIds);
                         if (line2.SumDifferentId < 10)
                         {
-                            Body.y -= Body.vy / SettingsClass.current_FPS *3;
-                            Body.x -= Body.vx / SettingsClass.current_FPS *3;
+                            Body.y -= Body.vy / SettingsClass.current_FPS*1.5 ;
+                            Body.x -= Body.vx / SettingsClass.current_FPS *1.5 ;
+                            
                         }
                         return CollisionHandler(Polygon2, line2);
                     }
