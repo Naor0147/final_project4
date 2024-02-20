@@ -162,7 +162,7 @@ namespace final_project4.classes.Shapes
                         {
                             Body.y -= Body.vy / SettingsClass.current_FPS*1.5 ;
                             Body.x -= Body.vx / SettingsClass.current_FPS *1.5 ;
-                            
+                           // return CollisionType.Wall;
                         }
                         return CollisionHandler(Polygon2, line2);
                     }
