@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="0405b3be-cf14-46d5-b3ca-1a538a6c38fc" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/FInalProject/Service1/" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Service1.wsdl" MetadataType="Wsdl" ID="92cc4968-46b5-4ae4-b432-e84df7d545ac" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/FInalProject/Service1/?wsdl" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="d9a76624-34f0-4889-9c0c-3f2207c63b03" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/FInalProject/Service1/?disco" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="64cb2934-5e76-4575-817a-77c8ddd00e43" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/FInalProject/Service1/?xsd=xsd0" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="bd23c768-d3e5-45f9-8593-ba60ed254629" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/FInalProject/Service1/?xsd=xsd1" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="f09fb3b4-81f4-43bd-b4a9-96c1fcbb4d21" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/FInalProject/Service1/?xsd=xsd2" />
+    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="b4359d31-2e1c-456c-818e-cfa60f546790" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/FInalProject/Service1/?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

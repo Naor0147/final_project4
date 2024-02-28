@@ -122,11 +122,21 @@ namespace final_project4.classes.Shapes
 
         public bool OnGroundLineCheck(MyLine line)
         {
-            if (Body == null) { return false ; }
+            
+            if (Body == null|| line.LineType == LineType.Win) { return false ; }
             Point point = new Point(Body.x+Width/2, Body.y+Height);// the center bottom of the ball
             double y = line.Get_Y_Value_On_X(point.X);
 
-            return Math.Abs(y - point.Y) < 2 && SettingsClass.isBetween(line.x1, point.X, line.x2);
+
+            double dis = y - point.Y;
+            if (dis>-5&&dis<0)
+            {
+                Body.y--;
+            }
+
+
+
+            return Math.Abs(y - point.Y) < 4&& SettingsClass.isBetween(line.x1, point.X, line.x2);
            
              //debug 
           /*   if (val)
@@ -177,7 +187,7 @@ namespace final_project4.classes.Shapes
                             double value =  sin * 980;
                             Body.vy = value*sin*0.1;
                             Body.vx = value*cos;
-                            Body.y -= 2;
+                            Body.y += Body.vy/SettingsClass.current_FPS;
                             return CollisionType.Wall;
 
                         }

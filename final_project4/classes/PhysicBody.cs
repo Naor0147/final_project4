@@ -81,7 +81,7 @@ namespace final_project4.classes
 
             /*InitializeArr(last4SpeedsVx, 4, 100);
             InitializeArr(last4SpeedsVy, 4, 100);*/
-            OnGround= InitializeArr(OnGround, 5, false);
+            OnGround= InitializeArr(OnGround, 3, false);
         }
 
         public static T[] InitializeArr<T>(T[] arr, int arraySize, T value)

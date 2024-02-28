@@ -1,4 +1,7 @@
-﻿using System;
+﻿//using final_project4.ServiceReference1;
+//using NetTopologySuite.Operation.Overlay.Validate;
+using System;
+using System.Xml.Linq;
 using Windows.UI.ViewManagement;
 
 namespace final_project4.classes
@@ -112,5 +115,25 @@ namespace final_project4.classes
             arr[arrLength - 1] = value;
             return arr;
         }
+
+
+      /*  public static string ToStringWcf<T>(T WcfValue)
+        {
+
+            if (WcfValue==null) return null;
+            if (WcfValue is User)
+            {
+                return ToStringUser(WcfValue as User);
+            }
+           
+            return WcfValue.ToString();
+
+        }
+
+
+        public static string ToStringUser(User user)
+        {
+            return $"Name:{user.Name} , Password:{user.Password} , mail:{user.Mail} , year born:{user.YearBorn} ";
+        }*/
     }
 }
