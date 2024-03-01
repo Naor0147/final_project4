@@ -58,7 +58,7 @@ namespace final_project4.pages
             {
                 case "GetLevelStats":
                   
-                    LstUsers.ItemsSource = await s.GetLevelStatsAsync();
+                    LstUsers.ItemsSource = await s.GetLevelStatsAsync();//ng
                     break;
                 case "GetLevelStatsPerUser":
   
