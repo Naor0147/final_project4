@@ -144,8 +144,8 @@ namespace final_project4.classes
                     break;
                 }
 
-                HandleCollisonPerTwoItems(j);
-
+                //HandleCollisonPerTwoItems(j);
+                MyBall.NewCollision(ReList[j] as MyPolygon);
 
             }
 

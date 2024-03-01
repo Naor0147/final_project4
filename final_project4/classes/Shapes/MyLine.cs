@@ -224,6 +224,66 @@ namespace final_project4.classes.Shapes
             return m * x_temp + b;
         }
 
+        public double GetDisFromPoint(double x , double y)
+        {
+            
+            Point point = TheClosestPointOnLine(x, y);
+            if (SettingsClass.isBetween(x1,point.X,x2) || SettingsClass.isBetween(y1, point.Y, y2))
+            {
+                return Math.Abs(m * x - y + b) / Math.Sqrt(m * m + 1);
+
+            }
+            double left=SettingsClass.DistanceBetweenTwoPoints(x1,y1,x,y);
+            double right=SettingsClass.DistanceBetweenTwoPoints(x2,y2,x,y);
+            return Math.Min(left,right);
+            
+            /*
+            Point point = TheClosestPointOnVector(x, y);
+
+            return Math.Abs(m * point.X - point.Y + b) / Math.Sqrt(m * m + 1);
+            */
+
+
+        }
+        public Point TheClosestPointOnLine(double x, double y)
+        {
+            // i got those formulas after calc 
+            double x1 = (x + m * y - m * b) / (m * m + 1);
+            double y1 = m * (x1) + b;
+            return new Point(x1, y1);
+
+        }
+
+        //the diffrent is vector has limits line is like a function 
+        public Point TheClosestPointOnVector(double x, double y)
+        {
+            // i got those formulas after calc 
+            double cx1 = (x + m * y - m * b) / (m * m + 1);
+            double cy1 = m * (cx1) + b;
+            if (SettingsClass.isBetween(x1,cx1,x2) || SettingsClass.isBetween(y1, cy1, y2))
+            {
+                return new Point(cx1, cy1);
+
+            }
+
+
+
+            //the closests point if the point is not between the x nor y you need to check the edge of the vectr 
+            double left = SettingsClass.DistanceBetweenTwoPoints(x1, y1, x, y);
+            double right = SettingsClass.DistanceBetweenTwoPoints(x2, y2, x, y);
+
+            if (left>right)
+            {
+                return new Point(x2, y2);
+            }
+
+            return new Point(x1, y1);
+
+        }
+
+
+
+
         //working
         public PointCol Collision(MyLine line)
         {

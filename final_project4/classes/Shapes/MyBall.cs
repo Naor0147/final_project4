@@ -76,7 +76,27 @@ namespace final_project4.classes.Shapes
             return Rect.CollCheck(reSizable);
         }
 
-        
+        public bool NewCollision(MyPolygon myPolygon)
+        {
+            if (myPolygon == null || myPolygon.lines == null )return false;
+            double radius = Size / 2;
+            double x = Body.x + radius;
+            double y = Body.y + radius;// the center of the ball
+            foreach (MyLine myLine in myPolygon.lines)
+            {
+                double dis = myLine.GetDisFromPoint(x, y);
+                if (dis < radius)
+                {
+                    Point p = myLine.TheClosestPointOnVector(x, y);
+                    MyLine myLine1 = new MyLine(p,new Point(x,y));
+                    myLine1.CreateLineVisualization();
+                    myLine1.AddToCanvas(SettingsClass.GameCanvas);
+                    Debug.WriteLine("" + dis);
+                    return true;
+                }
+            }
+            return false;
+        }
 
 
         public override void AddToCanvas(GameCanvas gameCanvas)
