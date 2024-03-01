@@ -14,12 +14,6 @@
   <wsdl:message name="IService1_HasUsername_OutputMessage">
     <wsdl:part name="parameters" element="tns:HasUsernameResponse" />
   </wsdl:message>
-  <wsdl:message name="IService1_FindUser_InputMessage">
-    <wsdl:part name="parameters" element="tns:FindUser" />
-  </wsdl:message>
-  <wsdl:message name="IService1_FindUser_OutputMessage">
-    <wsdl:part name="parameters" element="tns:FindUserResponse" />
-  </wsdl:message>
   <wsdl:message name="IService1_RegisterUser_InputMessage">
     <wsdl:part name="parameters" element="tns:RegisterUser" />
   </wsdl:message>
@@ -32,17 +26,29 @@
   <wsdl:message name="IService1_ValidateUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:ValidateUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_AddStats_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddStats" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddStats_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddStatsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_FindUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:FindUser" />
+  </wsdl:message>
+  <wsdl:message name="IService1_FindUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FindUserResponse" />
+  </wsdl:message>
   <wsdl:message name="IService1_GetUsers_InputMessage">
     <wsdl:part name="parameters" element="tns:GetUsers" />
   </wsdl:message>
   <wsdl:message name="IService1_GetUsers_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetUsersResponse" />
   </wsdl:message>
-  <wsdl:message name="IService1_AddStats_InputMessage">
-    <wsdl:part name="parameters" element="tns:AddStats" />
+  <wsdl:message name="IService1_GetLevelStatsById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLevelStatsById" />
   </wsdl:message>
-  <wsdl:message name="IService1_AddStats_OutputMessage">
-    <wsdl:part name="parameters" element="tns:AddStatsResponse" />
+  <wsdl:message name="IService1_GetLevelStatsById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLevelStatsByIdResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_GetLevelStats_InputMessage">
     <wsdl:part name="parameters" element="tns:GetLevelStats" />
@@ -56,12 +62,6 @@
   <wsdl:message name="IService1_GetLevelStatsPerUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetLevelStatsPerUserResponse" />
   </wsdl:message>
-  <wsdl:message name="IService1_GetLevelStatsById_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetLevelStatsById" />
-  </wsdl:message>
-  <wsdl:message name="IService1_GetLevelStatsById_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetLevelStatsByIdResponse" />
-  </wsdl:message>
   <wsdl:message name="IService1_GetLevelStatsByLevelId_InputMessage">
     <wsdl:part name="parameters" element="tns:GetLevelStatsByLevelId" />
   </wsdl:message>
@@ -74,14 +74,22 @@
   <wsdl:message name="IService1_GetAvgScore_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAvgScoreResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_test_InputMessage">
+    <wsdl:part name="parameters" element="tns:test" />
+  </wsdl:message>
+  <wsdl:message name="IService1_test_OutputMessage">
+    <wsdl:part name="parameters" element="tns:testResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_black_InputMessage">
+    <wsdl:part name="parameters" element="tns:black" />
+  </wsdl:message>
+  <wsdl:message name="IService1_black_OutputMessage">
+    <wsdl:part name="parameters" element="tns:blackResponse" />
+  </wsdl:message>
   <wsdl:portType name="IService1">
     <wsdl:operation name="HasUsername">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/HasUsername" message="tns:IService1_HasUsername_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/HasUsernameResponse" message="tns:IService1_HasUsername_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="FindUser">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/FindUser" message="tns:IService1_FindUser_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/FindUserResponse" message="tns:IService1_FindUser_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RegisterUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/RegisterUser" message="tns:IService1_RegisterUser_InputMessage" />
@@ -91,13 +99,21 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/ValidateUser" message="tns:IService1_ValidateUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/ValidateUserResponse" message="tns:IService1_ValidateUser_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="AddStats">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddStats" message="tns:IService1_AddStats_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddStatsResponse" message="tns:IService1_AddStats_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FindUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/FindUser" message="tns:IService1_FindUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/FindUserResponse" message="tns:IService1_FindUser_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetUsers">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetUsers" message="tns:IService1_GetUsers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetUsersResponse" message="tns:IService1_GetUsers_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="AddStats">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddStats" message="tns:IService1_AddStats_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddStatsResponse" message="tns:IService1_AddStats_OutputMessage" />
+    <wsdl:operation name="GetLevelStatsById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetLevelStatsById" message="tns:IService1_GetLevelStatsById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetLevelStatsByIdResponse" message="tns:IService1_GetLevelStatsById_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetLevelStats">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetLevelStats" message="tns:IService1_GetLevelStats_InputMessage" />
@@ -107,10 +123,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetLevelStatsPerUser" message="tns:IService1_GetLevelStatsPerUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetLevelStatsPerUserResponse" message="tns:IService1_GetLevelStatsPerUser_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetLevelStatsById">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetLevelStatsById" message="tns:IService1_GetLevelStatsById_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetLevelStatsByIdResponse" message="tns:IService1_GetLevelStatsById_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="GetLevelStatsByLevelId">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetLevelStatsByLevelId" message="tns:IService1_GetLevelStatsByLevelId_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetLevelStatsByLevelIdResponse" message="tns:IService1_GetLevelStatsByLevelId_OutputMessage" />
@@ -119,20 +131,19 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetAvgScore" message="tns:IService1_GetAvgScore_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetAvgScoreResponse" message="tns:IService1_GetAvgScore_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="test">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/test" message="tns:IService1_test_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/testResponse" message="tns:IService1_test_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="black">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/black" message="tns:IService1_black_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/blackResponse" message="tns:IService1_black_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="HasUsername">
       <soap:operation soapAction="http://tempuri.org/IService1/HasUsername" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="FindUser">
-      <soap:operation soapAction="http://tempuri.org/IService1/FindUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -158,6 +169,24 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AddStats">
+      <soap:operation soapAction="http://tempuri.org/IService1/AddStats" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindUser">
+      <soap:operation soapAction="http://tempuri.org/IService1/FindUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetUsers">
       <soap:operation soapAction="http://tempuri.org/IService1/GetUsers" style="document" />
       <wsdl:input>
@@ -167,8 +196,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="AddStats">
-      <soap:operation soapAction="http://tempuri.org/IService1/AddStats" style="document" />
+    <wsdl:operation name="GetLevelStatsById">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetLevelStatsById" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -194,15 +223,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetLevelStatsById">
-      <soap:operation soapAction="http://tempuri.org/IService1/GetLevelStatsById" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetLevelStatsByLevelId">
       <soap:operation soapAction="http://tempuri.org/IService1/GetLevelStatsByLevelId" style="document" />
       <wsdl:input>
@@ -214,6 +234,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetAvgScore">
       <soap:operation soapAction="http://tempuri.org/IService1/GetAvgScore" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="test">
+      <soap:operation soapAction="http://tempuri.org/IService1/test" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="black">
+      <soap:operation soapAction="http://tempuri.org/IService1/black" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

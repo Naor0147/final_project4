@@ -76,6 +76,9 @@ namespace final_project4.classes.Shapes
             return Rect.CollCheck(reSizable);
         }
 
+        
+
+
         public override void AddToCanvas(GameCanvas gameCanvas)
         {
             gameCanvas.AddToCanvas(this);
@@ -162,13 +165,14 @@ namespace final_project4.classes.Shapes
                 foreach (MyLine line2 in Polygon2.lines)
                 {
                     PointCol point = line1.Collision(line2);
-                   
+                    //IsTheBallGoingsHitTheWall(line2);
                     if (point.Collision)
                     {
                         line1.UpdateLineCollisionHitArr();
                         line2.UpdateLineCollisionHitArr();
                         line2.print(line2.FpsHitIds);
-                        if (line2.SumDifferentId < 10 && Math.Abs( line2.m)<100)
+
+                     /*   if (line2.SumDifferentId < 10 && Math.Abs( line2.m)<100)
                         {
                             /*
                             Body.y -= Body.vy / SettingsClass.current_FPS*1.5 ;
@@ -181,7 +185,8 @@ namespace final_project4.classes.Shapes
                                 return CollisionType.Wall;
 
                             }
-*/
+                          
+*//*
                             double sin = Math.Sin(line2.Radian);
                             double cos = Math.Cos(line2.Radian);
                             double value =  sin * 980;
@@ -190,15 +195,39 @@ namespace final_project4.classes.Shapes
                             Body.y += Body.vy/SettingsClass.current_FPS;
                             return CollisionType.Wall;
 
-                        }
+                        }*/
+                       
                         return CollisionHandler(Polygon2, line2);
                     }
+                   
                 }
             }
             return CollisionType.False;
 
             // crazy one-liner  return (from line1 in lines from line2 in from line2 in Polygon2.lines let point = line1.Collision(line2) where point.Collision select line2 select CollisionHandler(Polygon2, line2)).FirstOrDefault();
         }
+        public bool IsTheBallGoingsHitTheWall(MyLine line)
+        {
+            double X = Body.x+Width/2;
+            double Y = Body.y+ Height/2;
+            double FutureX = Body.x+(Body.vx / SettingsClass.current_FPS * 4);
+            double FutureY = Body.y+ (Body.vy / SettingsClass.current_FPS*4);
+            MyLine my = new MyLine(X,Y,FutureX, FutureY);
+
+            PointCol value = my.Collision(line);
+            if (value.Collision)
+            {
+                my.CreateLineVisualization();
+                SettingsClass.GameCanvas.AddToCanvas(my);
+                Body.x = value.x - Body.vx / SettingsClass.current_FPS ; Body.y= value.y - Body.vy / SettingsClass.current_FPS * 4;
+            }
+            
+            return value.Collision;
+
+            
+            
+        }
+
 
         private CollisionType CollisionHandler(MyPolygon Polygon2, MyLine line2)
         {

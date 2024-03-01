@@ -19,6 +19,12 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        <ComboBox>
+            <ComboBoxItem>ad</ComboBoxItem>
+            <ComboBoxItem>aad</ComboBoxItem>
+            <ComboBoxItem>aadd</ComboBoxItem>
+        </ComboBox>
+        
         <Button Content="page 1" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="100" Foreground="Black" Click="Button_Click" />
         <Button Content="page 2" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="100" Foreground="Black" Click="Button_Click" />
 

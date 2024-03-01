@@ -8,7 +8,33 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <TextBlock FontSize="20" FontWeight="Black" Foreground="Green" x:Name="Text1"></TextBlock>
+    <Grid Background="Purple">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Margin="200" FontSize="20" FontWeight="Black" Foreground="Green" x:Name="Text1"></TextBlock>
+        <ComboBox Grid.Column="1" x:Name="DataBox" SelectionChanged="DataBox_SelectionChanged">
+            <ComboBoxItem>GetLevelStats</ComboBoxItem>
+            <ComboBoxItem>GetLevelStatsPerUser</ComboBoxItem>
+            <ComboBoxItem>GetLevelStatsByLevelId</ComboBoxItem>
+        </ComboBox>
+
+        <ListView x:Name="LstUsers" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="Red" BorderThickness="3">
+                        <StackPanel x:Name="MyStackPanel"   Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock  Text="{Binding Name}" Margin="0,0,10,0" Width="100" Height="70" Foreground="Green"></TextBlock>
+                            <TextBlock Text="{Binding TimePassed}" Margin="0,0,10,0" Width="100" Height="70"></TextBlock>
+                            <TextBlock Text="{Binding NumberOfCoins}" Margin="0,0,10,0" Width="100" Height="70"></TextBlock>
+                            <TextBlock Text="{Binding TimeClicked}" Margin="0,0,10,0" Width="100" Height="70"></TextBlock>
+                            <TextBlock Text="{Binding LevelId}" Margin="0,0,10,0" Width="100" Height="70"></TextBlock>
+                            <TextBlock Text="{Binding Id}" Margin="0,0,10,0" Width="100" Height="70"></TextBlock>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

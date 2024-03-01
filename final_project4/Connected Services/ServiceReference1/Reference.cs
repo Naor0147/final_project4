@@ -262,20 +262,23 @@ namespace final_project4.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/HasUsername", ReplyAction="http://tempuri.org/IService1/HasUsernameResponse")]
         System.Threading.Tasks.Task<bool> HasUsernameAsync(string username);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/FindUser", ReplyAction="http://tempuri.org/IService1/FindUserResponse")]
-        System.Threading.Tasks.Task<final_project4.ServiceReference1.User> FindUserAsync(string username);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/RegisterUser", ReplyAction="http://tempuri.org/IService1/RegisterUserResponse")]
         System.Threading.Tasks.Task<bool> RegisterUserAsync(final_project4.ServiceReference1.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ValidateUser", ReplyAction="http://tempuri.org/IService1/ValidateUserResponse")]
         System.Threading.Tasks.Task<bool> ValidateUserAsync(final_project4.ServiceReference1.User user);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddStats", ReplyAction="http://tempuri.org/IService1/AddStatsResponse")]
+        System.Threading.Tasks.Task<bool> AddStatsAsync(final_project4.ServiceReference1.LevelStats levelStats);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/FindUser", ReplyAction="http://tempuri.org/IService1/FindUserResponse")]
+        System.Threading.Tasks.Task<final_project4.ServiceReference1.User> FindUserAsync(string username);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUsers", ReplyAction="http://tempuri.org/IService1/GetUsersResponse")]
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<final_project4.ServiceReference1.User>> GetUsersAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddStats", ReplyAction="http://tempuri.org/IService1/AddStatsResponse")]
-        System.Threading.Tasks.Task<bool> AddStatsAsync(final_project4.ServiceReference1.LevelStats levelStats);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetLevelStatsById", ReplyAction="http://tempuri.org/IService1/GetLevelStatsByIdResponse")]
+        System.Threading.Tasks.Task<final_project4.ServiceReference1.LevelStats> GetLevelStatsByIdAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetLevelStats", ReplyAction="http://tempuri.org/IService1/GetLevelStatsResponse")]
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<final_project4.ServiceReference1.LevelStats>> GetLevelStatsAsync();
@@ -283,14 +286,17 @@ namespace final_project4.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetLevelStatsPerUser", ReplyAction="http://tempuri.org/IService1/GetLevelStatsPerUserResponse")]
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<final_project4.ServiceReference1.LevelStats>> GetLevelStatsPerUserAsync(string Name);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetLevelStatsById", ReplyAction="http://tempuri.org/IService1/GetLevelStatsByIdResponse")]
-        System.Threading.Tasks.Task<final_project4.ServiceReference1.LevelStats> GetLevelStatsByIdAsync(int id);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetLevelStatsByLevelId", ReplyAction="http://tempuri.org/IService1/GetLevelStatsByLevelIdResponse")]
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<final_project4.ServiceReference1.LevelStats>> GetLevelStatsByLevelIdAsync(int LevelId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetAvgScore", ReplyAction="http://tempuri.org/IService1/GetAvgScoreResponse")]
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<final_project4.ServiceReference1.UserAndLevel>> GetAvgScoreAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/test", ReplyAction="http://tempuri.org/IService1/testResponse")]
+        System.Threading.Tasks.Task<int> testAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/black", ReplyAction="http://tempuri.org/IService1/blackResponse")]
+        System.Threading.Tasks.Task<bool> blackAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -340,10 +346,6 @@ namespace final_project4.ServiceReference1 {
             return base.Channel.HasUsernameAsync(username);
         }
         
-        public System.Threading.Tasks.Task<final_project4.ServiceReference1.User> FindUserAsync(string username) {
-            return base.Channel.FindUserAsync(username);
-        }
-        
         public System.Threading.Tasks.Task<bool> RegisterUserAsync(final_project4.ServiceReference1.User user) {
             return base.Channel.RegisterUserAsync(user);
         }
@@ -352,12 +354,20 @@ namespace final_project4.ServiceReference1 {
             return base.Channel.ValidateUserAsync(user);
         }
         
+        public System.Threading.Tasks.Task<bool> AddStatsAsync(final_project4.ServiceReference1.LevelStats levelStats) {
+            return base.Channel.AddStatsAsync(levelStats);
+        }
+        
+        public System.Threading.Tasks.Task<final_project4.ServiceReference1.User> FindUserAsync(string username) {
+            return base.Channel.FindUserAsync(username);
+        }
+        
         public System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<final_project4.ServiceReference1.User>> GetUsersAsync() {
             return base.Channel.GetUsersAsync();
         }
         
-        public System.Threading.Tasks.Task<bool> AddStatsAsync(final_project4.ServiceReference1.LevelStats levelStats) {
-            return base.Channel.AddStatsAsync(levelStats);
+        public System.Threading.Tasks.Task<final_project4.ServiceReference1.LevelStats> GetLevelStatsByIdAsync(int id) {
+            return base.Channel.GetLevelStatsByIdAsync(id);
         }
         
         public System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<final_project4.ServiceReference1.LevelStats>> GetLevelStatsAsync() {
@@ -368,16 +378,20 @@ namespace final_project4.ServiceReference1 {
             return base.Channel.GetLevelStatsPerUserAsync(Name);
         }
         
-        public System.Threading.Tasks.Task<final_project4.ServiceReference1.LevelStats> GetLevelStatsByIdAsync(int id) {
-            return base.Channel.GetLevelStatsByIdAsync(id);
-        }
-        
         public System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<final_project4.ServiceReference1.LevelStats>> GetLevelStatsByLevelIdAsync(int LevelId) {
             return base.Channel.GetLevelStatsByLevelIdAsync(LevelId);
         }
         
         public System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<final_project4.ServiceReference1.UserAndLevel>> GetAvgScoreAsync() {
             return base.Channel.GetAvgScoreAsync();
+        }
+        
+        public System.Threading.Tasks.Task<int> testAsync() {
+            return base.Channel.testAsync();
+        }
+        
+        public System.Threading.Tasks.Task<bool> blackAsync() {
+            return base.Channel.blackAsync();
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync() {

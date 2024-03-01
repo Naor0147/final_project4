@@ -117,23 +117,24 @@ namespace final_project4.classes
         }
 
 
-      /*  public static string ToStringWcf<T>(T WcfValue)
+        public static string ToStringWcf<T>(T WcfValue)
         {
 
             if (WcfValue==null) return null;
-            if (WcfValue is User)
+            if (WcfValue is ServiceReference1.User)
             {
-                return ToStringUser(WcfValue as User);
+                return ToStringUser(WcfValue as ServiceReference1.User);
             }
+            
            
             return WcfValue.ToString();
 
         }
 
 
-        public static string ToStringUser(User user)
+        public static string ToStringUser(ServiceReference1.User user)
         {
             return $"Name:{user.Name} , Password:{user.Password} , mail:{user.Mail} , year born:{user.YearBorn} ";
-        }*/
+        }
     }
 }

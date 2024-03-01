@@ -1,5 +1,7 @@
-﻿using System;
+﻿using final_project4.classes;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -12,6 +14,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using System.Windows;
+using System.Collections;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -25,15 +29,46 @@ namespace final_project4.pages
         public DataPage()
         {
             this.InitializeComponent();
-            Check();
-            
-        }
-        public async void Check()
-        {
-           // ServiceReference1.IService1 s = new ServiceReference1.Service1Client();
-            //var user = await s.FindUserAsync("Naor");
-            //Text1.Text = user.ToString();
+           // UpdateTable();
 
+            
+           // CreateListView();
+        }
+
+
+
+        public async void Tester()
+        {
+            ServiceReference1.IService1 s = new ServiceReference1.Service1Client();
+            var user = await s.FindUserAsync("Naor");
+            var r = await s.blackAsync();
+            //Text1.Text = SettingsClass.ToStringWcf( user);
+            Text1.Text = r+" " ;
+           
+        }
+        public async void UpdateTable()
+    {
+            ServiceReference1.IService1 s = new ServiceReference1.Service1Client();
+            ComboBoxItem comboBoxItem = DataBox.SelectedItem as ComboBoxItem;
+
+            switch (comboBoxItem.Content.ToString() )
+            {
+                case "GetLevelStats":
+                  
+                    LstUsers.ItemsSource = await s.GetLevelStatsAsync();
+                    break;
+                case "GetLevelStatsPerUser":
+  
+                    LstUsers.ItemsSource = await s.GetLevelStatsAsync();
+                    break;
+            }
+            
+            //LstUsers.ItemsSource = find;
+        }
+
+        private void DataBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateTable();
 
         }
     }
