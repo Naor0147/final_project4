@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Windows;
 using System.Collections;
+using System.Globalization;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -37,7 +38,7 @@ namespace final_project4.pages
 
 
 
-        public async void Tester()
+       /* public async void Tester()
         {
             ServiceReference1.IService1 s = new ServiceReference1.Service1Client();
             var user = await s.FindUserAsync("Naor");
@@ -45,11 +46,13 @@ namespace final_project4.pages
             //Text1.Text = SettingsClass.ToStringWcf( user);
             Text1.Text = r+" " ;
            
-        }
+        }*/
         public async void UpdateTable()
     {
             ServiceReference1.IService1 s = new ServiceReference1.Service1Client();
             ComboBoxItem comboBoxItem = DataBox.SelectedItem as ComboBoxItem;
+
+            int result = 5;
 
             switch (comboBoxItem.Content.ToString() )
             {
@@ -59,8 +62,27 @@ namespace final_project4.pages
                     break;
                 case "GetLevelStatsPerUser":
   
-                    LstUsers.ItemsSource = await s.GetLevelStatsAsync();
+                    LstUsers.ItemsSource = await s.GetLevelStatsPerUserAsync((string)MyTextBox.Text);
                     break;
+                case "GetLevelStatsByLevelId":
+                   
+                    if (int.TryParse(MyTextBox.Text, out result))
+                    {
+                        LstUsers.ItemsSource = await s.GetLevelStatsByLevelIdAsync(result);
+
+                    }
+
+
+                    break;
+                case "GetLevelStatsById":
+                    
+                    if (int.TryParse(MyTextBox.Text, out result))
+                    {
+                        LstUsers.ItemsSource =new List<ServiceReference1.LevelStats> { await s.GetLevelStatsByIdAsync(result) };
+
+                    }
+                    break;
+
             }
             
             //LstUsers.ItemsSource = find;
@@ -68,8 +90,29 @@ namespace final_project4.pages
 
         private void DataBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            UpdateTable();
+           
+            ComboBoxItem comboBoxItem = DataBox.SelectedItem as ComboBoxItem;
 
+            switch (comboBoxItem.Content.ToString())
+            {
+                case "GetLevelStats":
+                    MyTextBox.Visibility = Visibility.Collapsed;
+                    break;
+                case "GetLevelStatsPerUser":
+                    MyTextBox.Visibility = Visibility.Visible;
+                    break;
+                case "GetLevelStatsByLevelId":
+                    MyTextBox.Visibility = Visibility.Visible;
+                    break;
+                case "GetLevelStatsById":
+                    MyTextBox.Visibility = Visibility.Visible;
+                    break;
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateTable();
         }
     }
 }
