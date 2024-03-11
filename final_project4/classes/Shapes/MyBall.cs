@@ -89,14 +89,94 @@ namespace final_project4.classes.Shapes
                 {
                     Point p = myLine.TheClosestPointOnVector(x, y);
                     MyLine myLine1 = new MyLine(p,new Point(x,y));
-                    myLine1.CreateLineVisualization();
-                    myLine1.AddToCanvas(SettingsClass.GameCanvas);
-                    Debug.WriteLine("" + dis);
+                   // myLine1.CreateLineVisualization();
+                   // myLine1.AddToCanvas(SettingsClass.GameCanvas);
+
+                    //Debug.WriteLine("" + dis);
+                   BallNewPostion(p.X,p.Y,dis, myLine1);
                     return true;
                 }
             }
             return false;
         }
+        public void BallNewPostion(double x,double y,double dis,MyLine line)
+        {
+            changespeed(line);
+
+            double radius = Size / 2;
+            double xCenter = Body.x + radius;
+            double yCenter = Body.y + radius;
+            double a = line.Radian;
+            double d = Math.Sqrt((radius - dis) / 1 + Math.Pow(Math.Tan(a), 2));
+            // d = Math.Min(d, Size / 2);
+            if (y < yCenter)
+            {
+                d = 0 - d;
+            }
+
+            //Body.vy *= -0.8;
+            //Body.vx *= -0.8;
+            // changespeed(line);
+            Debug.WriteLine(line.GetDisFromPoint(Body.x + d, Body.y + d * Math.Tan(a)) + "  m: " + line.m + " angle" + SettingsClass.ConvertRadianDegree(a));
+            if (line.m==0)
+            {
+                Body.y += d;
+                return;
+            }
+            if (Math.Abs(line.m) > 1000)
+            {
+                if (y < yCenter)
+                {
+                    Body.y += radius;
+                }
+                else
+                {
+                    Body.y -= radius;
+                }
+                return;
+            }
+            Body.x += d / 2;
+            Body.y += Math.Min(d * Math.Tan(a), radius) / 2;
+
+        }
+        public void changespeed( MyLine myLine)
+        {
+            if (myLine == null) return;
+
+            /* if (myLine.m==0)
+             {
+                 Body.vx *= -0.7;
+                 Body.vy *= -0.7;
+                 return;
+             }
+             double vector = Math.Sqrt( Body.vx*Body.vx + Body.vy*Body.vy )*0.7;
+             double angle1 = ( Body.angle);
+             double angle2 = (myLine.Radian); 
+             double angle3 = (2*angle2-angle1);
+             if (angle1 < 0) {
+
+                 angle3 *= -1;
+             }
+             Body.vx=vector*Math.Sin(angle3);
+             Body.vy=vector*Math.Cos(angle3);
+            */
+            double ballVx = Body.vx;
+            double ballVy = Body.vy;
+            double wallAngleRad = myLine.Radian;
+            double rotatedVx = ballVx * Math.Cos(wallAngleRad) - ballVy * Math.Sin(wallAngleRad);
+            double rotatedVy = ballVx * Math.Sin(wallAngleRad) + ballVy * Math.Cos(wallAngleRad);
+            // Flip the x-component
+            rotatedVx = -rotatedVx;
+
+            // Rotate the resulting vector back
+            double finalVx = rotatedVx * Math.Cos(-wallAngleRad) - rotatedVy * Math.Sin(-wallAngleRad);
+            double finalVy = rotatedVx * Math.Sin(-wallAngleRad) + rotatedVy * Math.Cos(-wallAngleRad);
+
+            Body.vx = finalVx*0.8; 
+            Body.vy = finalVy*0.8;
+        }
+
+
 
 
         public override void AddToCanvas(GameCanvas gameCanvas)
@@ -146,7 +226,7 @@ namespace final_project4.classes.Shapes
         public bool OnGroundLineCheck(MyLine line)
         {
             
-            if (Body == null|| line.LineType == LineType.Win) { return false ; }
+            if (Body == null|| line.LineType == LineType.Win|| line.LineType == LineType.Coin) { return false ; }
             Point point = new Point(Body.x+Width/2, Body.y+Height);// the center bottom of the ball
             double y = line.Get_Y_Value_On_X(point.X);
 

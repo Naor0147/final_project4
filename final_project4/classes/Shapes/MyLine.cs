@@ -8,7 +8,7 @@ namespace final_project4.classes.Shapes
 {
     public enum LineType
     {
-        Wall, Win, Coin
+        Wall, AngledWall, Win, Coin
     }
 
     public class MyLine : ReSizable
@@ -104,12 +104,13 @@ namespace final_project4.classes.Shapes
 
         public double Friction = 0.8;
 
-        public LineType LineType = LineType.Wall;
+        public LineType LineType = LineType.AngledWall;
 
         public int[] FpsHitIds = new int[3] {-200, -100, 0 } ;
         public int SumDifferentId = 0;
 
         public int id = 0;
+        private MyText myText;
 
         public MyLine(Point p1, Point p2) : base()
         {
@@ -399,6 +400,16 @@ namespace final_project4.classes.Shapes
             }
             arr[arrLength - 1] = value;
             return arr;
+        }
+
+        public void addText()
+        {
+            if (SettingsClass.GameCanvas == null)
+            {
+                return;
+            }
+            myText = new MyText(Function, new PhysicBody((x1+x2)/2,(y1+y2)/2));
+            SettingsClass.GameCanvas.AddToCanvas(myText);
         }
     }
 }

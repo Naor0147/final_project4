@@ -85,6 +85,7 @@ namespace final_project4.classes.Shapes
             if (PhysicBody==null) return;
             TextBlock.FontSize = SettingsClass.Convert_To_Real(FontSize);
             TextBlock.Text = this.Text1 + this.Variable + this.Text2;
+            
 
             Canvas.SetLeft(TextBlock , PhysicBody.xReal - (TextBlock.ActualWidth / 2));
             Canvas.SetTop(TextBlock, PhysicBody.yReal );

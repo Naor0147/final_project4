@@ -139,13 +139,17 @@ namespace final_project4.classes
             {
                 //check grvaity 
                  temp = MyBall.OnGround(ReList[j] as MyPolygon);
-                if (temp)
+              if (temp)
                 {
                     break;
                 }
 
                 //HandleCollisonPerTwoItems(j);
-                MyBall.NewCollision(ReList[j] as MyPolygon);
+                if (!(ReList[j] is MyCoin))
+                {
+                    MyBall.NewCollision(ReList[j] as MyPolygon);
+
+                }
 
             }
 
@@ -158,7 +162,7 @@ namespace final_project4.classes
             //}
             OnGroundText.Variable = OnGround+ "";
             MyBall.Body.HaveGravity= !OnGround;
-                
+              
             
         }
         public bool OnGround=false;

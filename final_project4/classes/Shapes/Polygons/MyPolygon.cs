@@ -167,6 +167,14 @@ namespace final_project4.classes
                 lines.Add(new MyLine(_pointsImg[i], _pointsImg[i + 1]));
             }
             lines.Add(new MyLine(_pointsImg.Last(), _pointsImg[0]));
+            //CreateText();
+        }
+        public void CreateText()
+        {
+            foreach(MyLine line in lines)
+            {
+                line.addText();
+            }
         }
 
      
