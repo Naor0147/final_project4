@@ -111,8 +111,8 @@ namespace final_project4.classes
         //display where the player clicked (on screen postion and realtive screen)
         private static Point DisplayCoordinatesInConsole(Point position)
         {
-            System.Diagnostics.Debug.WriteLine($"X: {position.X}, Y: {position.Y}");
-            System.Diagnostics.Debug.WriteLine($"X: {SettingsClass.Convert_To_Img(position.X)}, Y: {SettingsClass.Convert_To_Img(position.Y)}");
+           // System.Diagnostics.Debug.WriteLine($"X: {position.X}, Y: {position.Y}");
+           // System.Diagnostics.Debug.WriteLine($"X: {SettingsClass.Convert_To_Img(position.X)}, Y: {SettingsClass.Convert_To_Img(position.Y)}");
             return position;
         }
 
@@ -138,11 +138,11 @@ namespace final_project4.classes
             for (int j = 0; j < ReList.Count; j++)
             {
                 //check grvaity 
-                 temp = MyBall.OnGround(ReList[j] as MyPolygon);
+                /* temp = MyBall.OnGround(ReList[j] as MyPolygon);
               if (temp)
                 {
                     break;
-                }
+                }*/
 
                 //HandleCollisonPerTwoItems(j);
                 if (!(ReList[j] is MyCoin))
@@ -153,15 +153,15 @@ namespace final_project4.classes
 
             }
 
-            SettingsClass.QueueInArr(MyBall.Body.OnGround,temp);//update the array
+          //  SettingsClass.QueueInArr(MyBall.Body.OnGround,temp);//update the array
            
-            OnGround = MyBall.Body.IsReallyOnGround() ;
+            //OnGround = MyBall.Body.IsReallyOnGround() ;
             //if (OnGround)
             //{
             //    MyBall.Body.y -= 1;
             //}
-            OnGroundText.Variable = OnGround+ "";
-            MyBall.Body.HaveGravity= !OnGround;
+            //OnGroundText.Variable = OnGround+ "";
+            //MyBall.Body.HaveGravity= !OnGround;
               
             
         }

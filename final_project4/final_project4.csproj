@@ -152,8 +152,11 @@
     <Compile Include="pages\GamePage2.xaml.cs">
       <DependentUpon>GamePage2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="pages\gamePage3.xaml.cs">
-      <DependentUpon>gamePage3.xaml</DependentUpon>
+    <Compile Include="pages\GamePage3.xaml.cs">
+      <DependentUpon>GamePage3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="pages\TestPage.xaml.cs">
+      <DependentUpon>TestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Users\User.cs" />
@@ -274,7 +277,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="pages\gamePage3.xaml">
+    <Page Include="pages\GamePage3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\TestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

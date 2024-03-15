@@ -47,7 +47,7 @@ namespace final_project4.pages
         private void gameObjects()
         {
             //wall in angle
-            gameCanvas.CreateWall(0, 550, 50, 1000, angle: 280);
+            gameCanvas.CreateWall(0, 550, 150, 1000, angle: 280);
             gameCanvas.CreateBasket(1700, 900, 100);
             gameCanvas.CreateCoin(1200, 200, 50);
             gameCanvas.CreateCoin(1100, 300, 50);

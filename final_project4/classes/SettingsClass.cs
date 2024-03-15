@@ -3,6 +3,7 @@
 using System;
 using System.Xml.Linq;
 using Windows.UI.ViewManagement;
+using Windows.Web.Syndication;
 
 namespace final_project4.classes
 {
@@ -48,6 +49,13 @@ namespace final_project4.classes
 
             return value * (Window_VisibleBounds_Height / IMAGINARY_SCREEN_HEIGHT);
         }
+        // Function to rotate a vector by an angle
+        public static (double, double) RotateVector(double vx, double vy, double angle)
+        {
+            double rotatedVx = vx * Math.Cos(angle) - vy * Math.Sin(angle);
+            double rotatedVy = vx * Math.Sin(angle) + vy * Math.Cos(angle);
+            return (rotatedVx, rotatedVy);
+        }
 
         public static double ConvertAngleRadian(double angle) => angle * 0.0174532925;
 
@@ -91,6 +99,19 @@ namespace final_project4.classes
             }
             return v1 < middle && middle < v2;
         }
+        public static double ValueInBorder(double border1, double value, double border2)
+        {
+            if (isBetween(border1, value, border2))
+            {
+                return value;
+            }
+            if(border1-value> border2 - value)
+            {
+                return border2;
+            }
+            return border1;
+        }
+
         public static void QueueInArr<T>(T[] arr, T value)
         {
             if (arr == null) return;
