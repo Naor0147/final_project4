@@ -1,6 +1,9 @@
-﻿using System;
+﻿using final_project4.classes.Shapes.Polygons;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
@@ -28,6 +31,33 @@ namespace final_project4.classes.Shapes
 
             this.BallEllipse = CreateEllipse(body.xReal, body.yReal, SettingsClass.Convert_To_Real(size), Colors.Red);
         }
+
+
+        public void MoveThis()
+        {
+            MyLine line = new MyLine(Body.x,Body.y,Body.x+Body.vx,Body.vy);
+            foreach (MyPolygon item in SettingsClass.GameCanvas.ReList.Where(item => item != null && (item is MyPolygon)))
+            {
+                if (!(item is MyCoin))
+                {
+                    foreach(MyLine myLine in item.lines)
+                    {
+
+                        PointCol pointCol = line.Collision(myLine);
+                        if (pointCol.Collision)
+                        {
+                            Body.y = pointCol.y;
+                            Body.x = pointCol.x;
+                            return ;
+                        }
+                    }
+                    
+                }
+            }
+                Body.y += Body.vy;
+            Body.x += Body.vx;
+        }
+
 
         public Ellipse CreateEllipse(double x, double y, double size, Color color)
         {
@@ -121,58 +151,74 @@ namespace final_project4.classes.Shapes
             ChangeSpeed(line);
 
 
-            
-           // //check if the ball is couple of frames in the line 
-           ///* if (interction.FpsHitIds[line.FpsHitIds.Length - 1] - interction.FpsHitIds[line.FpsHitIds.Length - 2] > 10)
-           // {
-           //     return;
-           // }*/
-           // double radius = Size / 2;
-           // double xCenter = Body.x + radius;
-           // double yCenter = Body.y + radius;
-           // double a = line.Radian;
-           // // double d = Math.Sqrt((radius - dis) / 1 + Math.Pow(Math.Tan(a), 2));
-           // double d = radius -dis;
-           // // d = Math.Min(d, Size / 2);
-           // if (line.m>0)
-           // {
-           //     //d = 0 - d;
-           // }
 
-           // line.CreateLineVisualization();
-           // line.AddToCanvas(SettingsClass.GameCanvas);
+            //check if the ball is couple of frames in the line 
+             //if (interction.FpsHitIds[line.FpsHitIds.Length - 1] - interction.FpsHitIds[line.FpsHitIds.Length - 2] > 10)
+             //{
+             //    return;
+             //}
+            double radius = Size / 2;
+            double xCenter = Body.x + radius;
+            double yCenter = Body.y + radius;
+            double a = line.Radian;
+            // double d = Math.Sqrt((radius - dis) / 1 + Math.Pow(Math.Tan(a), 2));
+            double d = radius - dis;
+            // d = Math.Min(d, Size / 2);
+            if (interction.m > 0)
+            {
+                d = 0 - d;
+            }
 
-
-           // //  // Debug.WriteLine(line.GetDisFromPoint(Body.x + d, Body.y + d * Math.Tan(a)) + "  m: " + interction.m + " angle" + SettingsClass.ConvertRadianDegree(interction.Radian));
-           // if (line.m == 0)
-           // {
-           //     Body.y -= d;
-           //     return;
-           // }
-           // if (Math.Abs(line.m) > 1000)
-           // {
-           //     if (xCenter<x)
-           //     {
-           //         Body.x -= radius;
-           //     }
-           //     else
-           //     {
-           //         Body.x += radius;
-           //     }
-           //     return;
-           // }
+            line.CreateLineVisualization();
+            line.AddToCanvas(SettingsClass.GameCanvas);
 
 
-           // //   Body.x += d*1.1;
-           // //   Body.y += Math.Min(d * Math.Tan(a), radius)*1.1;
+            //  // Debug.WriteLine(line.GetDisFromPoint(Body.x + d, Body.y + d * Math.Tan(a)) + "  m: " + interction.m + " angle" + SettingsClass.ConvertRadianDegree(interction.Radian));
+            if (interction.m == 0)
+            {
+                if (y < yCenter) {  
+                Body.y += radius;
+                    return;
+                }
+                Body.y -= radius;
+                return;
+            }
+            if (Math.Abs(interction.m) > 1000)
+            {
+                if (xCenter < x)
+                {
+                    Body.x -= radius;
+                }
+                else
+                {
+                    Body.x += radius;
+                }
+                return;
+            }
+
+            //   Body.x += d*1.1;
+            //   Body.y += Math.Min(d * Math.Tan(a), radius)*1.1;
+
+            /*   if (x<xCenter)
+               {
+
+
+               }
+               else
+               {
+                   Body.x += d * Math.Cos(a);
+
+               }
+            */
+            Body.x += d * Math.Cos(a);
+
            
-           // Body.x += d *Math.Cos(a);
-           // if (yCenter>y)
-           // {
-           //     Body.y -= d * Math.Sin(a);
-           //     return;
-           // }
-           // Body.y += d * Math.Sin(a);
+            if (yCenter > y)
+            {
+                Body.y += d * Math.Sin(a);
+                return;
+            }
+            Body.y -= d * Math.Sin(a);
         }
         public void ChangeSpeed( MyLine myLine)
         {

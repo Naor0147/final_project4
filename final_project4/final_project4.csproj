@@ -119,6 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="classes\BallPhysic.cs" />
     <Compile Include="classes\DebugClass.cs" />
     <Compile Include="classes\GameHandler.cs" />
     <Compile Include="classes\PointCol.cs" />

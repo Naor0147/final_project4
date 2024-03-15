@@ -153,6 +153,11 @@ namespace final_project4.classes
         {
             if (polygon != null &&polygon.Body != null && polygon.Body.Movable)
             {
+               /* if (polygon is MyBall)
+                {
+                    (polygon as MyBall).MoveThis();
+                    return;
+                }*/
                 polygon.Body.Move(SettingsClass.current_FPS);
             }
             polygon.UpdatePosAndSize();

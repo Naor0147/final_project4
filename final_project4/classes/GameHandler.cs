@@ -138,11 +138,11 @@ namespace final_project4.classes
             for (int j = 0; j < ReList.Count; j++)
             {
                 //check grvaity 
-                /* temp = MyBall.OnGround(ReList[j] as MyPolygon);
+                temp = MyBall.OnGround(ReList[j] as MyPolygon);
               if (temp)
                 {
                     break;
-                }*/
+                }
 
                 //HandleCollisonPerTwoItems(j);
                 if (!(ReList[j] is MyCoin))
@@ -153,17 +153,17 @@ namespace final_project4.classes
 
             }
 
-          //  SettingsClass.QueueInArr(MyBall.Body.OnGround,temp);//update the array
-           
-            //OnGround = MyBall.Body.IsReallyOnGround() ;
-            //if (OnGround)
-            //{
-            //    MyBall.Body.y -= 1;
-            //}
-            //OnGroundText.Variable = OnGround+ "";
-            //MyBall.Body.HaveGravity= !OnGround;
-              
-            
+            SettingsClass.QueueInArr(MyBall.Body.OnGround, temp);//update the array
+
+            OnGround = MyBall.Body.IsReallyOnGround();
+            if (OnGround)
+            {
+                MyBall.Body.y -= 1;
+            }
+            OnGroundText.Variable = OnGround + "";
+            MyBall.Body.HaveGravity = !OnGround;
+
+
         }
         public bool OnGround=false;
         protected void HandleCollisonPerTwoItems( int j)
