@@ -106,9 +106,9 @@ namespace final_project4.classes.Shapes
             return Rect.CollCheck(reSizable);
         }
 
-        public bool NewCollision(MyPolygon myPolygon)
+        public CollisionType NewCollision(MyPolygon myPolygon)
         {
-            if (myPolygon == null || myPolygon.lines == null )return false;
+            if (myPolygon == null || myPolygon.lines == null )return CollisionType.False;
             double radius = Size / 2;
             double x = Body.x + radius;
             double y = Body.y + radius;// the center of the ball
@@ -123,9 +123,26 @@ namespace final_project4.classes.Shapes
                 double dis = myLine.GetDisFromPoint(x, y);
                 if (dis < radius)
                 {
-                    minDis = dis;
-                    closest = myLine;
-                    check = true;
+                    switch (myLine.LineType)
+                    {
+                        case LineType.Win:
+                            {
+                                myPolygon.realPolygon.Stroke = new SolidColorBrush(Windows.UI.Colors.Green);
+                                myPolygon.realPolygon.StrokeThickness = 5;
+                                return CollisionType.Win;
+                            }
+                        case LineType.Coin:
+                            {
+                                return CollisionType.Coin;
+                            }
+                    }
+                    if (minDis>dis)
+                    {
+                        minDis = dis;
+                        closest = myLine;
+                        check = true;
+                    }
+
                 }
             }
 
@@ -143,7 +160,7 @@ namespace final_project4.classes.Shapes
                
             }
 
-            return check;
+            return CollisionType.False;
         }
         public void BallNewPostion(double x, double y, double dis, MyLine line, MyLine interction)
         {
@@ -153,10 +170,10 @@ namespace final_project4.classes.Shapes
 
 
             //check if the ball is couple of frames in the line 
-             //if (interction.FpsHitIds[line.FpsHitIds.Length - 1] - interction.FpsHitIds[line.FpsHitIds.Length - 2] > 10)
-             //{
-             //    return;
-             //}
+            if (interction.FpsHitIds[line.FpsHitIds.Length - 1] - interction.FpsHitIds[line.FpsHitIds.Length - 2] > 10)
+            {
+                return;
+            }
             double radius = Size / 2;
             double xCenter = Body.x + radius;
             double yCenter = Body.y + radius;

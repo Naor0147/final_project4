@@ -156,10 +156,7 @@ namespace final_project4.classes
             SettingsClass.QueueInArr(MyBall.Body.OnGround, temp);//update the array
 
             OnGround = MyBall.Body.IsReallyOnGround();
-            if (OnGround)
-            {
-                MyBall.Body.y -= 1;
-            }
+            
             OnGroundText.Variable = OnGround + "";
             MyBall.Body.HaveGravity = !OnGround;
 
