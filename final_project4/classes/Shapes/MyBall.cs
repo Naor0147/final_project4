@@ -196,20 +196,7 @@ namespace final_project4.classes.Shapes
                 return;
             }
 
-            //   Body.x += d*1.1;
-            //   Body.y += Math.Min(d * Math.Tan(a), radius)*1.1;
-
-            /*   if (x<xCenter)
-               {
-
-
-               }
-               else
-               {
-                   Body.x += d * Math.Cos(a);
-
-               }
-            */
+           
             Body.x += d * Math.Cos(a);
 
            
