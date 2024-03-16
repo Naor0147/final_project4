@@ -51,7 +51,8 @@ namespace final_project4.pages
             gameCanvas.CreateWall(600, 650, 50, 400, angle: 310);
 
 
-            gameCanvas.CreateWall(700, 350, 50, 400, angle: 310);
+            gameCanvas.CreateWall(700, 350, 50, 400, angle: 110);
+            gameCanvas.CreateWall(200, 650, 100, 400, angle: 110);
 
 
             gameCanvas.CreateBasket(1700, 900, 100);

@@ -186,29 +186,8 @@ namespace final_project4.classes
 
         }
 
-        protected void HandleCollisonPerTwoItems( int j)
-        {
-            if (MyBall==null|| ReList[j]==MyBall || !MyBall.Body.HaveGravity) return;
-            switch (MyBall.CollCheckForPolygon(ReList[j] as MyPolygon))
-            {
-                case CollisionType.Coin:
-                    {
-                        CoinHandler(j);
-                        break;
-                    }
-                case CollisionType.Win:
-                    {
-                        WinHandler();
-                        break;
-                    }
-                case CollisionType.Wall:
-
-                    break;
-                case CollisionType.False:
-                    break;
-               
-            }
-        }
+     
+       
         private void CoinHandler(MyPolygon polygon)
         {
             polygon.Height = 0;
@@ -227,23 +206,7 @@ namespace final_project4.classes
         }
 
 
-        private void CoinHandler(int j)
-        {
-            ReList[j].Height = 0;
-            if (!(ReList[j] is MyCoin)) return;
-            
-            MyCoin coin = ReList[j] as MyCoin;
-
-            if (coin.Collected) return;
-
-            LevelStats.AmountOfCoinsCollected++;
-            LevelStats.CoinsTotal += coin.CoinValue;
-            ScoreText.Variable = LevelStats.CoinsTotal + "";
-
-            removeObject(ReList[j]);
-            coin.Collected = true;
-        }
-
+      
         private void WinHandler()
         {
             //SettingsClass.current_FPS = 0;//stop the game
@@ -251,6 +214,7 @@ namespace final_project4.classes
 
             LevelStats.Won = true;
             WinScreen();
+            
         }
 
         private void WinScreen()

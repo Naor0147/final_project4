@@ -1,0 +1,59 @@
+﻿<Page
+    x:Class="final_project4.pages.DataPage2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:final_project4.pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Name="User_TB" Text="Current User: " FontSize="50" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="100 0 0 0"/>
+        <TextBlock Text="Statistics" FontSize="100" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Name="DeleteBtn" Content="Delete My User" FontSize="50" FontWeight="SemiBold" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 100 0" Click="DeleteBtn_Click"/>
+
+        <ListView Name="LstUsers" Grid.Row="1" ItemsSource="{Binding}"  IsItemClickEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="PlayersLst_SelectionChanged">
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <ListViewHeaderItem Content="Name" FontSize="40" Width="300"/>
+                        <ListViewHeaderItem Content="TimePassed" FontSize="40" Width="300"/>
+                        <ListViewHeaderItem Content="number of Coins" FontSize="40" Width="300"/>
+                        <ListViewHeaderItem Content="TimeClicked" FontSize="40" Width="300"/>
+                        <ListViewHeaderItem Content="LevelId" FontSize="40" Width="150"/>
+                        <ListViewHeaderItem Content="Id" FontSize="40" Width="150"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock  Text="{Binding Name}"  Width="300"/>
+                        <TextBlock  Text="{Binding TimePassed}"  Width="300"/>
+                        <TextBlock  Text="{Binding NumberOfCoins}" Width="300"/>
+                        <TextBlock  Text="{Binding TimeClicked}"  Width="300"/>
+                        <TextBlock  Text="{Binding LevelId}"  Width="150"/>
+                        <TextBlock  Text="{Binding Id}"  Width="150"/>
+                    
+                        </StackPanel>  
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ComboBox VerticalAlignment="Center" x:Name="DataBox"  Grid.Row="2"  SelectionChanged="DataBox_SelectionChanged" FontSize="40"  >
+            <ComboBoxItem IsSelected="True">GetLevelStats</ComboBoxItem>
+            <ComboBoxItem>GetLevelStatsPerUser</ComboBoxItem>
+            <ComboBoxItem>GetLevelStatsByLevelId</ComboBoxItem>
+            <ComboBoxItem>GetLevelStatsById</ComboBoxItem>
+
+        </ComboBox>
+        <Button Name="BackBtn" Content="Back" Width="450" FontSize="60" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="BackBtn_Click"/>
+        <TextBox Grid.Row="2" Width="400" Margin="50,0,50,0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="40" x:Name="MyTextBox" Visibility="Collapsed"></TextBox>
+    </Grid>
+</Page>

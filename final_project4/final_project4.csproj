@@ -147,6 +147,9 @@
     <Compile Include="pages\DataPage.xaml.cs">
       <DependentUpon>DataPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pages\DataPage2.xaml.cs">
+      <DependentUpon>DataPage2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pages\GamePage1.xaml.cs">
       <DependentUpon>GamePage1.xaml</DependentUpon>
     </Compile>
@@ -267,6 +270,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="pages\DataPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\DataPage2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -49,12 +49,23 @@
 
         <TextBlock></TextBlock>
 
-        <ListView x:Name="LstUsers" >
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top"  Height="80" >
+            <TextBlock  Text= "Name" Margin="0,0,20,0"  Height="70" FontSize="20"></TextBlock>
+            <TextBlock Text= "TimePassed" Margin="0,0,20,0" Height="70"  FontSize="20"></TextBlock>
+            <TextBlock Text="Number Of Coins" Margin="0,0,20,0"  Height="70" FontSize="20" ></TextBlock>
+            <TextBlock Text= "TimeClicked" Margin="0,0,20,0"  Height="70"  FontSize="20" ></TextBlock>
+            <TextBlock Text="LevelId" Margin="0,0,20,0"  Height="70"  FontSize="20" ></TextBlock>
+            <TextBlock Text="Id" Margin="0,0,20,0"  Height="70" FontSize="20"></TextBlock>
+        </StackPanel>
+
+        <ListView x:Name="LstUsers" Margin="0,100,100,100" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="Red" BorderThickness="3">
+                        
                         <StackPanel x:Name="MyStackPanel"  Orientation="Horizontal" HorizontalAlignment="Center" Background="Black">
-                            <TextBlock  Text="{Binding Name}" Margin="0,0,10,0" Width="200" Height="70" FontSize="50"></TextBlock>
+                            <TextBlock Text="{Binding Name}" Margin="0,0,10,0" Width="200" Height="70" FontSize="50"></TextBlock>
                             <TextBlock Text="{Binding TimePassed}" Margin="0,0,10,0" Width="200" Height="70"  FontSize="50"></TextBlock>
                             <TextBlock Text="{Binding NumberOfCoins}" Margin="0,0,10,0" Width="200" Height="70" FontSize="50" ></TextBlock>
                             <TextBlock Text="{Binding TimeClicked}" Margin="0,0,10,0" Width="200" Height="70"  FontSize="50" ></TextBlock>
