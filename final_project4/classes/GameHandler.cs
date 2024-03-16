@@ -139,18 +139,15 @@ namespace final_project4.classes
             {
                 //check grvaity 
                 temp = MyBall.OnGround(ReList[j] as MyPolygon);
-              if (temp)
+                if (temp)
                 {
                     break;
                 }
 
                 //HandleCollisonPerTwoItems(j);
-                if (!(ReList[j] is MyCoin))
-                {
-                    MyBall.NewCollision(ReList[j] as MyPolygon);
-
-                }
-
+              
+                    handleCollision(ReList[j] as MyPolygon);
+              
             }
 
             SettingsClass.QueueInArr(MyBall.Body.OnGround, temp);//update the array
@@ -163,6 +160,32 @@ namespace final_project4.classes
 
         }
         public bool OnGround=false;
+
+        protected void handleCollision(MyPolygon myPolygon)
+        {
+           
+            switch (MyBall.NewCollision(myPolygon))
+            {
+                case CollisionType.Coin:
+                    {
+                        CoinHandler(myPolygon);
+                        break;
+                    }
+                case CollisionType.Win:
+                    {
+                        WinHandler();
+                        break;
+                    }
+                case CollisionType.Wall:
+
+                    break;
+                case CollisionType.False:
+                    break;
+
+            }
+
+        }
+
         protected void HandleCollisonPerTwoItems( int j)
         {
             if (MyBall==null|| ReList[j]==MyBall || !MyBall.Body.HaveGravity) return;
@@ -185,6 +208,22 @@ namespace final_project4.classes
                     break;
                
             }
+        }
+        private void CoinHandler(MyPolygon polygon)
+        {
+            polygon.Height = 0;
+            if (!(polygon is MyCoin)) return;
+
+            MyCoin coin = polygon as MyCoin;
+
+            if (coin.Collected) return;
+
+            LevelStats.AmountOfCoinsCollected++;
+            LevelStats.CoinsTotal += coin.CoinValue;
+            ScoreText.Variable = LevelStats.CoinsTotal + "";
+
+            removeObject(polygon);
+            coin.Collected = true;
         }
 
 

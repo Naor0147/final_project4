@@ -156,13 +156,13 @@ namespace final_project4.classes.Shapes
 
                 //Debug.WriteLine("" + dis);
                 Debug.WriteLine("m: " + closest.m + " angle " + SettingsClass.ConvertRadianDegree(closest.Radian));
-                BallNewPostion(p.X, p.Y, minDis, myLine1,closest);
+                BallNewPosition(p.X, p.Y, minDis, myLine1,closest);
                
             }
 
             return CollisionType.False;
         }
-        public void BallNewPostion(double x, double y, double dis, MyLine line, MyLine interction)
+        public void BallNewPosition(double x, double y, double dis, MyLine line, MyLine interction)
         {
 
             ChangeSpeed(line);
