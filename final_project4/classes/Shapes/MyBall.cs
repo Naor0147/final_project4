@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Windows.Foundation;
+using Windows.Graphics.DirectX;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
@@ -193,11 +195,14 @@ namespace final_project4.classes.Shapes
             //  // Debug.WriteLine(line.GetDisFromPoint(Body.x + d, Body.y + d * Math.Tan(a)) + "  m: " + interction.m + " angle" + SettingsClass.ConvertRadianDegree(interction.Radian));
             if (interction.m == 0)
             {
-                if (y < yCenter) {  
-                Body.y += radius;
+                if (y < yCenter) {
+                    Body.y += radius;
+                   
                     return;
                 }
                 Body.y -= radius;
+               
+
                 return;
             }
             if (Math.Abs(interction.m) > 1000)
@@ -205,6 +210,7 @@ namespace final_project4.classes.Shapes
                 if (xCenter < x)
                 {
                     Body.x -= radius;
+
                 }
                 else
                 {
@@ -224,6 +230,8 @@ namespace final_project4.classes.Shapes
             }
             Body.y -= d * Math.Sin(a);
         }
+
+
         public void ChangeSpeed( MyLine myLine)
         {
             if (myLine == null) return;

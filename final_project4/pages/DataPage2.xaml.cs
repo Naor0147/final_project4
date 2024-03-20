@@ -52,15 +52,20 @@ namespace final_project4.pages
             switch (comboBoxItem.Content.ToString())
             {
                 case "GetLevelStats":
+                    whatTableToShow(1);
+
 
                     LstUsers.ItemsSource = await s.GetLevelStatsAsync();//ng
 
                     break;
                 case "GetLevelStatsPerUser":
+                    whatTableToShow(1);
+
 
                     LstUsers.ItemsSource = await s.GetLevelStatsPerUserAsync((string)MyTextBox.Text);
                     break;
                 case "GetLevelStatsByLevelId":
+                    whatTableToShow(1);
 
                     if (int.TryParse(MyTextBox.Text, out result))
                     {
@@ -71,6 +76,7 @@ namespace final_project4.pages
 
                     break;
                 case "GetLevelStatsById":
+                    whatTableToShow(1);
 
                     if (int.TryParse(MyTextBox.Text, out result))
                     {
@@ -79,10 +85,51 @@ namespace final_project4.pages
                     }
                     break;
 
+                case "GetUsers":
+                    LstUsers2.ItemsSource = await s.GetUsersAsync();
+                    whatTableToShow(2);
+
+
+                    break;
+
+                case "FindUser":
+                    LstUsers2.ItemsSource = new List<ServiceReference1.User> { await s.FindUserAsync(MyTextBox.Text) };
+
+                    whatTableToShow(2);
+
+                    break;
+                case "GetAvgScore":
+                    LstUsers3.ItemsSource = await s.GetAvgScoreAsync() ;
+                    
+                    whatTableToShow(3);
+                    break;
+
             }
 
             //LstUsers.ItemsSource = find;
         }
+
+        private void whatTableToShow(int table)
+        {
+
+            LstUsers.Visibility = Visibility.Collapsed;
+            LstUsers2.Visibility = Visibility.Collapsed;
+            LstUsers3.Visibility = Visibility.Collapsed;
+            switch (table)
+            {
+                case 1:
+                    LstUsers.Visibility = Visibility.Visible;
+                    break;
+                case 2:
+                    LstUsers2.Visibility = Visibility.Visible;
+                    break;
+                case 3:
+                    LstUsers3.Visibility = Visibility.Visible;
+                    break;
+
+            }
+        }
+
         private void DataBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -102,6 +149,15 @@ namespace final_project4.pages
                     break;
                 case "GetLevelStatsById":
                     MyTextBox.Visibility = Visibility.Visible;
+                    break;
+                case "GetUsers":
+                    MyTextBox.Visibility = Visibility.Collapsed;
+                    break;
+                case "FindUser":
+                    MyTextBox.Visibility = Visibility.Visible;
+                    break;
+                case "GetAvgScore":
+                    MyTextBox.Visibility = Visibility.Collapsed;
                     break;
             }
         }

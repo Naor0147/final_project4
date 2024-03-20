@@ -31,5 +31,6 @@
         <Button Content="page 3" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="100" Foreground="Black" Click="Button_Click" />
         <Button Content="Get Data" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="100" Foreground="Black" Click="Button_Click" />
 
+        <Button  Content="Login" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="100" Foreground="Black" Click="Button_Click" ></Button>
     </Grid>
 </Page>

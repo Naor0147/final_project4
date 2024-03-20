@@ -55,7 +55,12 @@ namespace final_project4
                 case "Get Data":
                     Frame.Navigate(typeof(DataPage2));
                     break;
+                case "Login":
+                    Frame.Navigate(typeof(LoginPage));
+                    break;
             }
         }
+
+        
     }
 }

@@ -19,7 +19,7 @@
         <TextBlock Text="Statistics" FontSize="100" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Button Name="DeleteBtn" Content="Delete My User" FontSize="50" FontWeight="SemiBold" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 100 0" Click="DeleteBtn_Click"/>
 
-        <ListView Name="LstUsers" Grid.Row="1" ItemsSource="{Binding}"  IsItemClickEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="PlayersLst_SelectionChanged">
+        <ListView Name="LstUsers" Visibility="Visible" Grid.Row="1" ItemsSource="{Binding}"  IsItemClickEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="PlayersLst_SelectionChanged">
             <ListView.HeaderTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -46,11 +46,80 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+
+        <ListView Name="LstUsers2" Visibility="Collapsed" Grid.Row="1" ItemsSource="{Binding}"  IsItemClickEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="PlayersLst_SelectionChanged">
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <ListViewHeaderItem HorizontalAlignment="Center" Content="Name" FontSize="40" Width=" 150" Margin="0,0,10,0"/>
+                        <ListViewHeaderItem HorizontalAlignment="Center" Content="Password" FontSize="40"  Width=" 250" Margin="0,0,10,0"/>
+                        <ListViewHeaderItem HorizontalAlignment="Center" Content="Mail" FontSize="40" Width="300" Margin="0,0,10,0"/>
+                        <ListViewHeaderItem HorizontalAlignment="Center" Content="Year Born" FontSize="40" Margin="0,0,10,0" />
+  
+
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock  Text="{Binding Name}" Margin="0,0,10,0" Width=" 150" />
+                        <TextBlock  Text="{Binding Password}" Margin="0,0,10,0" Width=" 250"/>
+                        <TextBlock  Text="{Binding Mail}" Margin="0,0,10,0" Width="300"/>
+                        <TextBlock Text="{Binding YearBorn}"  Margin="0,0,10,0" />
+                      
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
+        <ListView Name="LstUsers3" Visibility="Collapsed" Grid.Row="1" ItemsSource="{Binding}"  IsItemClickEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="PlayersLst_SelectionChanged">
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <ListViewHeaderItem HorizontalAlignment="Center" Content="Name" FontSize="40" Width=" 150" Margin="0,0,10,0"/>
+                        <ListViewHeaderItem HorizontalAlignment="Center" Content="Password" FontSize="40"  Width=" 250" Margin="0,0,10,0"/>
+                        <ListViewHeaderItem HorizontalAlignment="Center" Content="Mail" FontSize="40" Width="250" Margin="0,0,10,0"/>
+                        <ListViewHeaderItem HorizontalAlignment="Center" Content="Year Born" FontSize="40" Margin="0,0,10,0" />
+                        <ListViewHeaderItem Content="Name" FontSize="40" Width="300"/>
+                        <ListViewHeaderItem Content="TimePassed" FontSize="40" Width="300"/>
+                        <ListViewHeaderItem Content="number of Coins" FontSize="40" Width="300"/>
+                        <ListViewHeaderItem Content="TimeClicked" FontSize="40" Width="300"/>
+                        <ListViewHeaderItem Content="LevelId" FontSize="40" Width="150"/>
+                        <ListViewHeaderItem Content="Id" FontSize="40" Width="150"/>
+
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock  Text="{Binding Name}" Margin="0,0,10,0" Width=" 150" />
+                        <TextBlock  Text="{Binding Password}" Margin="0,0,10,0" Width=" 250"/>
+                        <TextBlock  Text="{Binding Mail}" Margin="0,0,10,0" Width="250"/>
+                        <TextBlock Text="{Binding YearBorn}"  Margin="0,0,10,0" Width=" 150"/>
+                        <TextBlock  Text="{Binding Name}"  Width="300"/>
+                        <TextBlock  Text="{Binding TimePassed}"  Width="300"/>
+                        <TextBlock  Text="{Binding NumberOfCoins}" Width="300"/>
+                        <TextBlock  Text="{Binding TimeClicked}"  Width="300"/>
+                        <TextBlock  Text="{Binding LevelId}"  Width="150"/>
+                        <TextBlock  Text="{Binding Id}"  Width="150"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
         <ComboBox VerticalAlignment="Center" x:Name="DataBox"  Grid.Row="2"  SelectionChanged="DataBox_SelectionChanged" FontSize="40"  >
             <ComboBoxItem IsSelected="True">GetLevelStats</ComboBoxItem>
             <ComboBoxItem>GetLevelStatsPerUser</ComboBoxItem>
             <ComboBoxItem>GetLevelStatsByLevelId</ComboBoxItem>
             <ComboBoxItem>GetLevelStatsById</ComboBoxItem>
+            <ComboBoxItem>GetUsers</ComboBoxItem>
+            <ComboBoxItem>FindUser</ComboBoxItem>
+            <ComboBoxItem>GetAvgScore</ComboBoxItem>
 
         </ComboBox>
         <Button Name="BackBtn" Content="Back" Width="450" FontSize="60" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="BackBtn_Click"/>
